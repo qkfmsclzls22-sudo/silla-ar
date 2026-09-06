@@ -49,11 +49,15 @@
     width:100%; height:min(64vw, 420px); min-height:300px; border-radius:13px; background:transparent;
     --poster-color:transparent; --progress-bar-color:var(--gold); --progress-bar-height:3px;
   }
-  model-viewer::part(default-ar-button){
+  .ar-cta{
+    position:absolute; left:50%; bottom:16px; transform:translateX(-50%);
+    display:flex; align-items:center; gap:7px;
     background:linear-gradient(180deg, var(--gold-bright), var(--gold)); border:none; border-radius:999px;
-    padding:10px 18px; font-family:'Noto Sans KR', sans-serif; font-weight:600; font-size:13px;
-    color:#211a08; box-shadow:0 8px 20px -8px rgba(201,162,74,0.7); bottom:16px;
+    padding:10px 20px; font-family:'Noto Sans KR', sans-serif; font-weight:700; font-size:13.5px;
+    color:#211a08; box-shadow:0 8px 20px -8px rgba(201,162,74,0.7); cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
   }
+  .ar-cta svg{ flex:none; }
   .info{
     padding:14px 16px; background:var(--bg-1); border:1px solid var(--line); border-radius:12px;
     color:var(--ink-dim); font-size:13.5px; line-height:1.7;
@@ -102,7 +106,12 @@
       min-camera-orbit="auto 40deg auto"
       max-camera-orbit="auto 100deg auto"
       interaction-prompt="none"
-    ></model-viewer>
+    >
+      <button slot="ar-button" class="ar-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l1.9 3.8L18 8l-3.8 1.9L12 14l-1.9-3.8L6 8l3.8-1.9L12 3z"/><path d="M19 15l.9 1.8L22 18l-1.9.9L19 21l-.9-1.9L16 18l1.9-.9L19 15z"/></svg>
+        <span>AR로 보기</span>
+      </button>
+    </model-viewer>
   </div>
 
   <div class="info">
@@ -111,7 +120,7 @@
 
   <div class="hint">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-    <span><b>화면을 드래그</b>해서 회전해보세요. <b>카메라 모양 버튼</b>을 누르면 실제 공간에 놓아볼 수 있어요.</span>
+    <span><b>화면을 드래그</b>해서 회전해보세요. <b>AR로 보기 버튼</b>을 누르면 실제 공간에 놓아볼 수 있어요.</span>
   </div>
 
   <footer>제작 · <span class="brand">경주트립</span></footer>
