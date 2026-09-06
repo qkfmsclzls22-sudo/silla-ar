@@ -1,4 +1,4 @@
-name: Assemble uploaded Seondeok model
+name: Complete Silla AR model upload
 on:
   push:
     branches:
@@ -13,34 +13,31 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - name: Verify and assemble the uploaded model
+      - name: Verify and assemble crown with side pendants
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           python3 - <<'PY'
-          import base64, concurrent.futures, hashlib, json, os, urllib.request
+          import base64, hashlib, json, os, urllib.request
           repo = "qkfmsclzls22-sudo/silla-ar"
           assert os.environ["GITHUB_REPOSITORY"] == repo
           api = "https://api.github.com/repos/" + repo + "/git/blobs"
           headers = {"Authorization": "Bearer " + os.environ["GH_TOKEN"], "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "Content-Type": "application/json"}
-          parts = [{"sha":"769207f0b30c9be00253274113c5e69a28caf802","size":600000},{"sha":"ce62eaa18aa4c8234a13a3b4a19c0561d22b918b","size":600000},{"sha":"bc4bbeb580795b4182dac1b77e49453e9b886269","size":600000},{"sha":"b2be5eb64a2d9d98ccfe4341503eb52345217927","size":600000},{"sha":"fbce6518ce886f3922908ece6bd6b1d26ee4d276","size":600000},{"sha":"5e455b3e625bda23ea5e46e150143bd950e22a66","size":600000},{"sha":"7037af1cdc2d276da25f562c45d4caa9ab0d9e8d","size":600000},{"sha":"493b49830ac7f82cf4f360cb510e8a12e2594eb8","size":600000},{"sha":"3a50032a47783b8b0cace09859533602d29f5596","size":600000},{"sha":"7af6b0b3f33330f15fd2722b5365f018174291f6","size":600000},{"sha":"e0a4e6d6905bff46fc0b1e010df7a0fd3e312b81","size":600000},{"sha":"f099140f05dd2e7b5aea0711c46b41e23e9beab7","size":600000},{"sha":"a88df9c61b5d2fb466e2596e84cb57adc265094e","size":600000},{"sha":"1e5c698a180c6f67a7f1fb9e93e653d35de6e406","size":600000},{"sha":"72211991ffba4a2f9a83a55a27c39352772c7657","size":600000},{"sha":"91a4daab612266f70e77d5a9a8b646619b1a46f1","size":600000},{"sha":"be504276f560b1e9e81e709b078c1ee4976cf70f","size":600000},{"sha":"338c124c5196ca1ccf0987113b77a26d58a7d48a","size":600000},{"sha":"d94df75082105202e3623b6185882dc8cd37427a","size":600000},{"sha":"3e1047c8ada3b81ed58190c7355e2008eda11778","size":2400000},{"sha":"84686f091b1779be4a77a2fd81bed9ea7bfe0a9b","size":2400000},{"sha":"28d31cc499c36915ab9d35a99c3d385ccca4d7fa","size":2400000},{"sha":"760617fca4707889e8d336045c5e6039fe6b4d16","size":600000},{"sha":"2823ce683fd949eee67534cba02c277fbeeef092","size":2400000},{"sha":"68153bc2df9f0e0a98a1115fa45dfb1105aeb804","size":108136}]
-          def fetch(part):
-              req = urllib.request.Request(api + "/" + part["sha"], headers=headers)
-              with urllib.request.urlopen(req, timeout=90) as response:
-                  payload = json.load(response)
-              data = base64.b64decode(payload["content"])
-              assert len(data) == part["size"], "Chunk size mismatch"
-              assert hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest() == part["sha"], "Chunk hash mismatch"
+          def read_blob(sha):
+              with urllib.request.urlopen(urllib.request.Request(api + "/" + sha, headers=headers), timeout=120) as response:
+                  data = base64.b64decode(json.load(response)["content"])
+              assert hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest() == sha
               return data
-          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
-              data = b"".join(pool.map(fetch, parts))
-          assert len(data) == 21708136
-          assert hashlib.sha256(data).hexdigest() == "4ca123ce057890e0c7cfd9909a0da894e672709cd97675648c8e0c19d7eed81a"
+          source = read_blob("f1959f5253be0ad13537fa0dd57a8b2f5416248a")
+          delta = read_blob("64ca92dcc53bdec13b18528a64e6248ea951631a")
+          assert len(source) == 21708136 and len(delta) == 657720
+          data = delta[:297072] + source[293720:293720 + 11549908] + delta[297072:]
+          assert len(data) == 12207628
+          assert hashlib.sha256(data).hexdigest() == "f2403497e154c87df5426389e640312e8661141eaf0a807f7d1204f71f23e5e1"
           payload = json.dumps({"encoding": "base64", "content": base64.b64encode(data).decode()}).encode()
-          req = urllib.request.Request(api, data=payload, headers=headers, method="POST")
-          with urllib.request.urlopen(req, timeout=180) as response:
+          with urllib.request.urlopen(urllib.request.Request(api, data=payload, headers=headers, method="POST"), timeout=180) as response:
               result = json.load(response)
-          assert result["sha"] == "f1959f5253be0ad13537fa0dd57a8b2f5416248a", result["sha"]
-          print("Verified and stored model: " + result["sha"] + " (" + str(len(data)) + " bytes)")
+          assert result["sha"] == "9ac9b0d6d22ed7a4d48406101829851ebc62e1b2"
+          print("Verified crown with two side pendants: " + result["sha"] + " (" + str(len(data)) + " bytes)")
           PY
