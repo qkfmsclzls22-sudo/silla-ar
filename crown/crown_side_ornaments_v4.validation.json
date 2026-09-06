@@ -1,0 +1,52 @@
+{
+  "filename": "crown_side_ornaments_v4.glb",
+  "bytes": 12207628,
+  "sha256": "f2403497e154c87df5426389e640312e8661141eaf0a807f7d1204f71f23e5e1",
+  "git_blob_sha": "9ac9b0d6d22ed7a4d48406101829851ebc62e1b2",
+  "base_binary_bytes_preserved": 11549908,
+  "base_materials_preserved": true,
+  "side_groups": [
+    {
+      "side": "Left",
+      "group_node": 394,
+      "anchor_z_up_m": [
+        -0.09309760481119156,
+        -0.026434531435370445,
+        0.019603798165917397
+      ],
+      "length_m": 0.192,
+      "beads": 9,
+      "small_leaves": 18,
+      "terminal_leaves": 1
+    },
+    {
+      "side": "Right",
+      "group_node": 426,
+      "anchor_z_up_m": [
+        0.09990708529949188,
+        -0.027851052582263947,
+        0.01950179971754551
+      ],
+      "length_m": 0.192,
+      "beads": 9,
+      "small_leaves": 18,
+      "terminal_leaves": 1
+    }
+  ],
+  "scene_triangles": 444666,
+  "added_unique_meshes": 6,
+  "bounds_m": [
+    0.3501133422873429,
+    0.298078726323293,
+    0.52672574429214
+  ],
+  "checks": [
+    "GLB header",
+    "finite positions and normals",
+    "normal lengths",
+    "index bounds",
+    "unchanged base binary and materials"
+  ],
+  "ar_device_tested": false,
+  "reference": "https://sketchfab.com/3d-models/gold-crown-from-cheonmachong-tomb-d9b3c2ddf8464605a8dd9e9b0f2b5f3e"
+}
