@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>터번 쓴 토우 AR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<style>
+  :root{
+    --bg-0:#0e1016;
+    --bg-1:#171a24;
+    --vitrine:#1c202c;
+    --line:#33384a;
+    --gold:#c9a24a;
+    --gold-bright:#eccd7c;
+    --jade:#5c8f7c;
+    --ink:#f4efe2;
+    --ink-dim:#a6a394;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,162,74,0.10), transparent 60%),
+      var(--bg-0);
+    color:var(--ink);
+    font-family:'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 16px 40px;
+  }
+  .page{
+    width:100%;
+    max-width:520px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .eyebrow{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.16em;
+    color:var(--gold);
+    text-transform:uppercase;
+    text-align:center;
+  }
+  h1{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:clamp(28px, 6vw, 38px);
+    text-align:center;
+    margin:0;
+    text-wrap:balance;
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .subtitle{
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:14px;
+    margin:-8px 0 4px;
+  }
+  .vitrine{
+    position:relative;
+    border-radius:18px;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 38%, rgba(201,162,74,0.16), transparent 70%),
+      var(--vitrine);
+    border:1px solid var(--line);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.03),
+      0 24px 48px -20px rgba(0,0,0,0.6);
+    padding:6px;
+    overflow:hidden;
+  }
+  .vitrine::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    border-radius:18px;
+    box-shadow:inset 0 0 0 1px rgba(201,162,74,0.08);
+  }
+  model-viewer{
+    width:100%;
+    height:min(64vw, 420px);
+    min-height:300px;
+    border-radius:13px;
+    background:transparent;
+    --poster-color:transparent;
+    --progress-bar-color:var(--gold);
+    --progress-bar-height:3px;
+  }
+  model-viewer::part(default-ar-button){
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+    border:none;
+    border-radius:999px;
+    padding:10px 18px;
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    color:#211a08;
+    box-shadow:0 8px 20px -8px rgba(201,162,74,0.7);
+    bottom:16px;
+  }
+  .info{
+    padding:14px 16px;
+    background:var(--bg-1);
+    border:1px solid var(--line);
+    border-radius:12px;
+    color:var(--ink-dim);
+    font-size:13.5px;
+    line-height:1.7;
+  }
+  .info b{color:var(--ink); font-weight:600;}
+  .hint{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px 14px;
+    background:var(--bg-1);
+    border:1px solid var(--line);
+    border-radius:12px;
+    color:var(--ink-dim);
+    font-size:13px;
+    line-height:1.55;
+  }
+  .hint svg{flex:none; margin-top:2px; color:var(--jade);}
+  .hint b{color:var(--ink); font-weight:600;}
+  footer{
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:12px;
+    letter-spacing:0.04em;
+    padding-top:4px;
+  }
+  footer .brand{color:var(--gold); font-weight:600;}
+  @media (prefers-reduced-motion: reduce){
+    model-viewer{ --animation-play-state:paused; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="eyebrow">Gyeongju Trip · AR Preview</div>
+  <h1>터번 쓴 토우</h1>
+  <p class="subtitle">신라시대 · 서역인과의 교류를 보여주는 토우</p>
+
+  <div class="vitrine">
+    <model-viewer
+      id="toou"
+      src="toou.glb"
+      ios-src="toou.usdz"
+      alt="터번 쓴 토우 3D 모델"
+      ar
+      ar-modes="scene-viewer quick-look webxr"
+      camera-controls
+      touch-action="pan-y"
+      auto-rotate
+      auto-rotate-delay="1200"
+      rotation-per-second="18deg"
+      shadow-intensity="1"
+      shadow-softness="0.9"
+      exposure="1.05"
+      environment-image="neutral"
+      camera-orbit="10deg 78deg 105%"
+      min-camera-orbit="auto 40deg auto"
+      max-camera-orbit="auto 100deg auto"
+      interaction-prompt="none"
+    ></model-viewer>
+  </div>
+
+  <div class="info">
+    터번을 쓴 서역인의 모습을 형상화한 신라시대 토우입니다. 당시 신라가 실크로드를 통해 <b>서역(중앙아시아·서아시아) 지역 사람들과 실제로 교류</b>했음을 보여주는 중요한 고고학적 근거로 꼽혀요.
+  </div>
+
+  <div class="hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    <span><b>화면을 드래그</b>해서 회전해보세요. <b>카메라 모양 버튼</b>을 누르면 실제 공간에 놓아볼 수 있어요.</span>
+  </div>
+
+  <footer>제작 · <span class="brand">경주트립</span></footer>
+</div>
+
+</body>
+</html>
