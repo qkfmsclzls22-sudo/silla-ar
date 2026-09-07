@@ -58,6 +58,10 @@
     -webkit-tap-highlight-color:transparent;
   }
   .ar-cta svg{ flex:none; }
+  .ar-cta{z-index:20;min-width:156px;justify-content:center;text-decoration:none;}
+  .ar-cta:focus-visible{outline:3px solid #fff;outline-offset:3px;}
+  .ar-cta.ar-unavailable{background:#343847;color:#d7d3c8;box-shadow:none;cursor:default;}
+  .ar-thumb{width:1px;height:1px;opacity:.01;position:absolute;pointer-events:none;}
   .model-preview{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);object-fit:contain;border-radius:13px;pointer-events:none;background:var(--vitrine);}
   .model-preview[hidden]{display:none;}
   .views{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;}
@@ -105,11 +109,8 @@
       max-camera-orbit="auto 100deg auto"
       interaction-prompt="none"
     >
-      <button type="button" slot="ar-button" class="ar-cta">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l1.9 3.8L18 8l-3.8 1.9L12 14l-1.9-3.8L6 8l3.8-1.9L12 3z"/><path d="M19 15l.9 1.8L22 18l-1.9.9L19 21l-.9-1.9L16 18l1.9-.9L19 15z"/></svg>
-        <span>AR로 보기</span>
-      </button>
     </model-viewer>
+    <button id="arControl" type="button" class="ar-cta" aria-describedby="model-status">AR로 보기</button>
     <img id="model-preview" class="model-preview" src="review/queen_v6_front.jpg" alt="선덕여왕 수정 3D 모델의 실제 렌더 이미지">
   </div>
 
@@ -134,6 +135,19 @@
 <script type="module">
 const viewer = document.querySelector('model-viewer');
 const status = document.querySelector('#model-status');
+const arControl = document.querySelector('#arControl');
+const ua = navigator.userAgent || '';
+const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if (isIOS) {
+  arControl.textContent = 'iPhone AR 준비 중';
+  arControl.classList.add('ar-unavailable');
+  arControl.addEventListener('click', () => alert('현재 3D와 일치하는 iPhone용 AR 파일을 준비 중입니다. 다른 모델이 잘못 열리지 않도록 AR 실행을 막아두었습니다.'));
+} else {
+  arControl.addEventListener('click', async () => {
+    try { await viewer.activateAR(); }
+    catch (error) { status.textContent = 'ARCore 지원 Android의 Chrome에서 다시 열어주세요.'; }
+  });
+}
 const preview = document.querySelector('#model-preview');
 const views = {
   front: {orbit:'0deg 80deg 105%',target:'auto auto auto'},
@@ -151,9 +165,9 @@ document.querySelectorAll('[data-view]').forEach(button => button.addEventListen
 }));
 viewer.addEventListener('load', () => {
   preview.hidden = true;
-  status.textContent = viewer.canActivateAR
-    ? 'AR로 보기 버튼을 눌러 실제 공간에 배치해보세요.'
-    : 'AR은 지원되는 휴대폰에서 이용할 수 있어요. 아이폰은 Safari, 안드로이드는 Chrome으로 열어주세요.';
+  status.textContent = isIOS
+    ? '현재 3D와 일치하는 iPhone용 AR 파일을 준비 중입니다. 3D 미리보기는 정상 이용할 수 있어요.'
+    : (viewer.canActivateAR ? 'AR로 보기 버튼을 눌러 실제 공간에 배치해보세요.' : 'ARCore 지원 Android의 Chrome에서 이용해 주세요.');
 });
 viewer.addEventListener('error', () => { preview.hidden = false; status.textContent = '현재는 실제 모델의 정지 이미지를 보여드리고 있어요. 3D·AR은 휴대폰 기본 브라우저에서 다시 열어주세요.'; });
 setTimeout(() => { if (!preview.hidden) status.textContent = '실제 모델의 정지 이미지로 미리 보는 중입니다. 3D를 열지 못하면 휴대폰 기본 브라우저로 접속해주세요.'; }, 15000);
