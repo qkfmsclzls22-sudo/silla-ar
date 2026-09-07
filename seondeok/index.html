@@ -77,6 +77,9 @@
   footer{ text-align:center; color:var(--ink-dim); font-size:12px; letter-spacing:0.04em; padding-top:4px; }
   footer .brand{color:var(--gold); font-weight:600;}
   @media (prefers-reduced-motion: reduce){ model-viewer{ --animation-play-state:paused; } }
+.ar-cta{z-index:20;min-width:156px;justify-content:center;white-space:nowrap;}
+.ar-cta:disabled{opacity:.7;cursor:wait;}
+model-viewer::part(default-ar-button){display:none;}
 </style>
 </head>
 <body>
@@ -135,19 +138,50 @@
 <script type="module">
 const viewer = document.querySelector('model-viewer');
 const status = document.querySelector('#model-status');
-const arControl = document.querySelector('#arControl');
-const ua = navigator.userAgent || '';
-const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-if (isIOS) {
-  arControl.textContent = 'iPhone AR 준비 중';
-  arControl.classList.add('ar-unavailable');
-  arControl.addEventListener('click', () => alert('현재 3D와 일치하는 iPhone용 AR 파일을 준비 중입니다. 다른 모델이 잘못 열리지 않도록 AR 실행을 막아두었습니다.'));
-} else {
-  arControl.addEventListener('click', async () => {
-    try { await viewer.activateAR(); }
-    catch (error) { status.textContent = 'ARCore 지원 Android의 Chrome에서 다시 열어주세요.'; }
-  });
+const arControl = document.getElementById('arControl');
+const arStatus = document.getElementById('arStatus') || document.getElementById('model-status');
+const readyMessage = 'AR로 보기를 눌러 실제 공간에 놓아보세요. iPhone은 Safari, Android는 Chrome에서 열어주세요.';
+arStatus.setAttribute('role', 'status');
+arStatus.textContent = '3D 모델을 불러오는 중입니다.';
+arControl.disabled = true;
+arControl.textContent = '3D 불러오는 중';
+function readyAR() {
+  arControl.disabled = false;
+  arControl.textContent = 'AR로 보기';
+  arStatus.textContent = readyMessage;
 }
+viewer.addEventListener('load', readyAR);
+if (viewer.loaded) readyAR();
+arControl.addEventListener('click', async () => {
+  if (!viewer.loaded) {
+    arStatus.textContent = '모델을 불러온 뒤 다시 눌러주세요.';
+    return;
+  }
+  if (!viewer.canActivateAR) {
+    arStatus.textContent = '이 브라우저에서는 AR을 지원하지 않습니다. 휴대폰에서 이 주소를 Safari(iPhone) 또는 Chrome(Android)으로 열어주세요. 카카오톡에서는 메뉴의 다른 브라우저로 열기를 선택해주세요.';
+    return;
+  }
+  arControl.disabled = true;
+  arControl.textContent = 'AR 준비 중';
+  arStatus.textContent = '현재 모델로 AR을 준비하고 있습니다. 잠시 기다려주세요.';
+  try {
+    await viewer.activateAR();
+  } catch (error) {
+    arStatus.textContent = 'AR을 열지 못했습니다. 휴대폰의 Safari 또는 Chrome에서 다시 시도해주세요.';
+  } finally {
+    arControl.disabled = false;
+    arControl.textContent = 'AR로 보기';
+  }
+});
+viewer.addEventListener('error', () => {
+  arControl.disabled = true;
+  arControl.textContent = '모델 로딩 실패';
+  arStatus.textContent = '3D 모델을 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침해주세요.';
+});
+viewer.addEventListener('ar-status', event => {
+  if (event.detail.status === 'failed') arStatus.textContent = 'AR을 시작하지 못했습니다. 카메라 권한과 휴대폰의 AR 지원 여부를 확인해주세요.';
+});
+
 const preview = document.querySelector('#model-preview');
 const views = {
   front: {orbit:'0deg 80deg 105%',target:'auto auto auto'},
@@ -165,9 +199,7 @@ document.querySelectorAll('[data-view]').forEach(button => button.addEventListen
 }));
 viewer.addEventListener('load', () => {
   preview.hidden = true;
-  status.textContent = isIOS
-    ? '현재 3D와 일치하는 iPhone용 AR 파일을 준비 중입니다. 3D 미리보기는 정상 이용할 수 있어요.'
-    : (viewer.canActivateAR ? 'AR로 보기 버튼을 눌러 실제 공간에 배치해보세요.' : 'ARCore 지원 Android의 Chrome에서 이용해 주세요.');
+  status.textContent = readyMessage;
 });
 viewer.addEventListener('error', () => { preview.hidden = false; status.textContent = '현재는 실제 모델의 정지 이미지를 보여드리고 있어요. 3D·AR은 휴대폰 기본 브라우저에서 다시 열어주세요.'; });
 setTimeout(() => { if (!preview.hidden) status.textContent = '실제 모델의 정지 이미지로 미리 보는 중입니다. 3D를 열지 못하면 휴대폰 기본 브라우저로 접속해주세요.'; }, 15000);
