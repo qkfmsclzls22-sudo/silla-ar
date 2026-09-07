@@ -1,0 +1,58 @@
+{
+  "valid": true,
+  "bytes": 22343816,
+  "sha256": "0b9b8086b0ff1d3964b6b8a149b9c86d9320e18dc603217c990de38d1cd28c6b",
+  "scene_triangles": 536056,
+  "embedded_images": 6,
+  "all_embedded_image_bytes_preserved": true,
+  "all_uvs_and_indices_preserved": true,
+  "crown_and_jewellery_geometry_unchanged": true,
+  "node_transforms_unchanged": true,
+  "protected_face_positions_unchanged": true,
+  "max_displacement_m": 0.002000037580728531,
+  "scalp_open_edges_after_weld": 0,
+  "local_triangle_orientation_reversals": 0,
+  "materials": 11,
+  "skins": 0,
+  "animations": 0,
+  "verification_scope": "custom numerical tests and CPU renders; not Khronos certification or mobile AR test",
+  "cleanup": {
+    "source": "queen_seondeok_refined_v4.glb",
+    "version": "v5",
+    "image_bytes_unchanged": true,
+    "uvs_indices_pose_unchanged": true,
+    "max_displacement_m": 0.002000037580728531,
+    "vertices_moved": 20703,
+    "corrections": [
+      {
+        "mesh": "Seondeok_Face_neck_hands",
+        "tinted_vertices": 342
+      },
+      {
+        "mesh": "Seondeok_Royal_red_and_black_robe",
+        "tinted_vertices": 315
+      },
+      {
+        "mesh": "Seondeok_Hair",
+        "tinted_vertices": 2
+      },
+      {
+        "mesh": "Seondeok_Original_costume_embroidery",
+        "tinted_vertices": 0
+      },
+      {
+        "mesh": "Seondeok_Reconstructed_scalp_under_crown",
+        "tinted_vertices": 0
+      },
+      {
+        "mesh": "Seondeok_closed_hair_crown_seat",
+        "tinted_vertices": 0
+      }
+    ],
+    "limitations": [
+      "Waving fingers remain fused/incomplete in source anatomy; no full hand reconstruction.",
+      "Rear/side source images remain blurred; normal artifacts reduced, not new image detail.",
+      "CPU-render validation only; mobile AR not tested."
+    ]
+  }
+}
