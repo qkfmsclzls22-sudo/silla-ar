@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - name: Verify and assemble crown with side pendants
+      - name: Verify and assemble Seondeok v5 from lossless range patch
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           python3 - <<'PY'
-          import base64, hashlib, json, os, urllib.request
+          import base64, hashlib, json, os, struct, urllib.request, zlib
           repo = "qkfmsclzls22-sudo/silla-ar"
           assert os.environ["GITHUB_REPOSITORY"] == repo
           api = "https://api.github.com/repos/" + repo + "/git/blobs"
@@ -30,14 +30,30 @@ jobs:
               assert hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest() == sha
               return data
           source = read_blob("f1959f5253be0ad13537fa0dd57a8b2f5416248a")
-          delta = read_blob("64ca92dcc53bdec13b18528a64e6248ea951631a")
-          assert len(source) == 21708136 and len(delta) == 657720
-          data = delta[:297072] + source[293720:293720 + 11549908] + delta[297072:]
-          assert len(data) == 12207628
-          assert hashlib.sha256(data).hexdigest() == "f2403497e154c87df5426389e640312e8661141eaf0a807f7d1204f71f23e5e1"
+          patch = read_blob("475def88bf115c0038615ded699ae256caeca467")
+          assert len(source) == 21708136 and len(patch) == 2121825
+          raw = zlib.decompress(patch)
+          oldprefix, prefix, blen, count = struct.unpack_from("<IIII", raw)
+          assert oldprefix == 28 + struct.unpack_from("<I", source, 12)[0]
+          assert count == 18 and 0 < prefix < 1000000 and blen < 25000000
+          pos = 16
+          head = raw[pos:pos + prefix]
+          pos += prefix
+          body = bytearray(source[oldprefix:])
+          body.extend(b"\0" * (blen - len(body)))
+          for _ in range(count):
+              offset, length = struct.unpack_from("<II", raw, pos)
+              pos += 8
+              assert offset + length <= blen and pos + length <= len(raw)
+              body[offset:offset + length] = raw[pos:pos + length]
+              pos += length
+          assert pos == len(raw)
+          data = head + body
+          assert len(data) == 22343816
+          assert hashlib.sha256(data).hexdigest() == "0b9b8086b0ff1d3964b6b8a149b9c86d9320e18dc603217c990de38d1cd28c6b"
           payload = json.dumps({"encoding": "base64", "content": base64.b64encode(data).decode()}).encode()
           with urllib.request.urlopen(urllib.request.Request(api, data=payload, headers=headers, method="POST"), timeout=180) as response:
               result = json.load(response)
-          assert result["sha"] == "9ac9b0d6d22ed7a4d48406101829851ebc62e1b2"
-          print("Verified crown with two side pendants: " + result["sha"] + " (" + str(len(data)) + " bytes)")
+          assert result["sha"] == "c1dbc3b1b0c5eacc6a42af059c56350a4fab67fc"
+          print("Verified Seondeok v5: " + result["sha"] + " (" + str(len(data)) + " bytes)")
           PY
