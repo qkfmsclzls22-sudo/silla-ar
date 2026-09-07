@@ -1,0 +1,30 @@
+{
+  "input_sha256": "3d880320ea335ab7554a7aa36b2fe4bbec2271d45f1a5cddfdda24e6bc7bb080",
+  "bytes": 11516632,
+  "sha256": "ebc9ea8bf8b5194e18cac03e21b072437e2fc1fa0c0632a1fc41a0e668a01235",
+  "geometry_compression": "KHR_draco_mesh_compression",
+  "position_quantization_bits": 16,
+  "simplification": false,
+  "converted_color_maps": [
+    {
+      "name": "Original_T_24CL0003_C",
+      "original_bytes": 2232436,
+      "delivery_bytes": 355872,
+      "original_sha256": "66f32d5308e36bd390ea23aa53fd08022527a417cfec5e9ec2ca3dbc61c5821f",
+      "delivery_sha256": "cfa648966a13555c722491ac0c0b9fd37a3ab6392f6abd71eaf38dc8494c6290",
+      "quality": 90,
+      "resized": false
+    },
+    {
+      "name": "Queen_2K_Color",
+      "original_bytes": 3749013,
+      "delivery_bytes": 939258,
+      "original_sha256": "f432ffe73a460f5ca5de60ecd0123449dbb6f7ae97b24581c39378f22eb573b0",
+      "delivery_sha256": "564b9bb3d0bf37097df4d68bbfa55eaba9b8757bcd39b4696b7827cca6ad8c0f",
+      "quality": 90,
+      "resized": false
+    }
+  ],
+  "other_encoded_images_preserved": true,
+  "decoded_verification_file": "queen_v6_delivery.decoded.glb"
+}

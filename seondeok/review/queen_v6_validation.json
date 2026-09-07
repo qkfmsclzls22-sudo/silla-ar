@@ -1,0 +1,49 @@
+{
+  "valid": true,
+  "bytes": 11516632,
+  "sha256": "ebc9ea8bf8b5194e18cac03e21b072437e2fc1fa0c0632a1fc41a0e668a01235",
+  "existing_node_transforms_unchanged": true,
+  "closed_surface_checks": {
+    "V6_closed_anatomical_head": {
+      "watertight": true,
+      "components": 1,
+      "vertices": 16114,
+      "triangles": 32224
+    },
+    "V6_closed_neck": {
+      "watertight": true,
+      "components": 1,
+      "vertices": 7202,
+      "triangles": 14400
+    },
+    "V6_five_finger_waving_hand": {
+      "watertight": true,
+      "components": 1,
+      "vertices": 23520,
+      "triangles": 47036
+    }
+  },
+  "embedded_images": 9,
+  "new_generated_material_images": 3,
+  "skins": 0,
+  "animations": 0,
+  "visual_checks": "CPU renders of the delivery GLB after Draco decoding",
+  "browser_webgl_available": false,
+  "mobile_AR_tested": false,
+  "authored_model": {
+    "sha256": "3d880320ea335ab7554a7aa36b2fe4bbec2271d45f1a5cddfdda24e6bc7bb080",
+    "bytes": 30327752,
+    "crown_meshes_exactly_preserved": 139,
+    "original_encoded_images_preserved": true
+  },
+  "geometry_compression": "KHR_draco_mesh_compression",
+  "delivery_max_vertex_distance_m": 1.9687276697950166e-05,
+  "delivery_triangle_count": 413993,
+  "delivery_removed_zero_area_triangles": 160,
+  "delivery_node_transforms_preserved": true,
+  "delivery_reencoded_color_maps": [
+    "Original_T_24CL0003_C",
+    "Queen_2K_Color"
+  ],
+  "other_encoded_images_preserved": true
+}

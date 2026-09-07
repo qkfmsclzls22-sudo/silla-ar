@@ -1,3 +1,48 @@
+# 선덕여왕 v6 · 얼굴 재구성 및 참고 자료 기반 보완 · 2026-09-07
+
+- **[3D·AR 확인](https://qkfmsclzls22-sudo.github.io/silla-ar/seondeok/)** · **[실제 수정 전후 비교](https://qkfmsclzls22-sudo.github.io/silla-ar/seondeok/review/compare.html)**
+- 모델: [`queen_seondeok_refined_v6.glb`](../queen_seondeok_refined_v6.glb)
+- 게시 크기: 11,516,632 bytes · SHA-256: `ebc9ea8bf8b5194e18cac03e21b072437e2fc1fa0c0632a1fc41a0e668a01235`
+- 사용자 우선순위: 복식 고증보다 선덕여왕 분위기와 자연스러운 완성도, 특히 어색한 얼굴 개선.
+
+## 변경 내용
+
+- 기존 사진 기반 얼굴과 턱의 겹친 경계를 제거하고 눈·코·입·턱을 갖춘 닫힌 입체 머리를 구성했습니다. 부드러운 미소의 새 피부 질감을 얼굴 위치에 맞춰 적용했습니다.
+- 피부·목·귓바퀴, 옆머리와 뒷머리를 새로 구성했습니다. 금관 아래 안감을 추가하고 귀 장식을 독립된 형상으로 만들었습니다.
+- 들고 있는 손은 손바닥·손목과 분리된 다섯 손가락이 매끈하게 연결되는 닫힌 표면으로 교체했습니다. 배 위에 놓인 손은 원본을 유지했습니다.
+- 붉은 예복의 정면은 유지하면서 뒷면에 검정·금색 어깨 자수, 허리띠, 금색 문양과 옷단을 적용했습니다.
+- 기존 금관의 형상과 배치는 유지했습니다. 같은 GLB에서 iPhone용 AR 데이터를 생성하도록 이전 USDZ를 별도로 연결하지 않았습니다.
+- 확인 페이지에 정면·얼굴 확대·얼굴 옆면·뒷면 버튼, 실제 모델 정지 이미지와 전후 비교 페이지를 추가했습니다.
+
+## 참고 자료와 사용 구분
+
+| 자료 | 사용한 부분 |
+|---|---|
+| [선덕여왕 즉위식 의상 사진](https://news.nate.com/view/20091117n20900) | 금관·붉은 예복·검정 금색 어깨 장식의 조합과 얼굴·머리 연결 분위기 |
+| [씨네21 선덕여왕 의상 사진](https://cine21.com/news/view/?mag_id=56033) | 정면 예복과 금색 문양의 배치·분량 |
+| [지온 삼국시대 왕비 03의 후면 사진](https://jiondress.com/88/?idx=154) | 뒷면의 비단 주름, 금색 문양 반복과 옷단 표현 |
+| [MBC 옛드 선덕여왕 51회 재생목록](https://www.youtube.com/playlist?list=PLOBbhydezQbfEQYf99LFyGe-RpX-xB7Ny) | 관련 영상 위치를 확인한 참고 링크. 영상 프레임을 추출해 적용하지는 않음 |
+| [MediaPipe canonical face mesh](https://github.com/google-ai-edge/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model.obj) | 얼굴의 기본 연결 구조. Apache 2.0 라이선스 동봉, 생성 얼굴에 맞춰 수정 |
+
+외부 사진은 시각적 참고로 사용했으며 사진 파일을 저장소에 재배포하거나 모델에 그대로 붙이지 않았습니다. 얼굴·후면·머리카락 질감은 내장 Imagegen으로 생성한 창작 자료입니다. 고증 복원이나 실제 인물의 모습을 확정한 결과가 아닙니다.
+
+## 검증·한계
+
+- 최종 파일의 형식·형상 검증 수치는 `queen_v6_validation.json`과 `queen_v6_khronos.json`에 기록합니다.
+- 전송 한도와 모바일 로딩을 위해 Draco 16비트 형상 압축을 적용하고 원본의 불투명 색상 지도 2개를 해상도 변경 없이 JPEG 품질 90으로 재인코딩했습니다. 나머지 내장 이미지 7개는 원시 바이트를 유지했습니다. 원본 제작 파일에서 금관 형상을 그대로 유지했고, 게시용 압축의 실제 정점 오차·면적이 0인 삼각형 제거 수를 별도로 검증했습니다. 세부 설정은 `queen_v6_compression.json`에 기록합니다.
+- 비교 이미지는 실제 게시 GLB를 Draco 해제한 후 CPU로 렌더한 결과입니다. `rebuild/v6_assets/*projection*.png`는 보완용 생성 질감이며 검수용 3D 렌더와 구분합니다.
+- Khronos 검사에서 오류·경고는 0개입니다. 검사기가 Draco 확장 자체를 검사하지 못하므로, 별도 디코딩·형상 비교를 함께 실행했습니다.
+- 현재 확인용 브라우저는 WebGL 컨텍스트가 비활성화되어 회전·AR 동작을 실제로 검수하지 못했습니다. 페이지 연결·게시 파일의 검증과 휴대폰 AR 검증은 다릅니다.
+- 어깨·의복 옆선의 일부 원본 질감 경계, 배 위에 놓인 손, 피부와 의복의 해상도 차이는 남아 있습니다. 리깅·애니메이션은 없습니다.
+
+## 재현
+
+`rebuild/build_v6.py`와 `rebuild/v6_assets/`를 사용합니다. 입력은 해시가 지정된 v5입니다. Python에 NumPy, SciPy, Pillow, scikit-image, trimesh가 필요합니다. MediaPipe 추론 결과를 포함해 두었으므로 다시 빌드할 때 추론 모델을 다운로드할 필요는 없습니다. 소프트웨어 렌더러는 기존 `gltf_tools.py`와 `raster.cpp`를 사용합니다. [생성 방식과 프롬프트](rebuild/v6_assets/generation_notes.md)도 기록했습니다.
+
+게시용 압축은 `rebuild/compress_v6.cjs`를 사용합니다. 파일 상단에 Node 의존성 설치 및 실행 명령이 있습니다. 빌드한 원본을 별도 경로에 보관하고 입력·출력 경로를 다르게 지정합니다. 이 과정에서 검사에 사용할 `.decoded.glb`도 생성됩니다. `verify_v6.py --authored 원본.glb --delivered 게시본.glb --decoded 게시본.decoded.glb`로 원본 보존과 압축 후 오차를 함께 확인합니다. 원본과 디코딩 중간 파일은 게시 페이지에서 사용하지 않습니다.
+
+---
+
 # 선덕여왕 v5 보완본 · 2026-09-07
 
 **현재 상태: 표면·재질 2차 보완본이며, 손가락 재조형과 측후면 고해상도 복원까지 끝난 최종본은 아닙니다.**

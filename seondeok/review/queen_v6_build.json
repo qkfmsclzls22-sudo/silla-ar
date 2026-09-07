@@ -1,0 +1,27 @@
+{
+  "version": "v6",
+  "source_sha256": "0b9b8086b0ff1d3964b6b8a149b9c86d9320e18dc603217c990de38d1cd28c6b",
+  "removed_source_triangles": 12304,
+  "head": {
+    "vertices": 16114,
+    "triangles": 32224,
+    "closed": true
+  },
+  "waving_hand": {
+    "vertices": 23520,
+    "triangles": 47036,
+    "digits": 5,
+    "method": "smooth union signed distance surface"
+  },
+  "rear_retextured_triangles": 18667,
+  "portrait_and_rear_textures": "generated reference-assisted material designs",
+  "historical_accuracy_required": false,
+  "existing_crown_geometry_preserved": true,
+  "mobile_ar_tested": false,
+  "delivery": {
+    "bytes": 11516632,
+    "sha256": "ebc9ea8bf8b5194e18cac03e21b072437e2fc1fa0c0632a1fc41a0e668a01235",
+    "geometry_compression": "KHR_draco_mesh_compression",
+    "original_opaque_color_maps_reencoded_as_jpeg": 2
+  }
+}
