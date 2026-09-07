@@ -132,6 +132,13 @@ model-viewer::part(default-ar-button){display:none;}
 
   <p id="model-status" role="status" style="margin:0;text-align:center;color:var(--ink-dim);font-size:13px;line-height:1.6">3D 모델을 불러오는 중입니다.</p>
 
+<aside id="browser-help" hidden style="padding:16px;border:1px solid var(--gold);border-radius:12px;font-size:14px;line-height:1.6">
+<strong>AR이 열리지 않나요?</strong>
+<p>아이폰은 Safari에서 열어주세요. 카톡 화면 메뉴에서 외부 브라우저로 열기를 선택하거나, 아래 주소를 복사해 Safari 주소창에 붙여넣어 주세요. Android는 Chrome을 이용해주세요.</p>
+<button id="copy-ar-link" type="button" style="padding:12px;border:0;border-radius:8px;background:var(--gold-bright);font:inherit;color:#211a08">이 유물 주소 복사</button>
+<input id="ar-page-link" readonly aria-label="유물 주소" style="display:block;width:100%;margin-top:12px;padding:8px;font-size:16px">
+<p id="copy-feedback" role="status"></p>
+</aside>
   <footer>제작 · <span class="brand">경주트립</span></footer>
 </div>
 
@@ -167,6 +174,7 @@ arControl.addEventListener('click', async () => {
   try {
     await viewer.activateAR();
   } catch (error) {
+    document.getElementById('browser-help').hidden = false;
     arStatus.textContent = 'AR을 열지 못했습니다. 휴대폰의 Safari 또는 Chrome에서 다시 시도해주세요.';
   } finally {
     arControl.disabled = false;
@@ -205,6 +213,34 @@ viewer.addEventListener('error', () => { preview.hidden = false; status.textCont
 setTimeout(() => { if (!preview.hidden) status.textContent = '실제 모델의 정지 이미지로 미리 보는 중입니다. 3D를 열지 못하면 휴대폰 기본 브라우저로 접속해주세요.'; }, 15000);
 viewer.addEventListener('ar-status', (event) => {
   if (event.detail.status === 'failed') status.textContent = 'AR을 시작하지 못했어요. 휴대폰 기본 브라우저로 다시 열어주세요.';
+});
+</script>
+<script type="module">
+const help = document.getElementById('browser-help');
+const link = document.getElementById('ar-page-link');
+const feedback = document.getElementById('copy-feedback');
+const model = document.querySelector('model-viewer');
+const isKakao = /KAKAOTALK/i.test(navigator.userAgent);
+const url = new URL(location.pathname, location.origin);
+url.searchParams.set('v', 'kakao-help-1');
+link.value = url.href;
+function showHelp() { help.hidden = false; }
+if (isKakao) showHelp();
+document.getElementById('arControl').addEventListener('click', () => {
+  if (!model.canActivateAR || isKakao) showHelp();
+});
+model.addEventListener('ar-status', event => {
+  if (event.detail.status === 'failed') showHelp();
+});
+model.addEventListener('error', showHelp);
+document.getElementById('copy-ar-link').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(link.value);
+    feedback.textContent = '주소를 복사했어요. Safari 또는 Chrome 주소창에 붙여넣어 주세요.';
+  } catch {
+    link.focus(); link.select(); link.setSelectionRange(0, link.value.length);
+    feedback.textContent = '자동 복사가 막혀 있어요. 선택된 주소를 길게 눌러 복사해주세요.';
+  }
 });
 </script>
 </body>
