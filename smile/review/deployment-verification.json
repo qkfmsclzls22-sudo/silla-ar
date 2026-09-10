@@ -1,0 +1,53 @@
+{
+  "source_checks": [
+    {
+      "file": "compressed_T_24HO0001_02_N.jpg",
+      "matches_record": true
+    },
+    {
+      "file": "compressed_T_24HO0001_02_P.jpg",
+      "matches_record": true
+    },
+    {
+      "file": "새ntitled(20260909-235420).glb",
+      "matches_record": true
+    },
+    {
+      "file": "compressed_T_24HO0001_02__C.jpg",
+      "matches_record": true
+    }
+  ],
+  "glb_sha256": "023dc22c57e5da731f64a89a78385c8427c2919bc7adc957140f72389cbb4647",
+  "glb_bytes": 3563496,
+  "triangles": 544681,
+  "images": [
+    {
+      "format": "JPEG",
+      "size": [
+        1024,
+        1024
+      ],
+      "embedded": true
+    },
+    {
+      "format": "JPEG",
+      "size": [
+        1024,
+        1024
+      ],
+      "embedded": true
+    },
+    {
+      "format": "JPEG",
+      "size": [
+        1024,
+        1024
+      ],
+      "embedded": true
+    }
+  ],
+  "self_contained": true,
+  "page_references_current_model": true,
+  "ios_uses_current_glb": true,
+  "fresh_browser_verification": "Pending public deployment; local HTTP preview is blocked in the browser environment."
+}
