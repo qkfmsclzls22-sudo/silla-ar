@@ -15,3 +15,13 @@ MediaPipe Tasks Vision 0.10.21 얼굴 랜드마크와 회전 행렬, 단일 얼�
 - https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker/web_js
 - https://modelviewer.dev/examples/augmentedreality/
 - 사진 조건 및 링크: /assets/artifacts/sources.html
+
+## 2026-09-14 자동화 검증 결과
+- 390×844 모바일 레이아웃: 유물 카드 4개, 사진 4개 로딩, 가로 넘침 없음, 선덕여왕 링크 숨김.
+- 카메라 전 자동 시작 없음; 카메라 이후에도 띄우기 전 촬영 비활성화.
+- 두 GLB 실제 로딩, 수동 배치/숨김, 540×720 JPEG 합성·Blob 저장 링크 확인.
+- 공개 MediaPipe portrait.jpg 샘플을 CanvasCaptureMediaStream으로 공급하고 실제 FaceLandmarker를 실행: 얼굴 감지, 촬영, 입력 제거시 촬영 비활성화, 재인식 복귀, 셀카 반전, 전환시 유물 숨김 확인.
+- 수막새 얼굴 합성, 크기/높이/기울기 초기화, 권한 거절 복구 버튼 확인.
+- JavaScript 예외 및 실패 네트워크 요청 없음. MediaPipe 라이브러리 자체 진단 경고는 보고서에 포함.
+- 이 검증은 실물 휴대폰이나 움직이는 실제 사람 촬영 검증을 대신하지 않음.
+- 재현: Node 20+, playwright와 sharp 설치 후 node tryon-preview/review/smoke-test.cjs 또는 face-test.cjs. SILLA_TEST_REF로 검토할 Git ref 지정 가능.

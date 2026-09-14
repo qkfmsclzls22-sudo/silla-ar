@@ -1,0 +1,160 @@
+{
+  "date": "2026-09-14",
+  "code_tested_commit": "6054a3c6cfbc13da7f7c6f30f16e91b106c7de9e",
+  "main_update": {
+    "queen": "menu card hidden; seondeok/ files unchanged",
+    "photos": "4 local JPEG photographs; Dharani exhibition replica explicitly labelled"
+  },
+  "browser_test": {
+    "engine": "Headless Chromium (Playwright)",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "physical_phone": false,
+    "live_human_camera": false,
+    "media_input": "fake camera color bars and MediaPipe public portrait fixture via CanvasCaptureMediaStream"
+  },
+  "checks": {
+    "camera_first_and_manual": {
+      "cameraBeforeShow": true,
+      "capture": {
+        "blobLink": true,
+        "h": 720,
+        "w": 540
+      },
+      "errors": [],
+      "failedRequests": [],
+      "hideDisablesCapture": true,
+      "initial": {
+        "camera": false,
+        "captureDisabled": true,
+        "showDisabled": true
+      },
+      "logs": [
+        "preview:model-ready crown {bounds: Array(3)}",
+        "preview:model-ready smile {bounds: Array(3)}"
+      ],
+      "main": {
+        "cards": 4,
+        "overflow": false,
+        "photos": [
+          {
+            "alt": "금관총 금관 사진",
+            "loaded": true
+          },
+          {
+            "alt": "터번 쓴 토우 사진",
+            "loaded": true
+          },
+          {
+            "alt": "무구정광대다라니경 전시 복제품 사진",
+            "loaded": true
+          },
+          {
+            "alt": "얼굴무늬 수막새 사진",
+            "loaded": true
+          }
+        ],
+        "queen": false
+      },
+      "math": "pass",
+      "smileLoaded": true,
+      "stop": {
+        "restartEnabled": true,
+        "streamGone": true
+      }
+    },
+    "face_detection_and_switch": {
+      "cameraRequests": [
+        {
+          "audio": false,
+          "video": {
+            "facingMode": {
+              "ideal": "environment"
+            },
+            "frameRate": {
+              "ideal": 24,
+              "max": 30
+            },
+            "height": {
+              "ideal": 720
+            },
+            "width": {
+              "ideal": 1280
+            }
+          }
+        },
+        {
+          "audio": false,
+          "video": {
+            "facingMode": {
+              "ideal": "user"
+            },
+            "frameRate": {
+              "ideal": 24,
+              "max": 30
+            },
+            "height": {
+              "ideal": 720
+            },
+            "width": {
+              "ideal": 1280
+            }
+          }
+        }
+      ],
+      "cameraSwitchHidesModel": true,
+      "captureWithRealDetection": true,
+      "errors": [],
+      "failedRequests": [],
+      "logs": [
+        "W0914 08:45:55.641000 1922656 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.",
+        "W0914 08:45:55.843000 1922656 gl_context.cc:1072] OpenGL error checking is disabled",
+        "preview:model-ready crown {bounds: Array(3)}",
+        "INFO: Created TensorFlow Lite XNNPACK delegate for CPU.",
+        "W0914 08:45:55.915000 1922656 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.",
+        "W0914 08:45:55.937000 1922656 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.",
+        "W0914 08:46:02.120000 1922656 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default."
+      ],
+      "lostDisablesCapture": true,
+      "reacquired": true,
+      "realDetectorReady": true,
+      "selfieMirrored": true,
+      "stopped": true
+    },
+    "tile_and_permission": {
+      "adjustments": [
+        "135%",
+        "20",
+        "15°"
+      ],
+      "deniedRecoverable": true,
+      "errors": [],
+      "failedRequests": [],
+      "logs": [
+        "preview:model-ready crown {bounds: Array(3)}",
+        "W0914 08:47:15.221000 1922656 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.",
+        "W0914 08:47:15.303000 1922656 gl_context.cc:1072] OpenGL error checking is disabled",
+        "INFO: Created TensorFlow Lite XNNPACK delegate for CPU.",
+        "W0914 08:47:15.365000 1922656 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.",
+        "W0914 08:47:15.387000 1922656 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.",
+        "preview:model-ready smile {bounds: Array(3)}"
+      ],
+      "noAudio": true,
+      "realDetectorReady": true,
+      "reset": [
+        "100%",
+        "0",
+        "0°"
+      ],
+      "smileFaceCapture": true
+    }
+  },
+  "notes": [
+    "MediaPipe informational/warning messages are reported separately from browser JavaScript errors.",
+    "Automatic facial detection ran successfully in a classic worker after correcting WASM importScripts initialization.",
+    "Actual iPhone/Safari and Android/Chrome fit, speed, rear-camera optics, hair occlusion and OS photo saving require user device review.",
+    "GLB assets and existing world-AR pages are unchanged."
+  ]
+}
