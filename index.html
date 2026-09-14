@@ -44,16 +44,17 @@
   }
   .card:active{ transform: scale(0.98); }
 
-  .emblem{
-    flex:none;
-    width:52px; height:52px;
-    border-radius:12px;
-    display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(160deg, rgba(201,162,74,0.18), rgba(201,162,74,0.04));
-    border:1px solid rgba(201,162,74,0.35);
-    color:var(--gold-bright);
-    font-size:22px;
-  }
+  .artifact-photo{flex:none;width:84px;height:92px;border-radius:12px;overflow:hidden;background:#171a24;border:1px solid rgba(201,162,74,.28);}
+  .artifact-photo img{display:block;width:100%;height:100%;object-fit:cover;}
+  .artifact-photo .photo-crown{object-position:center 28%;}
+  .artifact-photo .photo-toou{transform:scale(1.55);object-position:center;}
+  .artifact-photo .photo-dharani{object-fit:cover;}
+  .photo-note{display:block;color:var(--ink-dim);font-size:10px;margin-top:5px;}
+  .photo-credit{color:var(--ink-dim);font-size:10px;text-align:center;margin:0;}
+  .photo-credit a{color:var(--gold);}
+  .card:focus-visible{outline:3px solid var(--gold-bright);outline-offset:3px;}
+  @media(max-width:380px){.card{padding:12px;gap:12px}.artifact-photo{width:72px;height:86px}.card-title{font-size:16px}}
+
 
   .card-body{ flex:1; min-width:0; }
   .card-title{
@@ -89,7 +90,7 @@
 
     <!-- ITEM: 신라 금관 -->
     <a class="card" href="crown/">
-      <div class="emblem">👑</div>
+      <div class="artifact-photo"><img class="photo-crown" src="assets/artifacts/crown-v1.jpg" alt="금관총 금관 사진" width="84" height="92" decoding="async"></div>
       <div class="card-body">
         <p class="card-title">신라 금관</p>
         <p class="card-desc">3D 스캔 기반 디지털 복원 모델</p>
@@ -99,7 +100,7 @@
 
     <!-- ITEM: 터번 쓴 토우 -->
     <a class="card" href="toou/">
-      <div class="emblem">🗿</div>
+      <div class="artifact-photo"><img class="photo-toou" src="assets/artifacts/toou-v1.jpg" alt="터번 쓴 토우 사진" width="84" height="92" decoding="async"></div>
       <div class="card-body">
         <p class="card-title">터번 쓴 토우</p>
         <p class="card-desc">신라시대 · 서역인과의 교류를 보여주는 토우</p>
@@ -108,25 +109,19 @@
     </a>
 
     <a class="card" href="dharani/">
-      <div class="emblem">📜</div>
+      <div class="artifact-photo"><img class="photo-dharani" src="assets/artifacts/dharani-v1.jpg" alt="무구정광대다라니경 전시 복제품 사진" width="84" height="92" decoding="async"></div>
       <div class="card-body">
         <p class="card-title">무구정광대다라니경</p>
         <p class="card-desc">사진을 바탕으로 재현한 두루마리 3D 모델</p>
+        <span class="photo-note">사진: 박물관 전시 복제품</span>
       </div>
       <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
     </a>
 
-    <a class="card" href="seondeok/">
-      <div class="emblem">👸</div>
-      <div class="card-body">
-        <p class="card-title">선덕여왕</p>
-        <p class="card-desc">밝은 미소로 인사하는 선덕여왕 3D 재현</p>
-      </div>
-      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
+    <!-- 선덕여왕은 검토 중이라 메뉴에서만 숨깁니다. seondeok/ 파일은 보존합니다. -->
 
     <a class="card" href="smile/">
-      <div class="emblem" aria-hidden="true">◉</div>
+      <div class="artifact-photo"><img class="photo-smile" src="assets/artifacts/smile-v1.jpg" alt="얼굴무늬 수막새 사진" width="84" height="92" decoding="async"></div>
       <div class="card-body">
         <p class="card-title">얼굴무늬 수막새</p>
         <p class="card-desc">천년의 미소 · 표면의 질감까지 만나는 3D·AR</p>
@@ -136,7 +131,7 @@
 
     <!--
       새 유물을 추가할 때: 위의 <a class="card" ...>...</a> 블록 하나를
-      복사해서 여기 붙여넣고, href/emblem(이모지)/제목/설명만 바꾸면 됩니다.
+      복사해서 여기 붙여넣고, href/실물 사진/제목/설명만 바꾸면 됩니다.
     -->
 
   </div>
@@ -146,6 +141,7 @@
     <span>유물을 선택하면 3D 모델을 회전해보고, 카메라 버튼으로 실제 공간에 놓아볼 수 있어요.</span>
   </div>
 
+  <p class="photo-credit"><a href="assets/artifacts/sources.html">유물 사진 출처·이용 안내</a></p>
   <footer>제작 · <span class="brand">경주트립</span></footer>
 </div>
 
