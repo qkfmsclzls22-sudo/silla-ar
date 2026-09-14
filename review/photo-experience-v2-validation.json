@@ -1,0 +1,43 @@
+{
+  "static_checks": {
+    "crown": {
+      "model_and_scripts": "unchanged",
+      "subtitle": "신라 금관 써보기"
+    },
+    "toou": {
+      "model_and_scripts": "unchanged",
+      "subtitle": "토우와 함께 찰칵"
+    },
+    "dharani": {
+      "model_and_scripts": "unchanged",
+      "subtitle": "다라니경 읽기"
+    },
+    "smile": {
+      "model_and_scripts": "unchanged",
+      "subtitle": "신라의 미소 체험"
+    },
+    "crown-photo-v2.webp": {
+      "size": [
+        1536,
+        2048
+      ],
+      "bytes": 397828
+    },
+    "toou-photo-v2.webp": {
+      "size": [
+        362,
+        479
+      ],
+      "bytes": 59250
+    },
+    "smile-photo-v2.webp": {
+      "size": [
+        600,
+        584
+      ],
+      "bytes": 63746
+    }
+  },
+  "browser_validation": "pending deployment",
+  "physical_device_ar": "not tested; model paths and scripts unchanged"
+}

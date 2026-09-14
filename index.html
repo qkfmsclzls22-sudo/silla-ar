@@ -3,147 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>경주트립 · 유물 AR 아카이브</title>
+<meta name="theme-color" content="#fce08b">
+<meta name="description" content="신라 금관을 써보고, 토우와 함께 찰칵! 경주트립 유물 AR 포토체험으로 신라의 유물과 나만의 사진을 남겨보세요.">
+<title>유물 AR 포토체험 | 경주트립</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-0:#0e1016; --bg-1:#171a24; --vitrine:#1c202c; --line:#33384a;
-    --gold:#c9a24a; --gold-bright:#eccd7c; --jade:#5c8f7c; --ink:#f4efe2; --ink-dim:#a6a394;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,162,74,0.10), transparent 60%), var(--bg-0);
-    color:var(--ink); font-family:'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 16px 48px;
-  }
-  .page{ width:100%; max-width:520px; display:flex; flex-direction:column; gap:22px; }
-  .eyebrow{ font-size:12px; font-weight:600; letter-spacing:0.16em; color:var(--gold); text-transform:uppercase; text-align:center; }
-  h1{
-    font-family:'Noto Serif KR', serif; font-weight:700; font-size:clamp(28px, 6vw, 36px);
-    text-align:center; margin:0; text-wrap:balance;
-    background:linear-gradient(180deg, var(--gold-bright), var(--gold));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .subtitle{ text-align:center; color:var(--ink-dim); font-size:14px; margin:-10px 0 4px; }
-
-  .list{ display:flex; flex-direction:column; gap:14px; }
-
-  .card{
-    position:relative;
-    display:flex; align-items:center; gap:16px;
-    padding:16px 18px;
-    border-radius:16px;
-    text-decoration:none;
-    background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(201,162,74,0.10), transparent 65%), var(--vitrine);
-    border:1px solid var(--line);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 16px 32px -18px rgba(0,0,0,0.55);
-    transition: border-color .15s ease, transform .15s ease;
-  }
-  .card:active{ transform: scale(0.98); }
-
-  .artifact-photo{flex:none;width:84px;height:92px;border-radius:12px;overflow:hidden;background:#171a24;border:1px solid rgba(201,162,74,.28);}
-  .artifact-photo img{display:block;width:100%;height:100%;object-fit:cover;}
-  .artifact-photo .photo-crown{object-position:center 28%;}
-  .artifact-photo .photo-toou{transform:scale(1.55);object-position:center;}
-  .artifact-photo .photo-dharani{object-fit:cover;}
-  .photo-note{display:block;color:var(--ink-dim);font-size:10px;margin-top:5px;}
-  .photo-credit{color:var(--ink-dim);font-size:10px;text-align:center;margin:0;}
-  .photo-credit a{color:var(--gold);}
-  .card:focus-visible{outline:3px solid var(--gold-bright);outline-offset:3px;}
-  @media(max-width:380px){.card{padding:12px;gap:12px}.artifact-photo{width:72px;height:86px}.card-title{font-size:16px}}
-
-
-  .card-body{ flex:1; min-width:0; }
-  .card-title{
-    font-family:'Noto Serif KR', serif; font-weight:700; font-size:17px; color:var(--ink);
-    margin:0 0 3px;
-  }
-  .card-desc{
-    margin:0; font-size:12.5px; line-height:1.5; color:var(--ink-dim);
-    overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-  }
-
-  .chevron{ flex:none; color:var(--ink-dim); }
-
-  .hint{
-    display:flex; align-items:flex-start; gap:10px; padding:12px 14px; background:var(--bg-1);
-    border:1px solid var(--line); border-radius:12px; color:var(--ink-dim); font-size:12.5px; line-height:1.55;
-    margin-top:2px;
-  }
-  .hint svg{flex:none; margin-top:2px; color:var(--jade);}
-
-  footer{ text-align:center; color:var(--ink-dim); font-size:12px; letter-spacing:0.04em; padding-top:4px; }
-  footer .brand{color:var(--gold); font-weight:600;}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/photo-experience-v2.css">
 </head>
-<body>
-
-<div class="page">
-  <div class="eyebrow">Gyeongju Trip</div>
-  <h1>유물 AR 아카이브</h1>
-  <p class="subtitle">보고 싶은 유물을 골라보세요</p>
-
-  <div class="list">
-
-    <!-- ITEM: 신라 금관 -->
-    <a class="card" href="crown/">
-      <div class="artifact-photo"><img class="photo-crown" src="assets/artifacts/crown-v1.jpg" alt="금관총 금관 사진" width="84" height="92" decoding="async"></div>
-      <div class="card-body">
-        <p class="card-title">신라 금관</p>
-        <p class="card-desc">3D 스캔 기반 디지털 복원 모델</p>
-      </div>
-      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
-
-    <!-- ITEM: 터번 쓴 토우 -->
-    <a class="card" href="toou/">
-      <div class="artifact-photo"><img class="photo-toou" src="assets/artifacts/toou-v1.jpg" alt="터번 쓴 토우 사진" width="84" height="92" decoding="async"></div>
-      <div class="card-body">
-        <p class="card-title">터번 쓴 토우</p>
-        <p class="card-desc">신라시대 · 서역인과의 교류를 보여주는 토우</p>
-      </div>
-      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
-
-    <a class="card" href="dharani/">
-      <div class="artifact-photo"><img class="photo-dharani" src="assets/artifacts/dharani-v1.jpg" alt="무구정광대다라니경 전시 복제품 사진" width="84" height="92" decoding="async"></div>
-      <div class="card-body">
-        <p class="card-title">무구정광대다라니경</p>
-        <p class="card-desc">사진을 바탕으로 재현한 두루마리 3D 모델</p>
-        <span class="photo-note">사진: 박물관 전시 복제품</span>
-      </div>
-      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
-
-    <!-- 선덕여왕은 검토 중이라 메뉴에서만 숨깁니다. seondeok/ 파일은 보존합니다. -->
-
-    <a class="card" href="smile/">
-      <div class="artifact-photo"><img class="photo-smile" src="assets/artifacts/smile-v1.jpg" alt="얼굴무늬 수막새 사진" width="84" height="92" decoding="async"></div>
-      <div class="card-body">
-        <p class="card-title">얼굴무늬 수막새</p>
-        <p class="card-desc">천년의 미소 · 표면의 질감까지 만나는 3D·AR</p>
-      </div>
-      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
-
-    <!--
-      새 유물을 추가할 때: 위의 <a class="card" ...>...</a> 블록 하나를
-      복사해서 여기 붙여넣고, href/실물 사진/제목/설명만 바꾸면 됩니다.
-    -->
-
+<body class="home">
+<a class="skip-link" href="#experiences">체험 목록 바로가기</a>
+<header class="home-header">
+  <div class="site-nav">
+    <a class="wordmark" href="https://www.gjtrip.co.kr/" aria-label="경주트립 홈페이지">GYEONGJU TRIP</a>
+    <a class="home-link" href="https://www.gjtrip.co.kr/">홈페이지</a>
   </div>
-
-  <div class="hint">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-    <span>유물을 선택하면 3D 모델을 회전해보고, 카메라 버튼으로 실제 공간에 놓아볼 수 있어요.</span>
+  <div class="intro">
+    <h1>유물 AR <span>포토체험</span></h1>
+    <p>신라의 유물과 함께, 나만의 한 장.</p>
   </div>
-
-  <p class="photo-credit"><a href="assets/artifacts/sources.html">유물 사진 출처·이용 안내</a></p>
-  <footer>제작 · <span class="brand">경주트립</span></footer>
-</div>
-
+</header>
+<main id="experiences" class="experiences">
+  <p class="section-intro">함께 찍고 싶은 유물을 골라보세요.</p>
+  <div class="artifact-grid">
+    <a class="artifact-card" href="crown/">
+      <div class="artifact-photo crown-photo"><img src="assets/artifacts/crown-photo-v2.webp" alt="금빛 나뭇가지 장식과 초록 곡옥이 달린 신라 금관" width="1536" height="2048" fetchpriority="high" decoding="async"></div>
+      <div class="card-copy"><h2>신라 금관</h2><p class="experience-label">신라 금관 써보기 <span aria-hidden="true">↗</span></p></div>
+    </a>
+    <a class="artifact-card" href="toou/">
+      <div class="artifact-photo toou-photo"><img src="assets/artifacts/toou-photo-v2.webp" alt="머리에 터번을 두른 신라시대 토우" width="362" height="479" decoding="async"></div>
+      <div class="card-copy"><h2>터번 쓴 토우</h2><p class="experience-label">토우와 함께 찰칵 <span aria-hidden="true">↗</span></p></div>
+    </a>
+    <a class="artifact-card" href="dharani/">
+      <div class="artifact-photo dharani-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Dharani_sutra.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="국립중앙박물관에 전시된 무구정광대다라니경 복제품" width="1296" height="968" referrerpolicy="no-referrer" decoding="async"></div>
+      <div class="card-copy"><h2>무구정광대다라니경 <span class="name-note">전시 복제품 사진</span></h2><p class="experience-label">다라니경 읽기 <span aria-hidden="true">↗</span></p></div>
+    </a>
+    <a class="artifact-card" href="smile/">
+      <div class="artifact-photo smile-photo"><img src="assets/artifacts/smile-photo-v2.webp" alt="온화한 미소가 새겨진 경주 얼굴무늬 수막새" width="600" height="584" decoding="async"></div>
+      <div class="card-copy"><h2>얼굴무늬 수막새 <span class="name-note">(천년의 미소)</span></h2><p class="experience-label">신라의 미소 체험 <span aria-hidden="true">↗</span></p></div>
+    </a>
+  </div>
+  <div class="how-to"><strong>휴대폰으로 함께해요</strong><p>유물을 고른 뒤 <b>AR로 보기</b>를 눌러주세요.<br>아이폰은 Safari, 안드로이드는 Chrome에서 체험할 수 있어요.</p></div>
+</main>
+<footer class="site-footer"><a class="footer-brand" href="https://www.gjtrip.co.kr/">Gyeongju Trip</a><a class="photo-credit" href="assets/artifacts/sources.html">유물 사진 출처</a></footer>
 </body>
 </html>
