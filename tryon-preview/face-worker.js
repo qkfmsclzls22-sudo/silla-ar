@@ -1,10 +1,11 @@
 // Camera frames never leave this worker/browser. Dependencies only are downloaded.
-import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/vision_bundle.mjs";
 let detector;
 let lastTimestamp = -1;
 self.onmessage = async ({ data }) => {
   if (data.type === "init") {
     try {
+      // Classic worker is required by the MediaPipe WASM loader (importScripts).
+      const { FaceLandmarker, FilesetResolver } = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/vision_bundle.mjs");
       const files = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/wasm");
       detector = await FaceLandmarker.createFromOptions(files, {
         baseOptions: {

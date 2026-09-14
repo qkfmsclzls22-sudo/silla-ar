@@ -107,7 +107,7 @@ async function loadModel(key) {
   loads.set(key, promise); updateControls();
   try {
     const result = await promise;
-    if (state.selected === key && state.running) say("구도를 잡은 뒤 ‘" + presets[key].name + " 띄우기’를 눌러주세요.");
+    if (state.selected === key && state.running && state.mode === "face" && state.workerReady) say("구도를 잡은 뒤 ‘" + presets[key].name + " 띄우기’를 눌러주세요.");
     return result;
   } catch (error) {
     console.error("Model load failed", key, error);
@@ -143,7 +143,7 @@ function startTracker() {
     trackerFailure("이 브라우저에서는 얼굴 인식을 시작할 수 없습니다."); return;
   }
   let worker;
-  try { worker = new Worker(new URL("./face-worker.js?v=1", import.meta.url), { type: "module" }); }
+  try { worker = new Worker(new URL("./face-worker.js?v=2", import.meta.url)); }
   catch { trackerFailure("얼굴 인식을 시작하지 못했습니다."); return; }
   state.worker = worker;
   state.workerTimer = setTimeout(() => {
