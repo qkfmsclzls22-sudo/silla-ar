@@ -28,7 +28,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--red); outline-o
 .artifact-photo { aspect-ratio: 1 / 1.06; background: #fff; overflow: hidden; }
 .artifact-photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .crown-photo { background: #252720; }
-.crown-photo img { object-fit: cover; object-position: 50% 55%; }
+.crown-photo img { object-fit: contain; }
 .toou-photo img, .dharani-photo img { object-fit: cover; }
 .smile-photo { background: #241f20; }
 .card-copy { padding: 18px 16px 20px; flex: 1; display: flex; flex-direction: column; }

@@ -38,6 +38,19 @@
       "bytes": 63746
     }
   },
-  "browser_validation": "pending deployment",
-  "physical_device_ar": "not tested; model paths and scripts unchanged"
+  "browser_validation": {
+    "public_home_title": "유물 AR 포토체험",
+    "main_photos": "4/4 loaded, including full-resolution 1296×968 Dharani photo",
+    "mobile_viewports": [
+      320,
+      390,
+      430
+    ],
+    "layout": "two-column cards visually checked; horizontal overflow checked in iframe viewports",
+    "crown_navigation": "main card opened /silla-ar/crown/; correct heading, action subtitle and AR control visible",
+    "model_runtime": "3D loader remained loading in cloud browser; runtime completion not verified",
+    "deployment": "GitHub Pages build and deploy jobs succeeded for 1c4573a9fe26c64ae169ab0dc57b1cb2764f496e"
+  },
+  "physical_device_ar": "not tested; model paths and scripts unchanged",
+  "final_adjustment": "Display full crown photograph without cropping dangling ornaments."
 }
