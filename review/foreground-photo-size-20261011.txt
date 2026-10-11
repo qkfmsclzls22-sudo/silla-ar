@@ -1,0 +1,2 @@
+Added two-finger pinch scaling in position mode and explicit minus/plus buttons. Slider now scales a fixed model viewport using CSS transform rather than resizing the renderer. The JPEG compositor uses the transformed bounds, so the saved image keeps the adjusted size.
+Verified with Chromium synthetic camera, actual GLBs, CDP two-finger touch input: pinch enlarges, plus enlarges, minus shrinks, slider 80 to 160 doubles the displayed bounding box, reset, capture of all four artifacts. Physical iPhone Safari remains unverified.

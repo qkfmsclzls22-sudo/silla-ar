@@ -21,7 +21,7 @@ function setupPhotoMode(original) {
       <p class="photo-status" role="status" aria-live="polite"></p>
       <div class="photo-controls">
         <div class="photo-row"><button type="button" data-action="move" aria-pressed="true">위치 이동</button><button type="button" data-action="rotate" aria-pressed="false">방향 회전</button><button type="button" data-action="reset">초기화</button></div>
-        <label class="photo-size">유물 크기 <input type="range" min="20" max="180" value="80" aria-label="유물 크기"></label>
+        <div class="photo-size"><button type="button" data-action="smaller" aria-label="유물 축소">−</button><input type="range" min="20" max="240" value="80" aria-label="유물 크기"><button type="button" data-action="larger" aria-label="유물 확대">＋</button></div>
         <div class="photo-row"><button type="button" data-action="camera">카메라 전환</button><button type="button" class="photo-primary" data-action="capture" disabled>사진 촬영</button></div>
         <button type="button" data-action="retry" hidden>카메라 다시 켜기</button>
       </div>
@@ -50,14 +50,22 @@ function setupPhotoMode(original) {
   model.setAttribute('reveal', 'auto');
   let stream, epoch = 0, facing = 'environment', mirrored = false;
   let x = .5, y = .5, moving = true, drag = null, capturing = false;
+  const pointers = new Map();
+  let pinch = null;
   let photoFile, photoURL, oldOverflow, wasRotating;
-  const hint = '화면을 드래그해 위치를 맞추세요. 방향 회전으로 옆모습도 조절할 수 있어요. 얼굴을 자동으로 따라가지는 않아요.';
+  const hint = '한 손가락으로 이동, 두 손가락을 벌리면 확대돼요. 아래 − / ＋ 버튼과 크기 슬라이더도 사용할 수 있어요.';
   function layout() {
     object.style.left = `${x * 100}%`; object.style.top = `${y * 100}%`;
-    object.style.width = `${size.value}%`;
+    // Keep the render viewport fixed: resizing it can trigger camera reframing.
+    // A transform scales the visible model and its captured bounding rectangle equally.
+    object.style.transform = `translate(-50%, -50%) scale(${Number(size.value)/80})`;
+  }
+  function resize(value) {
+    size.value = String(Math.max(Number(size.min), Math.min(Number(size.max), value)));
+    layout();
   }
   function setMode(move) {
-    moving = move; drag = null;
+    moving = move; drag = null; pinch = null; pointers.clear();
     stage.classList.toggle('rotating', !move);
     action('move').setAttribute('aria-pressed', String(move));
     action('rotate').setAttribute('aria-pressed', String(!move));
@@ -124,18 +132,29 @@ function setupPhotoMode(original) {
     model.jumpCameraToGoal(); setMode(true);
   });
   size.addEventListener('input', layout);
+  action('smaller').addEventListener('click', () => resize(Number(size.value)-15));
+  action('larger').addEventListener('click', () => resize(Number(size.value)+15));
+  function distance() {
+    const [a,b] = [...pointers.values()];
+    return Math.hypot(a.x-b.x, a.y-b.y);
+  }
   stage.addEventListener('pointerdown', event => {
-    if (!moving || capturing || !event.isPrimary) return;
-    drag = {id:event.pointerId, px:event.clientX, py:event.clientY, x, y};
+    if (!moving || capturing) return;
+    pointers.set(event.pointerId, {x:event.clientX,y:event.clientY});
+    if (pointers.size === 1) drag = {id:event.pointerId, px:event.clientX, py:event.clientY, x, y};
+    if (pointers.size === 2) { pinch = {distance:Math.max(1,distance()),size:Number(size.value)}; drag = null; }
     stage.setPointerCapture(event.pointerId);
   });
   stage.addEventListener('pointermove', event => {
+    if (!pointers.has(event.pointerId)) return;
+    pointers.set(event.pointerId, {x:event.clientX,y:event.clientY});
+    if (pinch && pointers.size >= 2) { resize(pinch.size*distance()/pinch.distance); return; }
     if (!drag || drag.id !== event.pointerId) return;
     const r = stage.getBoundingClientRect();
     x = Math.max(0, Math.min(1, drag.x + (event.clientX - drag.px)/r.width));
     y = Math.max(0, Math.min(1, drag.y + (event.clientY - drag.py)/r.height)); layout();
   });
-  for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) stage.addEventListener(name, () => { drag = null; });
+  for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) stage.addEventListener(name, event => { pointers.delete(event.pointerId); drag = null; pinch = null; });
   model.addEventListener('load', () => { updateCapture(); if (stream) status.textContent = hint; });
   model.addEventListener('error', () => { action('capture').disabled = true; status.textContent = '유물을 불러오지 못했어요. 창을 닫고 인터넷 연결을 확인한 뒤 다시 시도해주세요.'; });
   video.addEventListener('loadeddata', updateCapture);
