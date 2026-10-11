@@ -1,0 +1,23 @@
+Foreground photo mode — 2026-10-11
+
+Before: Native Quick Look / Scene Viewer places artifacts in world space;
+people or depth occlusion can make photographing together difficult.
+After: Each of crown, toou, dharani and smile has a separate photo button.
+The camera video is behind a transparent 3D viewer. The JPEG compositor draws
+the camera first, then the model. Native spatial AR is preserved unchanged.
+
+Controls: drag to position, rotation mode to orbit, size slider, reset,
+front/rear camera switch, capture, download, supported native file sharing.
+All composition stays on device; no photo upload. Closing/hiding stops tracks.
+
+Verification: Headless Chromium, 390 x 844 mobile viewport, fake camera,
+actual deployed GLBs and model-viewer 3.5.0. All four models rendered and
+generated a composite JPEG. Crown transparent PNG had both fully transparent
+and opaque pixels, square aspect preserved; JPEG was 1098 x 1464.
+Checked drag, rotation toggle, camera switch, close/reopen, stopped stream,
+and denied-camera error/retry UI. JavaScript syntax check passed.
+
+Limits: No physical iPhone/Safari or Android camera verification performed.
+No face tracking or real-world anchoring in photo mode. The whole artifact is
+in front, including its rear geometry; users adjust framing manually.
+Native AR occlusion behavior remains controlled by the system AR viewer.
