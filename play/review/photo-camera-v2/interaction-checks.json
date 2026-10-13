@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": [
+    "automatic Buddha overlay / no show-head step",
+    "two-finger resize",
+    "reset and mirror",
+    "camera switch",
+    "native file sharing with active user gesture (stubbed)",
+    "share cancellation retains photo",
+    "sharing error offers file fallback",
+    "captured photo survives visibility changes",
+    "retake restarts camera",
+    "background camera stopped; manual resume works",
+    "camera permission denial stays in viewport"
+  ],
+  "shareCall": {
+    "name": "gyeongju-buddha-smile.png",
+    "type": "image/png",
+    "size": 415629,
+    "active": true
+  },
+  "errors": []
+}

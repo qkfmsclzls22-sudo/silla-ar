@@ -1,0 +1,51 @@
+/* A single camera screen: controls always remain inside the visible viewport. */
+html:has(.camera-app){height:100%;overflow:hidden;background:#111715}
+.camera-app{height:100vh;height:100dvh;height:var(--camera-height,100dvh);overflow:hidden;overscroll-behavior:none;background:#111715;color:#fff;display:flex;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.camera-app button,.camera-app a{-webkit-tap-highlight-color:transparent}
+.camera-header{display:flex;align-items:center;justify-content:space-between;flex:0 0 58px;padding:4px 12px;gap:10px}
+.camera-header h1{font-size:16px;letter-spacing:0;margin:0;text-align:center;line-height:1.3}
+.camera-header h1 span{display:block;color:#bac4bd;font-size:9px;letter-spacing:2px;margin-top:3px}
+.camera-icon{display:grid;place-items:center;color:#fff;background:transparent;border:0;border-radius:50%;width:44px;height:44px;padding:0;font-size:27px;text-decoration:none;flex-shrink:0}
+.camera-screen{display:flex;flex-direction:column;flex:1;min-height:0;width:100%;max-width:760px;margin:0 auto;padding:0}
+.viewfinder{position:relative;display:flex;align-items:center;justify-content:center;flex:1;min-height:0;min-width:0;overflow:hidden;background:#080d0b}
+.photo-frame{position:relative;width:var(--frame-width,100%);height:var(--frame-height,100%);flex:none}
+.photo-frame canvas,.photo-frame #photo-result{display:block;width:100%;height:100%;object-fit:contain}
+.photo-frame canvas{touch-action:none}
+#photo-result{-webkit-touch-callout:default;user-select:auto}
+.camera-app .camera-cover{padding:16px;gap:12px;background:radial-gradient(ellipse at 50% 40%,#345749,#142a23);z-index:2}
+.camera-app .camera-cover img{height:43%;max-height:270px;min-height:0;filter:drop-shadow(0 12px 18px #0006)}
+.camera-cover h2{font-size:20px;letter-spacing:-.6px;margin:0}
+.camera-app .camera-cover p{max-width:310px;margin:0;color:#dfebe3;line-height:1.6;font-size:12px}
+.camera-app #start-camera{background:#f5ecd9;color:#233a2e;border:0;min-width:170px;border-radius:30px;font-size:16px}
+.camera-dock{flex:0 0 auto;padding:10px 18px 12px;background:#111715;text-align:center}
+.camera-hint{font-size:11px;color:#c5cdc8;margin:0 0 9px}
+.shutter-row{display:grid;grid-template-columns:1fr 84px 1fr;align-items:center;gap:24px;max-width:410px;margin:auto}
+.camera-app .shutter{width:78px;height:78px;min-height:78px;padding:5px;border:3px solid white;background:transparent;border-radius:50%;justify-self:center;box-shadow:0 0 0 1px #ffffff15}
+.shutter span{display:block;width:100%;height:100%;border-radius:50%;background:#fff;transition:transform .12s}
+.shutter:active span{transform:scale(.92)}
+.camera-app .side-control{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;border:0;background:transparent;color:#eee;padding:4px;font-size:11px;min-height:64px}
+.side-control span{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#ffffff16;font-size:25px}
+.shutter-label{font-size:11px;color:#ebcf92;margin:6px 0 0}
+#start-note{font-size:11px;letter-spacing:1.5px;color:#b3c0b8;margin:5px}
+.face-settings{position:absolute;z-index:4;bottom:10px;left:50%;transform:translateX(-50%);width:min(340px,calc(100% - 24px));padding:6px 16px 14px;background:#182720f2;backdrop-filter:blur(12px);border:1px solid #ffffff30;border-radius:18px;box-shadow:0 10px 32px #0005}
+.settings-title{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+.camera-app #close-settings{color:#fff;background:transparent;border:0;padding:0;width:44px;font-size:25px}
+.face-settings input{width:100%;height:32px;accent-color:#f5e8c8;margin:0 0 8px}
+.settings-actions{display:flex;gap:8px}
+.camera-app .settings-actions button{flex:1;border:1px solid #ffffff30;background:#ffffff0b;color:#fff;padding:8px;font-size:12px}
+.camera-app .settings-actions button[aria-pressed=true]{background:#f5e8c8;color:#22372b}
+#shutter-flash{position:absolute;inset:0;background:#fff;pointer-events:none;opacity:0;z-index:5}
+#shutter-flash.flash{animation:photo-flash .22s ease-out}
+@keyframes photo-flash{from{opacity:.85}to{opacity:0}}
+#review-status{font-size:13px;margin:0 0 10px;color:#fff}
+.review-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;max-width:430px;margin:0 auto}
+.camera-app #retake{background:#2a3830;color:#fff;border:1px solid #516358;border-radius:28px;min-height:50px;font-size:14px}
+.camera-app #save-photo{background:#f5ecd9;color:#233a2e;border:0;border-radius:28px;min-height:50px;font-size:14px}
+#save-help{font-size:11px;color:#bfcac2;line-height:1.5;margin:9px auto 0;max-width:430px;min-height:17px}
+#download-photo{display:inline-block;color:#f5ecd9;font-size:12px;min-height:32px;padding:7px 12px;margin-top:3px;text-decoration:underline}
+.camera-app #toast{bottom:calc(env(safe-area-inset-bottom) + 160px);max-width:calc(100% - 32px);width:max-content;font-size:12px;pointer-events:none}
+.camera-app dialog{color:#233a2e;background:#f6f2e9}
+.camera-app :focus-visible{outline:3px solid #eccc81;outline-offset:3px}
+@media(max-height:600px) and (orientation:portrait){.camera-header{flex-basis:48px}.camera-dock{padding:7px 14px}.camera-hint{font-size:10px;margin-bottom:6px}.camera-app .shutter{width:64px;height:64px;min-height:64px}.camera-cover h2{font-size:16px}.camera-app .camera-cover{gap:8px}}
+@media(orientation:landscape) and (max-height:600px){.camera-header{flex-basis:44px}.camera-header h1 span{display:none}.camera-screen{flex-direction:row;max-width:none}.camera-dock{width:210px;display:flex;align-items:center;justify-content:center;padding:10px}.shutter-row{grid-template-columns:1fr 1fr;gap:12px}.camera-app .shutter{grid-column:1 / -1;grid-row:1}.camera-hint{font-size:10px;line-height:1.5}.review-actions{grid-template-columns:1fr;gap:8px}.camera-app .camera-cover{gap:6px;padding:10px}.camera-app .camera-cover img{height:35%}.camera-cover h2{font-size:16px}.camera-app .camera-cover p{font-size:11px}.camera-app #start-camera{min-height:40px}.camera-app #toast{bottom:20px}.face-settings{bottom:6px}}
+@media(prefers-reduced-motion:reduce){#shutter-flash.flash{animation:none}.shutter span{transition:none}}

@@ -1,0 +1,522 @@
+[
+  {
+    "size": [
+      390,
+      844
+    ],
+    "state": "start",
+    "scrollHeight": 844,
+    "controls": [
+      [
+        "#start-camera",
+        550,
+        594
+      ]
+    ]
+  },
+  {
+    "size": [
+      390,
+      844
+    ],
+    "state": "live",
+    "scrollHeight": 844,
+    "controls": [
+      [
+        "#capture",
+        733,
+        811
+      ],
+      [
+        "#adjust-head",
+        740,
+        805
+      ],
+      [
+        "#switch-camera",
+        740,
+        805
+      ]
+    ]
+  },
+  {
+    "size": [
+      390,
+      844
+    ],
+    "state": "settings",
+    "scrollHeight": 844,
+    "controls": [
+      [
+        "#head-size",
+        590,
+        622
+      ],
+      [
+        "#reset-head",
+        630,
+        674
+      ],
+      [
+        "#toggle-mirror",
+        630,
+        674
+      ],
+      [
+        "#capture",
+        733,
+        811
+      ]
+    ]
+  },
+  {
+    "size": [
+      390,
+      844
+    ],
+    "state": "review",
+    "scrollHeight": 844,
+    "controls": [
+      [
+        "#save-photo",
+        756,
+        806
+      ],
+      [
+        "#retake",
+        756,
+        806
+      ]
+    ]
+  },
+  {
+    "size": [
+      390,
+      844
+    ],
+    "state": "download fallback",
+    "scrollHeight": 844,
+    "controls": [
+      [
+        "#save-photo",
+        721,
+        771
+      ],
+      [
+        "#retake",
+        721,
+        771
+      ],
+      [
+        "#download-photo",
+        800,
+        832
+      ]
+    ]
+  },
+  {
+    "size": [
+      390,
+      844
+    ],
+    "state": "retake",
+    "scrollHeight": 844,
+    "controls": [
+      [
+        "#capture",
+        733,
+        811
+      ]
+    ]
+  },
+  {
+    "size": [
+      375,
+      667
+    ],
+    "state": "start",
+    "scrollHeight": 667,
+    "controls": [
+      [
+        "#start-camera",
+        441,
+        485
+      ]
+    ]
+  },
+  {
+    "size": [
+      375,
+      667
+    ],
+    "state": "live",
+    "scrollHeight": 667,
+    "controls": [
+      [
+        "#capture",
+        556,
+        634
+      ],
+      [
+        "#adjust-head",
+        563,
+        628
+      ],
+      [
+        "#switch-camera",
+        563,
+        628
+      ]
+    ]
+  },
+  {
+    "size": [
+      375,
+      667
+    ],
+    "state": "settings",
+    "scrollHeight": 667,
+    "controls": [
+      [
+        "#head-size",
+        413,
+        445
+      ],
+      [
+        "#reset-head",
+        453,
+        497
+      ],
+      [
+        "#toggle-mirror",
+        453,
+        497
+      ],
+      [
+        "#capture",
+        556,
+        634
+      ]
+    ]
+  },
+  {
+    "size": [
+      375,
+      667
+    ],
+    "state": "review",
+    "scrollHeight": 667,
+    "controls": [
+      [
+        "#save-photo",
+        579,
+        629
+      ],
+      [
+        "#retake",
+        579,
+        629
+      ]
+    ]
+  },
+  {
+    "size": [
+      375,
+      667
+    ],
+    "state": "download fallback",
+    "scrollHeight": 667,
+    "controls": [
+      [
+        "#save-photo",
+        544,
+        594
+      ],
+      [
+        "#retake",
+        544,
+        594
+      ],
+      [
+        "#download-photo",
+        623,
+        655
+      ]
+    ]
+  },
+  {
+    "size": [
+      375,
+      667
+    ],
+    "state": "retake",
+    "scrollHeight": 667,
+    "controls": [
+      [
+        "#capture",
+        556,
+        634
+      ]
+    ]
+  },
+  {
+    "size": [
+      320,
+      568
+    ],
+    "state": "start",
+    "scrollHeight": 568,
+    "controls": [
+      [
+        "#start-camera",
+        369,
+        413
+      ]
+    ]
+  },
+  {
+    "size": [
+      320,
+      568
+    ],
+    "state": "live",
+    "scrollHeight": 568,
+    "controls": [
+      [
+        "#capture",
+        476,
+        540
+      ],
+      [
+        "#adjust-head",
+        475,
+        540
+      ],
+      [
+        "#switch-camera",
+        475,
+        540
+      ]
+    ]
+  },
+  {
+    "size": [
+      320,
+      568
+    ],
+    "state": "settings",
+    "scrollHeight": 568,
+    "controls": [
+      [
+        "#head-size",
+        339,
+        371
+      ],
+      [
+        "#reset-head",
+        379,
+        423
+      ],
+      [
+        "#toggle-mirror",
+        379,
+        423
+      ],
+      [
+        "#capture",
+        476,
+        540
+      ]
+    ]
+  },
+  {
+    "size": [
+      320,
+      568
+    ],
+    "state": "review",
+    "scrollHeight": 568,
+    "controls": [
+      [
+        "#save-photo",
+        485,
+        535
+      ],
+      [
+        "#retake",
+        485,
+        535
+      ]
+    ]
+  },
+  {
+    "size": [
+      320,
+      568
+    ],
+    "state": "download fallback",
+    "scrollHeight": 568,
+    "controls": [
+      [
+        "#save-photo",
+        434,
+        484
+      ],
+      [
+        "#retake",
+        434,
+        484
+      ],
+      [
+        "#download-photo",
+        529,
+        561
+      ]
+    ]
+  },
+  {
+    "size": [
+      320,
+      568
+    ],
+    "state": "retake",
+    "scrollHeight": 568,
+    "controls": [
+      [
+        "#capture",
+        476,
+        540
+      ]
+    ]
+  },
+  {
+    "size": [
+      844,
+      390
+    ],
+    "state": "start",
+    "scrollHeight": 390,
+    "controls": [
+      [
+        "#start-camera",
+        261,
+        302
+      ]
+    ]
+  },
+  {
+    "size": [
+      844,
+      390
+    ],
+    "state": "live",
+    "scrollHeight": 390,
+    "controls": [
+      [
+        "#capture",
+        153,
+        231
+      ],
+      [
+        "#adjust-head",
+        243,
+        308
+      ],
+      [
+        "#switch-camera",
+        243,
+        308
+      ]
+    ]
+  },
+  {
+    "size": [
+      844,
+      390
+    ],
+    "state": "settings",
+    "scrollHeight": 390,
+    "controls": [
+      [
+        "#head-size",
+        285,
+        317
+      ],
+      [
+        "#reset-head",
+        325,
+        369
+      ],
+      [
+        "#toggle-mirror",
+        325,
+        369
+      ],
+      [
+        "#capture",
+        153,
+        231
+      ]
+    ]
+  },
+  {
+    "size": [
+      844,
+      390
+    ],
+    "state": "review",
+    "scrollHeight": 390,
+    "controls": [
+      [
+        "#save-photo",
+        218,
+        268
+      ],
+      [
+        "#retake",
+        160,
+        210
+      ]
+    ]
+  },
+  {
+    "size": [
+      844,
+      390
+    ],
+    "state": "download fallback",
+    "scrollHeight": 390,
+    "controls": [
+      [
+        "#save-photo",
+        201,
+        251
+      ],
+      [
+        "#retake",
+        143,
+        193
+      ],
+      [
+        "#download-photo",
+        296,
+        328
+      ]
+    ]
+  },
+  {
+    "size": [
+      844,
+      390
+    ],
+    "state": "retake",
+    "scrollHeight": 390,
+    "controls": [
+      [
+        "#capture",
+        153,
+        231
+      ]
+    ]
+  }
+]
