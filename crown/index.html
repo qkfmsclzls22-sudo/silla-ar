@@ -98,14 +98,11 @@ model-viewer::part(default-ar-button){display:none;}
       ar-modes="scene-viewer quick-look webxr"
       camera-controls
       touch-action="pan-y"
-      auto-rotate
-      auto-rotate-delay="1200"
-      rotation-per-second="18deg"
       shadow-intensity="1"
       shadow-softness="0.9"
       exposure="1.05"
       environment-image="neutral"
-      camera-orbit="10deg 78deg 105%"
+      camera-orbit="0deg 90deg 105%"
       min-camera-orbit="auto 40deg auto"
       max-camera-orbit="auto 100deg auto"
       interaction-prompt="none"
@@ -203,7 +200,7 @@ document.getElementById('copy-ar-link').addEventListener('click', async () => {
   }
 });
 </script>
-<script type="module" src="../assets/foreground-photo-v3.js?v=20261013-1"></script>
+<script type="module" src="../assets/foreground-photo-v3.js?v=20261014-front-drag"></script>
 </body>
 </html>
 

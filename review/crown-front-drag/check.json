@@ -1,0 +1,30 @@
+{
+  "entry": {
+    "auto": false,
+    "orbit": "0rad 1.5707963267948966rad 1.288621143563859m",
+    "src": "crown_side_ornaments_v4.glb"
+  },
+  "defaultOrbit": {
+    "theta": 0,
+    "phi": 1.5707963267948966
+  },
+  "rotatedAnglePreservedAfterClosing": {
+    "theta": 0.4363323129985824,
+    "phi": 1.3962634015954636
+  },
+  "dragBeyondRightAndBottom": {
+    "x": 110,
+    "y": 110
+  },
+  "dragBeyondLeftAndTop": {
+    "x": -10,
+    "y": -10
+  },
+  "reset": {
+    "x": "50%",
+    "y": "50%"
+  },
+  "reopenReturnsToFront": true,
+  "capture": true,
+  "errors": []
+}

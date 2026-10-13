@@ -87,7 +87,7 @@ function setupPhotoMode(original) {
   function fit(){const viewport=window.visualViewport?.height||innerHeight;document.documentElement.style.setProperty('--photo-height',viewport+'px');if(dialog.open){const r=$('.photo-viewfinder').getBoundingClientRect(),w=Math.min(r.width,r.height*.75);stage.style.width=w+'px';stage.style.height=w/.75+'px'}}
   new ResizeObserver(fit).observe($('.photo-viewfinder'));
   window.visualViewport?.addEventListener('resize',fit);window.addEventListener('resize',fit);fit();
-  function settings(show){$('.photo-settings').hidden=!show;action('settings').setAttribute('aria-expanded',String(show))}
+  function settings(show){$('.photo-settings').hidden=!show;action('settings').setAttribute('aria-expanded',String(show));if(!show&&!moving)setMode(true)}
   function review(show){phase=show?'review':'live';result.hidden=!show;$('.photo-live-controls').hidden=show;$('.photo-review-controls').hidden=!show;dialog.classList.toggle('reviewing',show);settings(false);pointers.clear();drag=pinch=null;fit()}
   function canShare(){try{return !!(photoFile&&navigator.share&&navigator.canShare?.({files:[photoFile]}))}catch{return false}}
   function layout() {
@@ -154,7 +154,9 @@ function setupPhotoMode(original) {
     wasRotating = original.hasAttribute('auto-rotate'); original.removeAttribute('auto-rotate');
     document.body.style.overflow = 'hidden';
     capturing=false;object.append(model); dialog.showModal();review(false);setBusy(false);fit();
-    x = y = .5; size.value = '80'; layout(); setMode(true);
+    x = y = .5; size.value = '80'; layout();
+    model.cameraOrbit = original.getAttribute('camera-orbit') || '0deg 75deg 105%';
+    model.jumpCameraToGoal(); setMode(true);
     startCamera();
   });
   action('close').addEventListener('click', close);
@@ -190,8 +192,8 @@ function setupPhotoMode(original) {
     if (pinch && pointers.size >= 2) { resize(pinch.size*distance()/pinch.distance); return; }
     if (!drag || drag.id !== event.pointerId) return;
     const r = stage.getBoundingClientRect();
-    x = Math.max(0, Math.min(1, drag.x + (event.clientX - drag.px)/r.width));
-    y = Math.max(0, Math.min(1, drag.y + (event.clientY - drag.py)/r.height)); layout();
+    x = drag.x + (event.clientX - drag.px)/r.width;
+    y = drag.y + (event.clientY - drag.py)/r.height; layout();
   });
   for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) stage.addEventListener(name, event => { pointers.delete(event.pointerId); drag = null; pinch = null; });
   model.addEventListener('load', () => { updateCapture(); if (stream&&phase==='live') status.textContent = hint; });
