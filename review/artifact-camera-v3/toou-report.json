@@ -1,0 +1,49 @@
+{
+  "kind": "toou",
+  "bounds": {
+    "page": 844,
+    "dialog": 844,
+    "height": 844,
+    "capture": {
+      "x": 157,
+      "y": 754,
+      "width": 76,
+      "height": 76,
+      "top": 754,
+      "right": 233,
+      "bottom": 830,
+      "left": 157
+    }
+  },
+  "review": {
+    "size": [
+      1170,
+      1560
+    ],
+    "save": {
+      "x": 200,
+      "y": 754.5,
+      "width": 172,
+      "height": 50,
+      "top": 754.5,
+      "right": 372,
+      "bottom": 804.5,
+      "left": 200
+    },
+    "retake": {
+      "x": 18,
+      "y": 754.5,
+      "width": 174,
+      "height": 50,
+      "top": 754.5,
+      "right": 192,
+      "bottom": 804.5,
+      "left": 18
+    },
+    "cameraStopped": true,
+    "dialog": 844
+  },
+  "errors": [],
+  "download": true,
+  "retake": true
+}

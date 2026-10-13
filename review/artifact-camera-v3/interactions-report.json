@@ -1,0 +1,108 @@
+{
+  "reports": [
+    {
+      "size": [
+        320,
+        568
+      ],
+      "state": "entry",
+      "height": 568,
+      "dialog": 0
+    },
+    {
+      "size": [
+        320,
+        568
+      ],
+      "state": "live",
+      "height": 568,
+      "dialog": 568
+    },
+    {
+      "size": [
+        320,
+        568
+      ],
+      "state": "settings",
+      "height": 568,
+      "dialog": 568
+    },
+    {
+      "size": [
+        320,
+        568
+      ],
+      "state": "review",
+      "height": 568,
+      "dialog": 568
+    },
+    {
+      "size": [
+        320,
+        568
+      ],
+      "state": "save fallback",
+      "height": 568,
+      "dialog": 568
+    },
+    {
+      "size": [
+        844,
+        390
+      ],
+      "state": "entry",
+      "height": 390,
+      "dialog": 0
+    },
+    {
+      "size": [
+        844,
+        390
+      ],
+      "state": "live",
+      "height": 390,
+      "dialog": 390
+    },
+    {
+      "size": [
+        844,
+        390
+      ],
+      "state": "settings",
+      "height": 390,
+      "dialog": 390
+    },
+    {
+      "size": [
+        844,
+        390
+      ],
+      "state": "review",
+      "height": 390,
+      "dialog": 390
+    },
+    {
+      "size": [
+        844,
+        390
+      ],
+      "state": "save fallback",
+      "height": 390,
+      "dialog": 390
+    }
+  ],
+  "checks": [
+    "pinch zoom",
+    "size controls",
+    "move/rotate toggles",
+    "reset",
+    "native share (stubbed) with active gesture",
+    "share cancellation retains result",
+    "share error fallback",
+    "review survives background",
+    "retake",
+    "close",
+    "info dialog"
+  ],
+  "errors": []
+}

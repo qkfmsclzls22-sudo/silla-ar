@@ -1,0 +1,69 @@
+/* The model preview and camera each fit one visible screen. */
+html:has(body.detail){height:100%;overflow:hidden}
+body.detail{height:100vh;height:var(--photo-height,100dvh);min-height:0!important;overflow:hidden;padding:calc(env(safe-area-inset-top) + 10px) max(14px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 12px) max(14px,env(safe-area-inset-left));align-items:stretch}
+.detail .page{height:100%;min-height:0;gap:10px;margin:auto;max-width:620px}
+.detail .backlink{min-height:36px;flex:none}
+.detail .page>h1{font-size:clamp(23px,5vw,32px);line-height:1.3;flex:none}
+.detail .page>.eyebrow,.detail .page>.subtitle,.detail .page>.info,.detail .page>.hint,.detail .page>footer,.detail .page>#model-status{display:none}
+.detail .vitrine{flex:1;min-height:0;padding:0;position:relative}
+.detail .vitrine model-viewer{width:100%;height:100%;min-height:0;border-radius:16px}
+.detail .vitrine .ar-cta{font-size:12px;min-height:38px;padding:8px 16px;bottom:12px}
+.photo-entry{display:grid;gap:5px;flex:none;text-align:center}
+.photo-entry button,.photo-dialog button,.photo-dialog a.photo-save,.photo-info-dialog button{font:inherit;border:1px solid #536057;border-radius:16px;padding:10px 14px;min-height:44px;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.photo-entry .photo-open{border:0;background:#df2525;color:#fff;font-weight:800;min-height:50px;border-radius:28px;font-size:17px}
+.photo-entry-note{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.photo-entry-note p{font-size:11px;line-height:1.4;color:#755b4d;margin:0;text-align:left}
+.photo-entry .photo-about{background:transparent;min-width:65px;font-size:12px;padding:5px;border:0;white-space:nowrap;color:#755b4d}
+.photo-entry button:disabled{opacity:.55}
+.photo-dialog{position:fixed;inset:0;border:0;padding:0;width:100%;max-width:none;height:100vh;height:var(--photo-height,100dvh);max-height:none;margin:0;background:#111715;color:#fff;overflow:hidden;overscroll-behavior:none}
+.photo-dialog::backdrop{background:#111715}
+.photo-layout{width:100%;height:100%;display:flex;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.photo-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:0 0 54px;padding:4px 12px}
+.photo-toolbar strong{font-size:16px}
+.photo-toolbar .photo-brand{font-size:10px;color:#b6c3bb;min-width:44px;text-align:right}
+.photo-dialog .photo-toolbar button{border:0;background:transparent;color:white;width:44px;font-size:30px;padding:0;line-height:1}
+.photo-workspace{display:flex;flex:1;min-height:0;flex-direction:column;width:100%;max-width:760px;margin:auto}
+.photo-viewfinder{position:relative;flex:1;min-width:0;min-height:0;display:flex;justify-content:center;align-items:center;overflow:hidden;background:#080d0b}
+.photo-stage{position:relative;width:100%;height:100%;flex:none;overflow:hidden;background:#202c26;isolation:isolate;touch-action:none}
+.photo-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo-stage video.mirrored{transform:scaleX(-1)}
+.photo-object{position:absolute;width:80%;aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);transform-origin:center;z-index:1}
+.detail .photo-object model-viewer{width:100%;height:100%;min-height:0;border-radius:0;background:transparent;--poster-color:transparent;--progress-bar-height:0px;pointer-events:none}
+.photo-stage.rotating model-viewer{pointer-events:auto}
+.photo-stage.busy{pointer-events:none}
+.photo-dock{flex:none;padding:10px 18px 14px;background:#111715;text-align:center}
+.photo-status{font-size:11px;line-height:1.45;margin:0 auto 8px;max-width:440px;min-height:16px}
+.photo-shutter-row{display:grid;grid-template-columns:1fr 80px 1fr;align-items:center;gap:22px;max-width:410px;margin:auto}
+.photo-dialog .photo-shutter{border:3px solid white;background:transparent;padding:5px;width:76px;height:76px;min-height:76px;border-radius:50%;justify-self:center}
+.photo-shutter span{display:block;width:100%;height:100%;border-radius:50%;background:#fff}
+.photo-shutter:active span{transform:scale(.92)}
+.photo-dialog .photo-side{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;border:0;background:transparent;color:#eee;padding:4px;font-size:11px;min-height:64px}
+.photo-side span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#ffffff18;font-size:24px}
+.photo-dialog button{background:#293b30;color:#fff}
+.photo-dialog button:disabled{opacity:.45;cursor:default}
+.photo-dialog .photo-primary{background:#f5ecd9;color:#233a2e;border:0;font-weight:700}
+.photo-row{display:flex;gap:8px;align-items:center}
+.photo-row button{flex:1;white-space:nowrap}
+.photo-dialog .photo-review-controls>.photo-row button{border-radius:28px;min-height:50px;font-size:14px}
+.photo-save-hint{font-size:11px;line-height:1.5;color:#bfcac2;margin:9px auto 0;max-width:430px}
+.photo-dialog .photo-save{display:inline-block;background:transparent;border:0;color:#f5ecd9;font-size:12px;text-decoration:underline;min-height:32px;padding:7px 10px}
+.photo-result{position:absolute;inset:0;z-index:3;background:#080d0b;touch-action:auto}
+.photo-result img{display:block;width:100%;height:100%;object-fit:contain;-webkit-touch-callout:default}
+.photo-dialog.reviewing .photo-object,.photo-dialog.reviewing video{visibility:hidden}
+.photo-settings{position:absolute;z-index:5;bottom:8px;left:50%;transform:translateX(-50%);width:min(350px,calc(100% - 24px));padding:4px 12px 12px;border-radius:18px;background:#182720f5;border:1px solid #ffffff30;box-shadow:0 8px 30px #0005;backdrop-filter:blur(12px)}
+.photo-settings-title{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+.photo-dialog .photo-settings-title button{border:0;background:transparent;font-size:24px;padding:0;width:44px}
+.photo-dialog .photo-settings .photo-row button{font-size:12px;padding:8px 5px;border-radius:12px}
+.photo-dialog button[aria-pressed=true]{background:#f5ecd9;color:#233a2e}
+.photo-size{display:flex;align-items:center;gap:10px;margin-top:8px}
+.photo-size input{flex:1;min-width:0;height:36px;accent-color:#f5ecd9}
+.photo-size button{width:44px;padding:0}
+.photo-dialog [hidden]{display:none!important}
+.photo-dialog [data-action=retry]{margin-top:8px;font-size:13px;background:#f5ecd9;color:#233a2e}
+.photo-info-dialog{max-width:450px;width:calc(100% - 32px);max-height:85dvh;background:#fdf6ef;color:#401804;border:0;border-radius:20px;padding:22px;font-size:14px;line-height:1.7}
+.photo-info-dialog footer{color:#755b4d;margin:14px 0;font-size:12px}
+.photo-info-dialog .info{margin:12px 0}
+.detail #browser-help:not([hidden]){position:fixed;z-index:100;inset:12px;overflow:auto;max-height:calc(100dvh - 24px);box-shadow:0 0 0 100vmax #0008}
+.photo-dialog button:focus-visible{outline:3px solid #ebce91;outline-offset:2px}
+@media(max-height:600px) and (orientation:portrait){.photo-toolbar{flex-basis:46px}.photo-dock{padding:7px 14px}.photo-dialog .photo-shutter{width:64px;height:64px;min-height:64px}.photo-status{font-size:10px}.detail .page{gap:6px}.photo-entry .photo-open{min-height:44px}.photo-entry-note p{font-size:10px}}
+@media(orientation:landscape) and (max-height:600px){.photo-toolbar{flex-basis:44px}.photo-workspace{flex-direction:row;max-width:none}.photo-dock{width:205px;display:flex;flex-direction:column;justify-content:center;padding:10px}.photo-shutter-row{grid-template-columns:1fr 1fr;gap:10px}.photo-dialog .photo-shutter{grid-column:1/-1;grid-row:1}.photo-review-controls>.photo-row{flex-direction:column}.photo-review-controls>.photo-row button{width:100%}.detail .page{display:grid;grid-template-columns:1fr 205px;grid-template-rows:36px 1fr;column-gap:16px}.detail .backlink{grid-column:1;grid-row:1}.detail .page>h1{grid-column:2;grid-row:1;font-size:21px}.detail .vitrine{grid-column:1;grid-row:2}.photo-entry{grid-column:2;grid-row:2;align-content:center}.photo-entry-note{flex-direction:column}.photo-entry-note p{text-align:center}}
