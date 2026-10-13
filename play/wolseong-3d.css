@@ -1,0 +1,10 @@
+.world-builder-3d .world canvas{height:640px;aspect-ratio:auto}
+.world-builder-3d .camera-buttons{position:absolute;right:12px;top:74px;display:flex;flex-direction:column;gap:6px}
+.world-builder-3d .camera-buttons button{background:#fffdf1e8;backdrop-filter:blur(8px);border:0;min-width:44px;min-height:44px;padding:8px;font-size:19px;box-shadow:0 3px 12px #31473115}
+.world-builder-3d .camera-buttons #top-view{font-size:10px}
+.world-builder-3d .scene-shortcuts{position:absolute;left:12px;bottom:60px;display:flex;gap:6px}
+.world-builder-3d .scene-shortcuts button{font-size:11px;background:#fffdf1e8;min-height:37px;padding:8px 11px;border-radius:30px;backdrop-filter:blur(8px)}
+.world-builder-3d #piece-info{min-height:32px;width:32px;padding:0;border-radius:50%}
+.world-builder-3d .prop img{border-radius:9px}
+.world-builder-3d #grid[aria-pressed=true]{background:#285e4b;color:white}
+@media(max-width:760px){.world-builder-3d .world canvas{height:clamp(310px,50dvh,460px)}.world-builder-3d .world-top{gap:4px}.world-builder-3d .world-top button{padding:8px 12px;font-size:11px}.world-builder-3d .hint-pill{font-size:10px;max-width:95%;text-align:center}.world-builder-3d .camera-buttons{right:9px;top:65px}.world-builder-3d .scene-shortcuts{left:10px;bottom:56px}.world-builder-3d .scene-shortcuts button{font-size:10px;min-height:34px;padding:6px 10px}}

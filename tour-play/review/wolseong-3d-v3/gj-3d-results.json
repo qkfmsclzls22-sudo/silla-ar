@@ -1,0 +1,38 @@
+{
+  "checks": [
+    "true WebGL 3D context",
+    "house on lower flatland",
+    "pagoda on lower flatland",
+    "palace on hill",
+    "water protected from buildings",
+    "move building to wider flatland",
+    "rotate, delete and undo",
+    "drag rotates 3D without accidental placement",
+    "zoom buttons",
+    "reload persistence",
+    "day, night, top view",
+    "3D photo download",
+    "mobile tap places on flatland",
+    "two-finger pinch changes 3D distance without placing",
+    "two-finger pan moves view without placing",
+    "one-finger mobile orbit without placing",
+    "100 legacy pieces preserved with backup",
+    "100 buildings batched below 120 draw calls"
+  ],
+  "errors": [],
+  "performance100": {
+    "camera": [
+      53,
+      69,
+      101
+    ],
+    "target": [
+      0,
+      1,
+      16
+    ],
+    "pieces": 100,
+    "drawCalls": 43,
+    "triangles": 127834
+  }
+}
