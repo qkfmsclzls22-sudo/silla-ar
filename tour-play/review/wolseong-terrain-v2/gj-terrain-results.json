@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "place on raised hill",
+    "select tall sprite outside plateau and move",
+    "delete and undo",
+    "reject buildings in moat",
+    "place lotus in moat",
+    "reload preserves world",
+    "zoom and reset",
+    "pan and reset",
+    "day and night",
+    "PNG export",
+    "legacy 100-piece migration, no loss, unique cells, backup",
+    "390px mobile touch placement and no overflow"
+  ],
+  "errors": []
+}
