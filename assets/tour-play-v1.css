@@ -2,3 +2,13 @@
 /* Photo experiences lead the homepage; Buddha is a creative photo filter. */
 .photo-experiences{margin-bottom:40px}.buddha-photo{background:radial-gradient(ellipse at 50% 40%,#e7e4d6,#b8c9b8)}.buddha-photo img{object-fit:contain;padding:14px;filter:drop-shadow(0 8px 8px #203f3225)}
 @media(max-width:620px){.photo-experiences{margin-bottom:32px}.buddha-photo img{padding:10px}}
+
+/* QR-specific tour entry */
+.tour-entry-badge{display:inline-flex!important;width:max-content;margin:0 0 12px!important;padding:7px 12px;border:1px solid #31564233;border-radius:999px;background:#fff8dc;color:#315642;font-size:12px!important;font-weight:800;letter-spacing:.02em}
+.tour-card[hidden]{display:none!important}
+.home[data-tour] .tour-grid{grid-template-columns:minmax(0,720px);justify-content:center}
+.home[data-tour] .tour-card{box-shadow:0 18px 45px #294d3c12}
+.home[data-tour] .tour-visual{aspect-ratio:2.05}
+.home[data-tour] .tour-copy p{font-size:14px}
+.home[data-tour] .tour-footnote{padding:14px 16px;border-radius:12px;background:#fff8dc;color:#4d5e53}
+@media(max-width:620px){.tour-entry-badge{font-size:11px!important;margin-bottom:10px!important}.home[data-tour] .tour-visual{aspect-ratio:1.7}.home[data-tour] .tour-copy p{font-size:13px}}
