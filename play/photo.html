@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#111715">
   <title>불상의 미소 · 경주트립 포토체험</title>
-  <meta name="description" content="사진 찍기를 누르면 불상 얼굴이 바로 나타나요. 흰색 버튼으로 촬영하고 같은 화면에서 저장하세요.">
+  <meta name="description" content="신라 금관과 문화유산, 사극에서 영감을 받은 신라 복식으로 변신해 보세요. 흰색 버튼으로 촬영하고 같은 화면에서 저장하세요.">
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./photo-camera-v2.css">
+  <link rel="stylesheet" href="./photo-camera-v2.css?v=20261021-3">
   <link rel="icon" href="./favicon.svg">
-  <script type="module" src="./photo.js?v=camera2"></script>
+  <script type="module" src="./photo-v3.js?v=20261021-3"></script>
 </head>
 <body class="camera-app" data-mode="start">
   <header class="camera-header">
     <a href="./?tour=bulguksa" class="camera-icon" aria-label="소원 마당으로 돌아가기">‹</a>
-    <h1>불상의 미소 <span>GYEONGJU TRIP</span></h1>
+    <h1><b id="camera-title">불상의 미소</b> <span>GYEONGJU TRIP</span></h1>
     <button id="photo-info" class="camera-icon" aria-label="촬영 안내">ⓘ</button>
   </header>
   <main class="camera-screen" aria-label="불상 포토 카메라">
@@ -25,20 +25,20 @@
       </div>
       <div id="camera-cover" class="camera-cover">
         <img src="./assets/buddha.webp" alt="신라 불상에서 영감을 얻은 창작 얼굴">
-        <h2>불상의 미소로 한 장</h2>
+        <h2 id="camera-invitation">불상의 미소로 한 장</h2>
         <button id="start-camera" class="primary">사진 찍기</button>
-        <p id="camera-message" role="status">카메라를 허용하면 불상 얼굴이 바로 나타나요.</p>
+        <label class="camera-upload">사진 불러오기<input id="photo-input" type="file" accept="image/*"></label><a id="view-3d" class="camera-model-link" href="../">3D · AR로 보기 ↗</a><p id="camera-message" role="status">카메라를 허용하면 불상 얼굴이 바로 나타나요.</p>
       </div>
-      <div id="face-settings" class="face-settings hidden" role="region" aria-label="얼굴 조정">
-        <div class="settings-title"><label for="head-size">얼굴 크기</label><button id="close-settings" aria-label="얼굴 조정 닫기">×</button></div>
-        <input id="head-size" type="range" min="120" max="780" value="380">
-        <div class="settings-actions"><button id="reset-head">가운데 맞추기</button><button id="toggle-mirror" aria-pressed="false">좌우 반전</button></div>
+      <div id="face-settings" class="face-settings hidden" role="region" aria-label="의상·장식 조정">
+        <div class="settings-title"><label for="head-size">선택한 장식 크기</label><button id="close-settings" aria-label="얼굴 조정 닫기">×</button></div>
+        <div id="piece-options" class="piece-options"></div><input id="head-size" type="range" min="80" max="1800" value="380"><label for="piece-angle">기울기</label><input id="piece-angle" type="range" min="-180" max="180" value="0">
+        <div class="settings-actions"><button id="reset-head">처음 위치로</button><button id="toggle-mirror" aria-pressed="false">좌우 반전</button></div>
       </div>
       <div id="shutter-flash" aria-hidden="true"></div>
     </section>
     <section class="camera-dock" aria-label="촬영과 저장">
       <div id="live-controls" class="hidden">
-        <p class="camera-hint">얼굴을 끌어 옮기고 · 두 손가락으로 크기 조절</p>
+        <p class="camera-hint">끌어서 위치 맞추기 · 두 손가락으로 크기·각도 조절</p>
         <div class="shutter-row">
           <button id="adjust-head" class="side-control" aria-controls="face-settings" aria-expanded="false"><span aria-hidden="true">↔</span>크기 조절</button>
           <button id="capture" class="shutter" aria-label="사진 촬영" disabled><span></span></button>

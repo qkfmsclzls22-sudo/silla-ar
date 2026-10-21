@@ -14,18 +14,10 @@
   <div class="heading"><p class="eyebrow">신라 변신 사진관</p><h1 id="title">문화유산과 찰칵</h1><p id="description"></p></div>
   <div class="experience-layout">
    <div class="vitrine"><model-viewer id="viewer" camera-controls ar ar-modes="webxr scene-viewer quick-look" shadow-intensity="1" exposure="1" camera-orbit="0deg 90deg 105%" interaction-prompt="auto" loading="eager" alt="국가유산청 자료를 활용한 3D 모델"><button slot="ar-button" id="arButton">내 공간에서 AR로 보기 ↗</button></model-viewer><span class="viewer-hint">손가락으로 돌리고 확대해 보세요</span></div>
-   <div class="intro-panel"><span class="pill">내 얼굴 · 내 몸에 맞춰 찰칵</span><h2 id="invitation"></h2><p id="tip"></p><button class="primary" id="openPhoto">사진 찍기 <span>↗</span></button><p class="small">사진에서는 평면 스티커를 얼굴·몸에 맞춰요.<br>카메라와 사진은 기기 안에서만 처리돼요.</p><p id="modelStatus" role="status">3D 유물을 불러오는 중이에요…</p><details><summary>유물 이야기 · 자료 출처</summary><p id="story"></p><p>출처: 국가유산청 · 공공누리 제1유형</p><p id="credit"></p><div id="sourceLinks"></div><p class="small">모바일용 용량 조정 및 정면 렌더링을 적용했습니다. 기념사진은 체험용 합성 이미지예요.</p></details></div>
+   <div class="intro-panel"><span class="pill">내 얼굴 · 내 몸에 맞춰 찰칵</span><h2 id="invitation"></h2><p id="tip"></p><button class="primary" id="openPhoto">사진 찍기 <span>↗</span></button><p class="small">사진에서는 평면 스티커를 얼굴·몸에 맞춰요.<br>카메라와 사진은 기기 안에서만 처리돼요.</p><p id="modelStatus" role="status">3D 유물을 불러오는 중이에요…</p><details><summary>유물 이야기 · 자료 출처</summary><p id="story"></p><p>출처: 국가유산청 · 공공누리 제1유형</p><p id="credit"></p><div id="sourceLinks"></div><p class="small">원본 유물과 체험용 재창작 복식을 함께 제공합니다. 복식의 색채·문양·장신구는 사극의 분위기를 참고해 새로 구성했으며, 사진은 실제 얼굴을 넣는 합성 체험입니다.</p></details></div>
   </div>
  </section>
- <section id="studio" hidden aria-labelledby="studioTitle">
-  <div class="studio-heading"><button id="closePhoto" class="text-button">← 3D 보기</button><h1 id="studioTitle">나만의 한 장</h1></div>
-  <div class="studio-layout">
-   <div class="photo-frame"><canvas id="photoCanvas" width="900" height="1200" aria-label="문화유산 기념사진 미리보기"></canvas><video id="camera" playsinline autoplay muted hidden></video><span id="stageBadge">위치 미리보기</span></div>
-   <div class="controls"><p class="eyebrow">01 · 카메라를 켜거나 사진을 골라요</p><div class="button-row"><button id="startCamera">카메라 켜기</button><button id="flipCamera" disabled>카메라 전환</button></div><label class="upload">사진 불러오기<input type="file" id="photoInput" accept="image/*"></label><p id="cameraStatus" role="status">카메라를 켜기 전에는 위치를 연습할 수 있어요.</p><p class="eyebrow">02 · 스티커를 끌어 위치를 맞춰요</p><div id="pieceButtons" class="button-row"></div><label class="range-label">크기<input id="size" type="range" min="0.12" max="2" step="0.01" value="1"></label><label class="range-label">기울기<input id="angle" type="range" min="-180" max="180" step="1" value="0"></label><div class="button-row"><button id="mirrorPiece">스티커 좌우 반전</button><button id="reset">위치 초기화</button></div><p class="small">스티커를 누른 뒤 이동 · 두 손가락으로 확대와 회전<br>얼굴 자동 추적 없이 직접 위치를 맞추는 체험이에요.</p><button id="capture" class="primary" disabled>찰칵! 사진 찍기</button></div>
-  </div>
- </section>
- <section id="result" hidden aria-labelledby="resultTitle"><div class="heading"><p class="eyebrow">오늘의 신라, 오늘의 나</p><h1 id="resultTitle">기념사진이 완성됐어요</h1></div><img id="resultImage" alt="완성된 문화유산 합성 기념사진"><div class="result-actions"><a id="save" class="primary" download="gyeongju-photo.jpg">사진 저장</a><button id="share">사진 공유</button><button id="retake">다시 찍기</button><button id="finish">다른 체험 고르기</button></div><p class="small">아이폰에서 저장 창이 열리면 이미지 저장을 선택해 주세요.</p><p id="saveStatus" role="status"></p></section>
 </main>
 <footer>GYEONGJU TRIP · 국가유산과 함께 남기는 한 장</footer>
-<script type="module" src="experience-v1.js?v=20261021-2"></script><script type="module" src="../assets/tour-return-v1.js"></script>
+<script type="module" src="experience-v2.js?v=20261021-3"></script><script type="module" src="../assets/tour-return-v1.js"></script>
 </body></html>

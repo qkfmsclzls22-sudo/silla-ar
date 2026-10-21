@@ -1,0 +1,14 @@
+{
+  "id": "hwarang",
+  "base": "Korea Heritage Service official 6-du-pum robe",
+  "modifications": [
+    "Recoloured silk",
+    "Pose adjustment",
+    "New original embroidery and decorative facing geometry",
+    "New jewellery and belt",
+    "Original head accessory"
+  ],
+  "interpretation": "Drama-inspired creative experience costume; not a historical reconstruction or an official source costume",
+  "photo": "Real Blender render of the same derived 3D costume, with separate headwear and an empty face area",
+  "glb_bytes": 1174128
+}
