@@ -1,4 +1,4 @@
-const item=document.body.dataset.photoItem||location.pathname.split('/').filter(Boolean).pop();
+const item=document.body.dataset.photoItem||location.pathname.split('/').filter(part=>part&&part!=='index.html').pop();
 const viewer=document.querySelector('.vitrine model-viewer');
 if(viewer){
  const section=document.createElement('section');section.className='photo-entry';
