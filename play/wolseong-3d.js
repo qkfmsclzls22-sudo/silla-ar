@@ -1,3 +1,4 @@
+import {saveCityCard} from './tour-keepsakes.js?v=20261021';
 import {$,esc,toast,modal,read,write,saveCanvas} from './ui.js';
 import {createStage} from './wolseong-stage3d.js';
 import {definitions} from './wolseong-models3d.js';
@@ -14,13 +15,23 @@ export async function mountWolseong(root){
  <div class="scene-shortcuts"><button id="home-view">전체 보기</button><button id="plain-view">평지 가까이</button></div>
  <div class="world-bottom"><span class="hint-pill" id="build-hint"></span></div></section>
  <aside class="panel"><section class="card"><label for="map-name">내 월성의 이름</label><input id="map-name" class="title-input" maxlength="24" type="text"><p class="small" style="margin:8px 0 0">자동 저장 · <span id="piece-count"></span>/200개 · 언덕과 평지 모두 배치</p></section>
- <section class="card"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">무엇을 놓을까요?</h2><button id="piece-info" aria-label="선택한 요소 설명">?</button></div><div id="categories" class="tabs"></div><div id="catalog" class="catalog"></div></section>
+ <section class="card building-mission"><p class="eyebrow">TODAY’S BUILDING MISSION</p><h2>나도 월성 건축가</h2><p>마을과 명소, 자연을 담아 야경까지 완성해요.</p><ul id="building-missions"></ul><p id="mission-progress" role="status"></p><button id="builder-card" class="primary">건축 기록 카드 만들기</button></section><section class="card"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">무엇을 놓을까요?</h2><button id="piece-info" aria-label="선택한 요소 설명">?</button></div><div id="categories" class="tabs"></div><div id="catalog" class="catalog"></div></section>
  <section class="card"><div class="tool-row" id="tools"><button data-tool="build">＋ 놓기</button><button data-tool="move">옮기기</button><button data-tool="turn">방향</button><button data-tool="delete">지우기</button><button data-tool="view">둘러보기</button><button data-tool="pan">화면 이동</button><button id="undo" disabled>되돌리기</button><button id="grid" aria-pressed="false">격자</button></div><p class="small" style="margin:14px 0 10px">짧게 누르면 배치 · 끌면 회전<br>두 손가락으로 확대·축소와 이동<br>PC: 마우스 휠 확대 · 오른쪽 드래그 이동</p><button id="clear" class="danger">내 월성 비우기</button></section>
  <button id="export" class="primary">3D 월성 사진 저장</button><div class="notice">월성의 반달 지형에서 출발한 상상 놀이예요. 아래 평지에도 자유롭게 마을을 만들 수 있어요. 건물 모형과 배치는 놀이용으로 단순화했어요.</div></aside></div>`;
  const canvas=$('#map');let stage;
  try{stage=createStage(canvas)}catch(e){root.innerHTML='<div class="card"><h2>3D 화면을 열지 못했어요.</h2><p>Safari나 Chrome에서 다시 열어 주세요. 저장한 월성은 유지됩니다.</p><button id="retry-3d" class="primary">다시 열기</button></div>';$('#retry-3d').onclick=()=>location.reload();return}
  const thumbs=stage.thumbnails();$('#map-name').value=title;
+ function missions(){return [
+  {label:'기와집·초가집 3채',count:pieces.filter(p=>['house','cottage'].includes(p.id)).length,goal:3},
+  {label:'나만의 명소 1곳',count:pieces.filter(p=>byId[p.id]?.cat==='명소').length,goal:1},
+  {label:'자연 요소 3개',count:pieces.filter(p=>byId[p.id]?.cat==='자연').length,goal:3},
+  {label:'야경으로 바꾸기',count:night?1:0,goal:1}
+ ]}
  function update(){
+  const goals=missions(),done=goals.filter(g=>g.count>=g.goal).length;
+  $('#building-missions').innerHTML=goals.map(g=>'<li class="'+(g.count>=g.goal?'complete':'')+'"><span>'+(g.count>=g.goal?'✓':'○')+' '+g.label+'</span><strong>'+Math.min(g.count,g.goal)+' / '+g.goal+'</strong></li>').join('');
+  const progress=done===goals.length?'미션 완성! 나만의 건축가 카드를 남겨요.':done+' / '+goals.length+'개 미션 완성 · 자유롭게 꾸며도 좋아요.';
+  if($('#mission-progress').textContent!==progress)$('#mission-progress').textContent=progress;
   $('#world-title').textContent=title||'나의 월성';$('#piece-count').textContent=pieces.length;$('#world-night').textContent=night?'☀ 낮으로':'☾ 야경으로';$('#world-night').setAttribute('aria-pressed',night);
   const messages={build:selected==='lotus'?'해자·연못 자리에 연꽃 놓기':'언덕이나 아래 평지를 짧게 눌러 '+byId[selected].name+' 놓기',move:moving===null?'옮길 건물을 누른 뒤 새 땅을 눌러 주세요.':'새로 놓을 언덕이나 평지를 눌러 주세요.',turn:'건물을 누르면 90°씩 돌아가요.',delete:'지울 요소를 눌러 주세요.',view:'끌어서 회전 · 두 손가락으로 확대·이동',pan:'끌어서 화면 이동 · 두 손가락으로 확대·축소'};
   $('#build-hint').textContent=messages[tool];$('#tools').querySelectorAll('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tool===tool));$('#undo').disabled=!undo.length;
@@ -41,6 +52,7 @@ export async function mountWolseong(root){
  $('#undo').onclick=()=>{if(!undo.length)return;pieces=JSON.parse(undo.pop());moving=null;rebuild();save()};
  $('#clear').onclick=()=>{const d=modal('<h2>빈 월성에서 시작할까요?</h2><p>지금 놓인 요소가 지워져요. 되돌리기로 복구할 수 있어요.</p><button id="confirm-clear" class="primary">내 월성 비우기</button>');$('#confirm-clear',d).onclick=()=>{snapshot();pieces=[];moving=null;rebuild();save();d.close()}};
  $('#piece-info').onclick=()=>modal('<h2>'+esc(byId[selected].name)+'</h2><p>'+({house:'기와집을 여러 채 모아 언덕 아래 마을을 만들어 보세요.',cottage:'기와집과 초가집을 섞어 내 마을의 골목을 꾸며 보세요.',pagoda:'황룡사 구층목탑에서 아이디어를 얻은 9층 놀이 모형이에요. 평지와 언덕 모두 배치할 수 있어요.',palace:'동궁과 월지의 전각에서 아이디어를 얻은 놀이 모형이에요.',lotus:'월성 해자에서 발견된 가시연꽃 씨앗에서 출발한 요소예요. 해자에 직접 놓아 보세요.'}[selected]||'경주를 떠올리며 만든 입체 놀이 모형이에요. 언덕과 넓은 평지에서 자유롭게 꾸며 보세요.')+'</p><p class="small">실제 유물·건축물의 정밀 복원 모형은 아니에요.</p>');
+ $('#builder-card').onclick=()=>{stage.preview(selected,null);stage.select(null);stage.render();const goals=missions();saveCityCard(canvas,title,goals.filter(g=>g.count>=g.goal).length,goals.length);stage.select(moving)};
  $('#export').onclick=()=>{stage.preview(selected,null);stage.select(null);stage.render();saveCanvas(canvas,'my-wolseong-3d.png');stage.select(moving)};
  function locationAt(e){const p=stage.pickTerrain(e);return p?{x:snap(p.x),z:snap(p.z)}:null}
  function fits(id,p,ignore=-1){
