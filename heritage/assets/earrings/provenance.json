@@ -1,0 +1,15 @@
+{
+  "id": "earrings",
+  "source_files": [
+    "SM_CL20108_High.fbx"
+  ],
+  "mesh_count": 1,
+  "polygons": 86784,
+  "dimensions": [
+    0.021870488300919533,
+    0.011129675433039665,
+    0.04978705197572708
+  ],
+  "glb_bytes": 3180616,
+  "source_modified": "Mobile polygon reduction, material texture relinking, positioning, transparent orthographic render"
+}

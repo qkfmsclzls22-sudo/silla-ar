@@ -1,0 +1,15 @@
+{
+  "id": "pensive",
+  "source_files": [
+    "SM_24RE0001_Cage_High.fbx"
+  ],
+  "mesh_count": 1,
+  "polygons": 20259,
+  "dimensions": [
+    0.4085775315761566,
+    0.46412813663482666,
+    0.9015942811965942
+  ],
+  "glb_bytes": 3091936,
+  "source_modified": "Mobile polygon reduction, material texture relinking, positioning, transparent orthographic render"
+}

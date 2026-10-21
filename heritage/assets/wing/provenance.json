@@ -1,0 +1,15 @@
+{
+  "id": "wing",
+  "source_files": [
+    "SM_24CL0004_Cage_High.fbx"
+  ],
+  "mesh_count": 1,
+  "polygons": 18146,
+  "dimensions": [
+    0.4541432857513428,
+    0.14953866600990295,
+    0.4269804060459137
+  ],
+  "glb_bytes": 4040624,
+  "source_modified": "Mobile polygon reduction, material texture relinking, positioning, transparent orthographic render"
+}

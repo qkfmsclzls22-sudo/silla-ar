@@ -1,0 +1,15 @@
+{
+  "id": "robe",
+  "source_files": [
+    "SM_CL00125_Low.fbx"
+  ],
+  "mesh_count": 1,
+  "polygons": 19670,
+  "dimensions": [
+    1.7256709337234497,
+    0.5324310064315796,
+    1.495161771774292
+  ],
+  "glb_bytes": 1784960,
+  "source_modified": "Mobile polygon reduction, material texture relinking, positioning, transparent orthographic render"
+}

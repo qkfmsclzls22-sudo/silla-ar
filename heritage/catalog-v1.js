@@ -1,0 +1,8 @@
+const catalogSource='https://digital.khs.go.kr/heritage/catalog.do?order=4&index=1';
+const record=id=>'https://digital.khs.go.kr/record/recordDetail3D.do?ichDataUid='+id;
+export const artifacts = {
+ earrings:{title:'신라 금귀걸이',description:'반짝이는 신라의 보물로 오늘의 귀걸이 완성.',invitation:'양쪽 귀에 금빛 포인트',tip:'두 귀걸이를 각각 움직여 귓불에 맞춰 보세요. 머리를 살짝 기울이면 더 자연스러워요.',story:'국가유산청 「서라벌 천년 시간여행」 금귀걸이 자료입니다. 한 유물의 이미지를 양쪽에 배치해 착용 체험을 만들었어요.',credit:'금귀걸이 007 · SM_CL20108_High.fbx',sources:[['국가유산청 신라왕경 에셋',catalogSource]],pieces:[{name:'왼쪽 귀',x:.3,y:.39,size:.28},{name:'오른쪽 귀',x:.7,y:.39,size:.28,mirror:true}]},
+ robe:{title:'신라 관복',description:'오늘은 신라의 관리. 내 얼굴에 관복을 입혀요.',invitation:'관복 입고 시간 여행',tip:'옷깃을 목 아래에 맞춰 주세요. 팔을 살짝 벌리거나 상반신 사진을 사용하면 좋아요.',story:'국가유산청의 6두품 공복 포 재현 자료를 활용했습니다. 실제 인물의 얼굴 위에 머리를 덮지 않고 옷만 합성해요.',credit:'6두품 공복 포 서비스본 · SM_CL00125_Low.fbx',sources:[['국가유산청 신라왕경 에셋',catalogSource]],pieces:[{name:'관복',x:.5,y:.7,size:1.12}]},
+ wing:{photo:'photo-v1.png',title:'금제 날개 관식',description:'날개처럼 펼쳐지는 금빛 장식, 나만의 신라 스타일.',invitation:'금빛 날개를 머리에',tip:'관식의 아래쪽을 이마 위에 맞춰 보세요. 크기와 기울기를 조절해 나만의 스타일로 착용해요.',story:'금관총 순금 관식의 국가유산청 3D 자료를 활용했습니다. 사진용으로 관식 본체를 정면에서 렌더링했어요. 특정 현대인의 착용 제품과 동일하다는 뜻은 아닙니다.',credit:'금관총 순금 관식 · SM_24CL0004_Cage_High.fbx',sources:[['국가유산청 신라왕경 에셋',catalogSource]],pieces:[{name:'관식',x:.5,y:.2,size:.62}]},
+ pensive:{title:'반가사유상',description:'잠깐의 사색, 천년의 미소. 불상 얼굴로 찰칵.',invitation:'나도 사유하는 중',tip:'불상 얼굴을 내 얼굴에 맞춘 뒤 한 손을 볼에 살짝 대어 보세요. 사진에서는 얼굴 부분만 사용해요.',story:'삼산관을 쓴 금동반가사유상 공식 3D 자료입니다. 3D 감상에서는 전신을, 사진 체험에서는 얼굴 부분을 볼 수 있어요.',credit:'금동반가사유상 · SM_24RE0001_Cage_High.fbx',sources:[['국가유산청 원본 자료',record('13984209342670223083')]],photo:'face-v1.png',pieces:[{name:'불상 얼굴',x:.5,y:.35,size:.5}]}
+};
