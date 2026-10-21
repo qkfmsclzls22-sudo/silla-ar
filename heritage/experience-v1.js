@@ -1,4 +1,4 @@
-import { artifacts } from './catalog-v1.js';
+import { artifacts } from './catalog-v1.js?v=20261021-2';
 const $ = id => document.getElementById(id);
 const requested = new URLSearchParams(location.search).get('item');
 const id = Object.hasOwn(artifacts, requested) ? requested : 'earrings';
@@ -27,7 +27,11 @@ function syncControls(){$('size').value=pieces[selected].size;$('angle').value=p
 function setScreen(next){screen=next;for(const key of ['intro','studio','result'])$(key).hidden=key!==next;window.scrollTo({top:0,behavior:'instant'});if(next==='studio'){drawLoop();$('studioTitle').setAttribute('tabindex','-1');$('studioTitle').focus({preventScroll:true});}else cancelAnimationFrame(animation);}
 function stopCamera(){cameraRequest++;stream?.getTracks().forEach(track=>track.stop());stream=null;video.srcObject=null;$('flipCamera').disabled=true;}
 function cover(source,width,height,mirror=false){const scale=Math.max(900/width,1200/height),w=width*scale,h=height*scale;ctx.save();if(mirror){ctx.translate(900,0);ctx.scale(-1,1);}ctx.drawImage(source,(900-w)/2,(1200-h)/2,w,h);ctx.restore();}
-function drawGuide(){const grad=ctx.createLinearGradient(0,0,900,1200);grad.addColorStop(0,'#f0e3c8');grad.addColorStop(1,'#d6dbc9');ctx.fillStyle=grad;ctx.fillRect(0,0,900,1200);ctx.fillStyle='#b9b9a775';ctx.beginPath();ctx.ellipse(450,410,145,185,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(450,1060,360,440,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#6e7460';ctx.font='22px sans-serif';ctx.textAlign='center';ctx.fillText('얼굴과 몸의 위치를 맞춰 보세요',450,100);}
+function drawGuide(){
+ const body=artifact.type==='body',grad=ctx.createLinearGradient(0,0,900,1200);grad.addColorStop(0,'#f0e3c8');grad.addColorStop(1,'#d6dbc9');
+ ctx.fillStyle=grad;ctx.fillRect(0,0,900,1200);ctx.fillStyle='#b9b9a775';ctx.beginPath();ctx.ellipse(450,body?300:410,body?105:145,body?140:185,0,0,Math.PI*2);ctx.fill();
+ ctx.beginPath();ctx.ellipse(450,body?930:1060,body?265:360,body?480:440,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#6e7460';ctx.font='22px sans-serif';ctx.textAlign='center';ctx.fillText('얼굴과 몸의 위치를 맞춰 보세요',450,100);
+}
 function draw(includeSelection=true){
  ctx.clearRect(0,0,900,1200);
  if(stream&&video.readyState>=2)cover(video,video.videoWidth,video.videoHeight,facing==='user');

@@ -1,0 +1,15 @@
+{
+  "id": "helmet",
+  "source_files": [
+    "SM_WA10101_Low.fbx"
+  ],
+  "mesh_count": 1,
+  "polygons": 1920,
+  "dimensions": [
+    0.1548141986131668,
+    0.1581781804561615,
+    0.15246348083019257
+  ],
+  "glb_bytes": 1510880,
+  "source_modified": "Mobile polygon reduction, material texture relinking, positioning, transparent orthographic render"
+}

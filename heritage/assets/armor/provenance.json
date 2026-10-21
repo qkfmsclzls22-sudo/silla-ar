@@ -1,0 +1,15 @@
+{
+  "id": "armor",
+  "source_files": [
+    "SM_24WA0015_high.fbx"
+  ],
+  "mesh_count": 1,
+  "polygons": 116394,
+  "dimensions": [
+    0.5393187999725342,
+    0.384427934885025,
+    0.6870630383491516
+  ],
+  "glb_bytes": 6615928,
+  "source_modified": "Mobile polygon reduction, material texture relinking, positioning, transparent orthographic render"
+}

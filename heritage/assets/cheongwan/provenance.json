@@ -1,0 +1,9 @@
+{
+  "id": "cheongwan",
+  "source_files": [
+    "SM_24CL0007_High.fbx",
+    "SM_24CL0008_High.fbx"
+  ],
+  "source_modified": "Unit conversion, mobile polygon reduction, original texture relinking, clothing assembly and front orthographic render",
+  "glb_bytes": 2995076
+}
