@@ -1,5 +1,5 @@
 import {$,esc,modal,toast,read,write,pic,saveCanvas} from './ui.js';
-import {artifacts as photoArtifacts,legacyItems} from '../heritage/catalog-v2.js?v=20261021-3';
+import {artifacts as photoArtifacts,legacyItems} from '../heritage/catalog-v3.js?v=20261022-1';
 const artifacts=[
  {id:'crown',name:'신라 금관',image:'crown',tag:'빛나는 황금의 나라',q:'금관은 몸의 어느 곳에 쓰던 장식일까요?',answers:['손목','머리','발목'],answer:1,hint:'‘관’은 머리에 쓰는 물건을 뜻해요.',fact:'금관은 신라의 화려한 금속 공예를 보여 주는 유물이에요. 나뭇가지 같은 세움 장식과 달개를 찾아보세요.',ar:'crown/'},
  {id:'smile',name:'얼굴무늬 수막새',image:'smile',tag:'천 년을 건너온 미소',q:'미소 짓는 얼굴의 수막새는 어디에 쓰였을까요?',answers:['지붕 끝','밥상 위','신발 바닥'],answer:0,hint:'비가 오는 날 건물을 지켜 주는 곳을 생각해 보세요.',fact:'수막새는 지붕 끝을 마무리하는 기와예요. 얼굴무늬 수막새는 ‘신라의 미소’로도 사랑받아요.',ar:'smile/'},

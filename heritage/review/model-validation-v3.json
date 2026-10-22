@@ -1,0 +1,62 @@
+[
+  {
+    "id": "king",
+    "bytes": 13339916,
+    "triangles": 202752,
+    "dimensions_m": [
+      1.659523844718933,
+      0.5324090719223022,
+      2.0837302207946777
+    ],
+    "embedded_images": 6,
+    "base_color_materials": 5,
+    "normal_materials": 5,
+    "roughness_texture_materials": 5,
+    "display_form_3d_only": true
+  },
+  {
+    "id": "queen",
+    "bytes": 16955336,
+    "triangles": 223009,
+    "dimensions_m": [
+      1.089198112487793,
+      0.7489357590675354,
+      1.9786555767059326
+    ],
+    "embedded_images": 9,
+    "base_color_materials": 6,
+    "normal_materials": 6,
+    "roughness_texture_materials": 6,
+    "display_form_3d_only": true
+  },
+  {
+    "id": "noble",
+    "bytes": 9856144,
+    "triangles": 120084,
+    "dimensions_m": [
+      1.089198112487793,
+      0.7489357590675354,
+      1.659999966621399
+    ],
+    "embedded_images": 6,
+    "base_color_materials": 2,
+    "normal_materials": 2,
+    "roughness_texture_materials": 2,
+    "display_form_3d_only": true
+  },
+  {
+    "id": "hwarang",
+    "bytes": 11653156,
+    "triangles": 124614,
+    "dimensions_m": [
+      1.5944745540618896,
+      0.5324283838272095,
+      1.7949999570846558
+    ],
+    "embedded_images": 9,
+    "base_color_materials": 3,
+    "normal_materials": 3,
+    "roughness_texture_materials": 3,
+    "display_form_3d_only": true
+  }
+]

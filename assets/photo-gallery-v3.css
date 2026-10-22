@@ -1,0 +1,14 @@
+/* Shared neutral studio treatment for photographs, model renders and creative filters. */
+.photo-experiences > .artifact-grid .artifact-photo {
+  background:radial-gradient(ellipse at 50% 34%,#faf7f0 0%,#f0e9db 72%,#e8dfd0 100%);
+  border-bottom:1px solid #e9e1d4;
+}
+.photo-experiences > .artifact-grid .artifact-photo img {
+  width:100%;height:100%;object-fit:contain!important;
+  padding:18px;filter:drop-shadow(0 8px 6px #44371e16);
+}
+.photo-experiences > .artifact-grid .buddha-photo img {padding:23px}
+@media(max-width:560px){
+  .photo-experiences > .artifact-grid .artifact-photo img{padding:12px}
+  .photo-experiences > .artifact-grid .buddha-photo img{padding:17px}
+}

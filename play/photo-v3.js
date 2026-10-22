@@ -1,11 +1,11 @@
 import {$,toast,pic,point,modal,esc} from './ui.js';
-import {artifacts,legacyItems} from '../heritage/catalog-v2.js?v=20261021-3';
+import {artifacts,legacyItems} from '../heritage/catalog-v3.js?v=20261022-1';
 const params=new URLSearchParams(location.search),requested=params.get('item')||'buddha',id=legacyItems[requested]||requested;
 const base={
  toou:{title:'터번 쓴 토우',invitation:'토우와 함께 한 장',tip:'토우를 원하는 위치로 옮겨 함께 사진을 남겨 보세요.',image:'../assets/artifacts/toou-overlay-v3.png',pieces:[{name:'토우',x:.65,y:.64,size:.50}],view:'../toou/',story:'토우의 실제 3D 모델을 평면으로 렌더링한 사진 체험이에요.',credit:'경주트립 문화유산 자료 활용'},
  buddha:{title:'불상의 미소',invitation:'불상의 미소로 한 장',tip:'불상 얼굴을 내 얼굴에 맞춰 보세요.',image:'./assets/buddha.webp',pieces:[{name:'불상 얼굴',x:.5,y:.44,size:.43}],story:'신라 불상에서 영감을 얻은 창작 얼굴 포토필터예요.',credit:'경주트립 창작 포토필터'},
- crown:{title:'신라 금관',invitation:'신라 금관 써보기',tip:'금관의 아래쪽을 이마에 맞춰 주세요.',image:'../assets/artifacts/crown-overlay-v3.png',pieces:[{name:'금관',x:.5,y:.23,size:.62}],view:'../crown/',story:'신라 금관의 모습을 평면 이미지로 착용하는 포토체험이에요.',credit:'국가유산청 자료 활용'},
- smile:{title:'얼굴무늬 수막새',invitation:'천년의 미소로 찰칵',tip:'수막새의 얼굴을 내 얼굴에 맞춰 보세요.',image:'../assets/artifacts/smile-overlay-v3.png',pieces:[{name:'수막새',x:.5,y:.43,size:.52}],view:'../smile/',story:'얼굴무늬 수막새의 미소를 내 얼굴에 맞춰 남기는 한 장이에요.',credit:'국가유산청 자료 활용'},
+ crown:{title:'신라 금관',invitation:'신라 금관 써보기',tip:'금관의 아래쪽을 이마에 맞춰 주세요.',image:'../assets/artifacts/crown-overlay-v4.png',pieces:[{name:'금관',x:.5,y:.23,size:.62}],view:'../crown/',story:'신라 금관의 모습을 평면 이미지로 착용하는 포토체험이에요.',credit:'국가유산청 자료 활용'},
+ smile:{title:'얼굴무늬 수막새',invitation:'천년의 미소로 찰칵',tip:'수막새의 얼굴을 내 얼굴에 맞춰 보세요.',image:'../assets/artifacts/smile-overlay-v4.png',pieces:[{name:'수막새',x:.5,y:.43,size:.52}],view:'../smile/',story:'얼굴무늬 수막새의 미소를 내 얼굴에 맞춰 남기는 한 장이에요.',credit:'국가유산청 자료 활용'},
 };
 const item=artifacts[id]?{...artifacts[id],image:`../heritage/assets/${id}/${artifacts[id].photo||'overlay-v1.png'}`,poster:`../heritage/assets/${id}/${artifacts[id].poster||artifacts[id].photo||'overlay-v1.png'}`,view:`../heritage/?item=${id}`}:(base[id]||base.buddha);
 const safeId=artifacts[id]||base[id]?id:'buddha';

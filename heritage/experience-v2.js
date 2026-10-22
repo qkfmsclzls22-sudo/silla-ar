@@ -1,4 +1,6 @@
-import {artifacts,legacyItems} from './catalog-v2.js?v=20261021-3';
+import {artifacts,legacyItems} from './catalog-v3.js?v=20261022-1';
+// Keep woven details readable when the viewer adapts resolution on slower devices.
+customElements.whenDefined('model-viewer').then(()=>{customElements.get('model-viewer').minimumRenderScale=.75;});
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),raw=params.get('item'),id=legacyItems[raw]||raw;
 const selected=Object.hasOwn(artifacts,id)?id:'pensive',a=artifacts[selected],root='assets/'+selected+'/';
 document.title=a.title+' · 신라 변신 사진관 | 경주트립';for(const key of ['title','description','invitation','tip','story','credit'])$(key).textContent=a[key];

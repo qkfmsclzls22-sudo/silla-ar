@@ -1,0 +1,16 @@
+{
+  "id": "king",
+  "base": "Korea Heritage Service official 6-du-pum robe",
+  "modifications": [
+    "Baked woven fabric base colour, roughness and normals",
+    "Original source normal maps and male robe damask retained",
+    "Brocade and belt colours baked onto garment UV surfaces, with surface-fitted embroidery",
+    "Body-fitted belt and smaller physically based metallic jewellery",
+    "Faceless display form supporting headwear in 3D only",
+    "glTF cloth sheen and normal strength calibrated in the browser",
+    "Large material meshes simplified for mobile 3D rendering"
+  ],
+  "interpretation": "Drama-inspired creative experience costume; not an authenticated reconstruction",
+  "photo": "Actual 3D garment render, separate headwear, no mannequin in photo",
+  "glb_bytes": 13339916
+}
