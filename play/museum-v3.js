@@ -1,5 +1,5 @@
 import {artifacts,artifactById,interiorSource,storageKey,normalizeState} from './museum-data-v3.js';
-import {createGallery} from './museum-scene-v3.js';
+import {createGallery} from './museum-scene-v3.js?v=20261022-2';
 import {esc,read,write,toast,saveCanvas} from './ui.js';
 
 export async function mountMuseum(main){

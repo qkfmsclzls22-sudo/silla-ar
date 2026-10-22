@@ -41,7 +41,7 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
  const titleMap=canvasTexture(2048,768,()=>{});const titlePlane=new T.Mesh(new T.PlaneGeometry(8,3),new T.MeshBasicMaterial({map:titleMap,transparent:true,depthWrite:false}));titlePlane.position.set(.6,3.5,-11.78);scene.add(titlePlane);
  function setTitle(title){const c=titleMap.image.getContext('2d');c.clearRect(0,0,2048,768);c.fillStyle='#c5b58d';c.font='32px sans-serif';c.fillText('GYEONGJU  /  MY PRIVATE COLLECTION',90,135);c.fillStyle='#f0ece2';c.font='500 116px "Noto Sans KR", sans-serif';let rows=title.length>12?[title.slice(0,12),title.slice(12)]:[title];rows.forEach((r,i)=>c.fillText(r,90,340+i*150));c.fillStyle='#b4bdc1';c.font='30px "Noto Sans KR", sans-serif';c.fillText('신라의 아름다움, 나의 시선으로',96,680);titleMap.needsUpdate=true;dirty=true;}
  const glassMat=new T.MeshPhysicalMaterial({color:0xcfe3df,transparent:true,opacity:.065,roughness:.12,metalness:.12,side:T.DoubleSide,depthWrite:false});
- const cache=new Map(),slots=[],hitObjects=[];
+ const cache=new Map(),slots=[],hitObjects=[],baseHits=[];
  const draco=new DRACOLoader();draco.setDecoderPath('./vendor/draco/');draco.setDecoderConfig({type:'wasm'});draco.setWorkerLimit(2);
  const loader=new GLTFLoader();loader.setDRACOLoader(draco);
  async function load(id){if(!cache.has(id))cache.set(id,loader.loadAsync(artifactById[id].model).then(g=>{g.scene.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});return g.scene;}).catch(e=>{cache.delete(id);throw e;}));return cache.get(id);}
@@ -58,8 +58,9 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
   const edges=new T.LineSegments(new T.EdgesGeometry(glass.geometry),new T.LineBasicMaterial({color:0xa2c2bb,transparent:true,opacity:.24}));edges.position.copy(glass.position);group.add(edges);
   for(const sx of [-1,1])for(const sz of [-1,1])box(.012,2.05,.012,sx*1.25,2.27,sz*1.15,edgeMat,group);
   const plateMap=canvasTexture(768,192,()=>{});const plate=new T.Mesh(new T.PlaneGeometry(1.85,.46),new T.MeshBasicMaterial({map:plateMap}));plate.position.set(0,.8,1.132);group.add(plate);
-  const content=new T.Group();content.position.y=1.28;group.add(content);
+  const content=new T.Group();content.position.y=1.28;content.userData.slot=i;group.add(content);
   const hit=box(2.6,3.2,2.4,x,1.6,z,new T.MeshBasicMaterial({visible:false}));hit.userData.slot=i;hitObjects.push(hit);
+  const baseHit=box(2.55,1.24,2.35,x,.62,z,new T.MeshBasicMaterial({visible:false}));baseHit.userData.slot=i;baseHits.push(baseHit);
   const marker=document.createElement('button');marker.className='mg-marker';marker.dataset.slot=i;marker.onclick=()=>onSelect(i);host.append(marker);
   slots.push({group,content,plateMap,glow,marker,id:null,revision:0});
  });
@@ -79,7 +80,7 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
  function setTheme(name){wallMat.color.set(name==='warm'?'#786e5f':'#182b37');dirty=true;}
  let pointer=null;
  renderer.domElement.addEventListener('pointerdown',e=>{pointer={x:e.clientX,y:e.clientY};transition=null;});
- renderer.domElement.addEventListener('pointerup',e=>{if(!pointer||Math.hypot(e.clientX-pointer.x,e.clientY-pointer.y)>8)return;const r=renderer.domElement.getBoundingClientRect();const ray=new T.Raycaster();ray.setFromCamera(new T.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);const hit=ray.intersectObjects(hitObjects)[0];if(hit)onSelect(hit.object.userData.slot);});
+ renderer.domElement.addEventListener('pointerup',e=>{if(!pointer||Math.hypot(e.clientX-pointer.x,e.clientY-pointer.y)>8)return;pointer=null;const r=renderer.domElement.getBoundingClientRect();const ray=new T.Raycaster();ray.setFromCamera(new T.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);const artifactHit=ray.intersectObjects(slots.map(s=>s.content),true)[0],baseHit=ray.intersectObjects(baseHits)[0];if(artifactHit&&(!baseHit||artifactHit.distance<baseHit.distance)){let object=artifactHit.object;while(object&&object.userData.slot===undefined)object=object.parent;if(object){onSelect(object.userData.slot);return;}}const hit=ray.intersectObjects(hitObjects)[0];if(hit)onSelect(hit.object.userData.slot);});
  controls.addEventListener('start',()=>transition=null);
  controls.addEventListener('change',()=>dirty=true);
  function resize(){const w=host.clientWidth,h=host.clientHeight;camera.aspect=w/h;camera.fov=w<700?57:48;camera.updateProjectionMatrix();renderer.setSize(w,h);dirty=true;}
