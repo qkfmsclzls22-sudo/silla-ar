@@ -1,0 +1,37 @@
+Bulguksa photographic courtyard v7 — 2026-10-22
+
+Production route: /play/?tour=bulguksa
+Classic peer room remains available at /play/?tour=bulguksa&mode=classic or existing room links.
+Museum, Wolseong, and all AR/photo assets are unchanged.
+
+Implemented
+- Actual licensed wide photograph of Daeungjeon, Seokgatap and Dabotap.
+- Drag/pinch/wheel/keyboard navigation; tap an actual lantern to hang or read a wish.
+- Real tag-shaped input, 40-character wish, nickname, three optional prompts.
+- 22 lantern positions; own lantern uses a stronger color, warm outline, and an explicit '내 소원' marker.
+- Read, edit, remove, find own lantern, browser-local persistence.
+- Observe two pagodas and Daeungjeon after the guided tour. Both pagoda records add a mark to the exported postcard.
+- Save current scene as a 1800-pixel-wide PNG, with date and source/license credits.
+- Portrait layout keeps all three buildings visible in a distant photograph while larger foreground lanterns can be moved and selected. Landscape uses the unified wide panorama.
+- No continuous idle rendering; reduced-motion-aware hanging animation. Asset decoding and blurred backdrop are cached.
+
+Verified with CUA in the app browser
+- 1440 x 900 desktop; 390 x 844 and 360 x 640 portrait; 844 x 390 landscape.
+- No page overflow; form submit visible without dialog scrolling at 360 x 640 and 844 x 390.
+- Direct canvas selection hangs a wish. Dragging does not open a tag or add another wish.
+- Click own tag, read the exact text, edit the same slot, then reload. Count stays at one.
+- Both pagoda labels open the correct content and the second confirms both observations.
+- PNG export generated and downloaded; 1800 x 1057 at 844 x 390, with the two-pagoda record and attribution visible.
+- JS syntax checks and git diff whitespace checks; no browser warning/error logs in the tested flow.
+
+Limits
+- Responsive browser testing, not physical iOS/Android touch, pinch, camera or Web Share testing.
+- Wishes and observation records are local to the current browser. This revision has no shared public wish database and does not register wishes at the actual temple.
+- The courtyard photograph is Wikimedia CC BY-SA 4.0; the lantern is an AI-assisted edit of the user's photo. Neither is described as an official KHS asset. See assets/lotus-v7/SOURCES.txt.
+
+Next connected activities (ideas, NOT implemented in v7)
+1. Gratitude stone tower: select a stone, add one short gratitude, balance 3–5 stones. Include the finished tower next to the wish tag on the same travel postcard. Use licensed real stone surfaces or official objects with clear provenance.
+2. Guide's clue hunt: find 2–3 details in official heritage photographs that were actually discussed during the user's tour. After each find, the detail becomes a small collection stamp. Confirm clues against the actual tour script before publishing.
+3. One shared memory: two companions each choose a word for today's tour. Place both words on one commemorative tag, with an optional photo export. Keep participation short and within the same screen.
+
+Design principle: observe one real detail, leave one personal memory, and take away one coherent postcard. Avoid separate menus for disconnected mini-games.

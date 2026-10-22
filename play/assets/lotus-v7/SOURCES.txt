@@ -1,0 +1,25 @@
+Bulguksa photographic courtyard v7 — provenance
+2026-10-22
+
+bulguksa-courtyard.jpg
+Original photograph: Daeungjeon, Seokgatap and Dabotap
+Author: Christophe95, own work, 2018-10-01
+Source: https://commons.wikimedia.org/wiki/File:Daeungjeon,_Seokgatap_and_Dabotap.jpg
+Original: https://upload.wikimedia.org/wikipedia/commons/b/bd/Daeungjeon%2C_Seokgatap_and_Dabotap.jpg
+License: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+Original asset is unchanged. The interactive display scales/crops it and overlays lanterns, tags, labels, and optional night tint. Portrait layout uses a separate foreground lantern plane and a full-width architecture photograph. Adapted photographic scenes and exported composites retain CC BY-SA 4.0. This does not relicense unrelated program code.
+This photograph is NOT a National Heritage Service scan or KHS photograph.
+
+lotus-photo.png
+Created using the built-in imagegen tool (image edit, transparent background) from the user's supplied photograph. It is a photo-based AI edit, not a 3D render, official documentary scan, or unmodified extracted photo. Only the lantern remains; all personal tags, hands, and background are removed.
+Input: user-supplied codex-clipboard-4922c421-06b0-4e8d-aeb1-673794273f5a.png.
+Generated output: exec-b7b652bf-75fd-47e5-88d2-92d2b4435cca.png.
+Final prompt:
+Use case: background-extraction / precise-object-edit. Asset type: photoreal photographic cutout for an interactive Bulguksa lotus-lantern web experience. Image 1 is the edit target and material reference. Extract and reconstruct ONE complete central hanging lotus lantern only, with the same real saturated crimson crepe-paper petals, two tiers of pointed green crepe-paper leaves, and the flat blue-and-muted-gold scalloped circular collar with a dark circular opening underneath. Preserve the actual handmade PAPER quality, fine parallel ridges, wrinkles, thin uneven edges, slightly faded dye, and soft natural shadows seen in the photograph. Show the entire round lotus lantern, including its tall upward red petal tips, viewed slightly from below as in the photo. A short thin ivory hanging string at its top is okay. REMOVE ALL wish tags, label text, hands, other lanterns, buildings and background. True transparent background. Main lantern centered, occupies 85% of a square image. No cast shadow on a ground, no floor. This must look like a cut-out real documentary photograph, NOT illustration, NOT CGI, NOT a toy, NOT a smooth plastic or fabric flower. No text, no characters. Keep asymmetrical natural crepe folds; do not over-perfect the lantern.
+
+Layout reference only:
+National Heritage Digital Service, 2018 Bulguksa survey aerial image:
+https://digital.khs.go.kr/buis/buisDetail.do?bizUid=13983502673304513762&ctptNo=1333705020000&ctptUid=13898859678809301109&nation=&stakeholdersSes=
+The reference image is not redistributed by this page.
+
+The official 3D heritage files used by the existing AR/photo experiences are separate and unchanged by this revision.
