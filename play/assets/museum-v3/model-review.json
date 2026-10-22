@@ -1,0 +1,92 @@
+[
+  {
+    "id": "pensive",
+    "source": "heritage/assets/pensive/model-v1.glb",
+    "polygonsBefore": 36376,
+    "polygonsAfter": 36376,
+    "blenderBounds": [
+      [
+        -0.2042887657880783,
+        -0.2320784032344818,
+        0.0
+      ],
+      [
+        0.20427106320858002,
+        0.23206406831741333,
+        0.9015942811965942
+      ]
+    ]
+  },
+  {
+    "id": "wing",
+    "source": "heritage/assets/wing/model-v1.glb",
+    "polygonsBefore": 18500,
+    "polygonsAfter": 18500,
+    "blenderBounds": [
+      [
+        -0.2270716428756714,
+        -0.07478220760822296,
+        0.0
+      ],
+      [
+        0.2270716428756714,
+        0.07476933300495148,
+        0.426977276802063
+      ]
+    ]
+  },
+  {
+    "id": "earrings",
+    "source": "heritage/assets/earrings/model-v1.glb",
+    "polygonsBefore": 120000,
+    "polygonsAfter": 120000,
+    "blenderBounds": [
+      [
+        -0.010935244150459766,
+        -0.005563782528042793,
+        0.0
+      ],
+      [
+        0.010936050675809383,
+        0.005564837716519833,
+        0.04978705197572708
+      ]
+    ]
+  },
+  {
+    "id": "smile",
+    "source": "smile/smile-textured-v1.glb",
+    "polygonsBefore": 544681,
+    "polygonsAfter": 119999,
+    "blenderBounds": [
+      [
+        -0.11709821969270706,
+        -0.038190338760614395,
+        -0.12495049089193344
+      ],
+      [
+        0.11708138138055801,
+        0.038202300667762756,
+        0.12499498575925827
+      ]
+    ]
+  },
+  {
+    "id": "toou",
+    "source": "toou/toou-v2.glb",
+    "polygonsBefore": 12064,
+    "polygonsAfter": 12064,
+    "blenderBounds": [
+      [
+        -0.03464836627244949,
+        -0.01336759701371193,
+        0.0
+      ],
+      [
+        0.03464836627244949,
+        0.01336759701371193,
+        0.09792733937501907
+      ]
+    ]
+  }
+]
