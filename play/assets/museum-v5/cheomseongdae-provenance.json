@@ -1,0 +1,14 @@
+{
+  "id": "cheomseongdae",
+  "archive": "국보_경주_첨성대_00001_모델링_서비스.zip",
+  "originalFile": "NT31_Cheomseongdae Observatory, Gyeongju_low.obj",
+  "polygonsBefore": 230987,
+  "triangles": 79994,
+  "dimensions": [
+    1.6434111595153809,
+    1.69175386428833,
+    2.0
+  ],
+  "bytes": 1998628,
+  "processing": "Existing official KHS OBJ and original JPG texture. Uniform scaling, mesh reduction and texture resize. Thumbnail rendered after re-importing exported GLB."
+}

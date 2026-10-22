@@ -1,0 +1,14 @@
+{
+  "id": "necklace",
+  "archive": "서라벌_천년왕경_옥류연결_곡옥_목걸이_서비스본.zip",
+  "originalFile": "SM_CL00095_Low.fbx",
+  "polygonsBefore": 6082,
+  "triangles": 12144,
+  "dimensions": [
+    0.8894585371017456,
+    0.22975192964076996,
+    1.999999761581421
+  ],
+  "bytes": 2655616,
+  "processing": "Official KHS model and original texture maps. Uniform scale, mesh reduction when necessary, 1536px color / 1024px data textures; display orientation adjusted for cheonma and shoes. Thumbnail rendered from the final exported GLB."
+}

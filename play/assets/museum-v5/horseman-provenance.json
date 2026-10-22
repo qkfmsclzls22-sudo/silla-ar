@@ -1,0 +1,14 @@
+{
+  "id": "horseman",
+  "archive": "서라벌_천년왕경_기마인물형토기_서비스본.zip",
+  "originalFile": "SM_AR10005.fbx",
+  "polygonsBefore": 12029,
+  "triangles": 23834,
+  "dimensions": [
+    2.3880786895751953,
+    0.8036069869995117,
+    2.0000500679016113
+  ],
+  "bytes": 6582460,
+  "processing": "Official KHS model and original texture maps. Uniform scale, mesh reduction when necessary, 1536px color / 1024px data textures; display orientation adjusted for cheonma and shoes. Thumbnail rendered from the final exported GLB."
+}

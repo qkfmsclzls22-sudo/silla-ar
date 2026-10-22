@@ -1,0 +1,14 @@
+{
+  "id": "buddha-plaque",
+  "archive": "서라벌_천년왕경_금동아미타삼존불_판불_002_서비스본.zip",
+  "originalFile": "SM_RE20006_Low.fbx",
+  "polygonsBefore": 69322,
+  "triangles": 69322,
+  "dimensions": [
+    1.390953779220581,
+    0.30669039487838745,
+    1.9999992847442627
+  ],
+  "bytes": 4548160,
+  "processing": "Official KHS model and original texture maps. Uniform scale, mesh reduction when necessary, 1536px color / 1024px data textures; display orientation adjusted for cheonma and shoes. Thumbnail rendered from the final exported GLB."
+}

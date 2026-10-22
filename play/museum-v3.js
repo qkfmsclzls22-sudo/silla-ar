@@ -1,10 +1,10 @@
-import {artifacts,artifactById,interiorSource,storageKey,normalizeState,exhibitionSlots,recommendedIds} from './museum-data-v3.js?v=20261023-1';
-import {createGallery} from './museum-scene-v3.js?v=20261023-1';
+import {artifacts,artifactById,interiorSource,storageKey,normalizeState,exhibitionSlots,recommendedIds} from './museum-data-v3.js?v=20261023-2';
+import {createGallery} from './museum-scene-v3.js?v=20261023-2';
 import {esc,read,write,toast,saveCanvas} from './ui.js';
 
 export async function mountMuseum(main){
  document.body.classList.add('museum-gallery');document.title='나의 신라 전시실 · 경주트립';
- const css=document.createElement('link');css.rel='stylesheet';css.href='./museum-v3.css?v=20261023-1';document.head.append(css);
+ const css=document.createElement('link');css.rel='stylesheet';css.href='./museum-v3.css?v=20261023-2';document.head.append(css);
  const raw=read(storageKey,null);let state=normalizeState(raw);
  const recommended=recommendedIds.map(id=>id?{id,rotation:0,note:''}:null);
  if(!raw)state.cases=structuredClone(recommended);
@@ -29,11 +29,11 @@ export async function mountMuseum(main){
  function closePanel(){panel.hidden=true;app.classList.remove('panel-open');if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});}
  function showCatalog(i){selected=i;zone=exhibitionSlots[i].kind;refresh();gallery?.focus(i);
   const cards=artifacts.filter(a=>filter==='전체'||a.category===filter).map(a=>`<button class="mg-artifact-card" data-pick="${a.id}"><div class="mg-artifact-image"><img src="${a.thumb}" alt="${a.name} 실제 3D 모델 렌더" loading="lazy"><span>3D</span></div><div><small>${a.era}</small><b>${a.name}</b><p>${a.short}</p><em>${state.cases[i]?.id===a.id?'현재 전시 중':'이 자리에 담기 ＋'}</em></div></button>`).join('');
-  openPanel('어떤 유물을 담을까요?',`${exhibitionSlots[i].name} / ${artifacts.length}종의 선택`,`<div class="mg-filters" aria-label="유물 분류">${['전체','황금','불교미술','생활','무구'].map(x=>`<button data-filter="${x}" aria-pressed="${x===filter}">${x}</button>`).join('')}</div><div class="mg-catalog">${cards}</div><p class="mg-micro">${zone==='wall'?'벽 안쪽의 받침에 유물을 전시해요. ':''}국가유산 디지털 자료 기반 · 전시하기 좋게 크기를 조정했어요.</p>`);
+  openPanel('어떤 유물을 담을까요?',`${exhibitionSlots[i].name} / ${artifacts.length}종의 선택`,`<div class="mg-filters" aria-label="유물 분류">${['전체','황금','불교미술','생활','무구','건축'].map(x=>`<button data-filter="${x}" aria-pressed="${x===filter}">${x}</button>`).join('')}</div><div class="mg-catalog">${cards}</div><p class="mg-micro">${zone==='wall'?'벽 안쪽의 받침에 유물을 전시해요. ':''}국가유산 디지털 자료 기반 · 전시하기 좋게 크기를 조정했어요.</p>`);
  }
  function showStory(i){selected=i;zone=exhibitionSlots[i].kind;refresh();gallery.focus(i);const c=state.cases[i],a=artifactById[c.id];
   openPanel(a.name,`${exhibitionSlots[i].name} / MY COLLECTION`,
-   `<p class="mg-era">${a.era}</p><p class="mg-intro">${a.intro}</p><div class="mg-story-tabs" role="tablist" aria-label="유물 설명"><button role="tab" aria-selected="true" data-story="value">유물의 가치</button><button role="tab" aria-selected="false" data-story="story">얽힌 이야기</button><button role="tab" aria-selected="false" data-story="look">자세히 보기</button></div><div class="mg-story-content" role="tabpanel"><p>${a.value}</p></div><div class="mg-story-tools"><button data-action="rotate">↻ 유물 돌려 보기</button><button data-action="note">✎ 나의 한 줄</button></div>${c.note?`<blockquote class="mg-note">${esc(c.note)}</blockquote>`:`<p class="mg-question">${a.question}</p>`}<details class="mg-source"><summary>유물 자료와 이야기 출처</summary><p>${a.note}</p><a href="${a.source}" target="_blank" rel="noopener">국가유산 디지털 서비스 ↗</a><a href="${a.storySource}" target="_blank" rel="noopener">박물관 해설 자료 ↗</a></details>`,
+   `<p class="mg-era">${a.era}</p><p class="mg-intro">${a.intro}</p><div class="mg-story-tabs" role="tablist" aria-label="유물 설명"><button role="tab" aria-selected="true" data-story="value">유물의 가치</button><button role="tab" aria-selected="false" data-story="story">얽힌 이야기</button><button role="tab" aria-selected="false" data-story="look">자세히 보기</button></div><div class="mg-story-content" role="tabpanel"><p>${a.value}</p></div><div class="mg-story-tools"><button data-action="rotate">↻ 유물 돌려 보기</button><button data-action="note">✎ 나의 한 줄</button></div>${c.note?`<blockquote class="mg-note">${esc(c.note)}</blockquote>`:`<p class="mg-question">${a.question}</p>`}<details class="mg-source"><summary>유물 자료와 이야기 출처</summary><p>${a.note}</p><a href="${a.source}" target="_blank" rel="noopener">국가유산 디지털 서비스 ↗</a><a href="${a.storySource}" target="_blank" rel="noopener">유물 해설 자료 ↗</a></details>`,
    `<button data-action="replace" class="mg-primary">다른 유물로 바꾸기</button><button data-action="move">자리 옮기기</button><button data-action="remove" aria-label="진열장에서 유물 빼기">빼기</button>`);
  }
  function select(i){if(busy)return;if(status.get(i)==='error'){gallery.setCase(i,state.cases[i]);toast('유물을 다시 불러옵니다.');}state.cases[i]?showStory(i):showCatalog(i);}

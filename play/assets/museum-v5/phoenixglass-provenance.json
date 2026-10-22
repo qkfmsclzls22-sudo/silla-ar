@@ -1,0 +1,14 @@
+{
+  "id": "phoenixglass",
+  "archive": "서라벌_천년왕경_봉수형(봉황머리)유리병.zip",
+  "originalFile": "SM_24FO0006_Cage_High.fbx",
+  "polygonsBefore": 24417,
+  "triangles": 24417,
+  "dimensions": [
+    0.8886609077453613,
+    0.7816643714904785,
+    1.9999996423721313
+  ],
+  "bytes": 1628360,
+  "processing": "Official KHS model and original texture maps. Uniform scale, mesh reduction when necessary, 1536px color / 1024px data textures; display orientation adjusted for cheonma and shoes. Thumbnail rendered from the final exported GLB."
+}
