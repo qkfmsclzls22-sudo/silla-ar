@@ -1,0 +1,40 @@
+2026-10-22 — Mobile folk-art direction preview
+
+Entry: play/preview-v5.html?tour=wolseong (also bulguksa, museum)
+This is a separate review URL, not a replacement for play/index.html.
+The user rejected the initially generated landscape treatment and asked for
+the playful, character-led direction of pungsokdo.com. Original code-drawn
+scenery, characters, controls and props now provide the preview direction.
+No artwork files from Pungsokdo were downloaded or reused. The rejected
+Higgsfield landscape images are not shipped in this preview.
+
+Implemented
+- Bulguksa: paper wish tag, 48-character wishes, color, tap a hanging slot,
+  8 personal lanterns, night mode, tag reading/removal, balanced stone stack.
+- Museum: six excavation sites, real cleared-area coverage, 65% uncover
+  threshold, artifact facts, collection exhibition and AR links.
+- Wolseong: eight expressions, four hairstyles/outfits/poses, palette/skin,
+  placement, drag, resize, undo, six original ink props, scene naming.
+- Shared: viewport-based mobile controls, local persistence, 1080x1500 PNG
+  export, existing classic experiences and old storage preserved.
+- Sources and scope: play/preview-about-v5.html.
+
+Verification
+- node --test play/tests/mobile-v4.test.mjs: 4 passed.
+  Tests distinguish repeated brushing from actually clearing new areas,
+  reject unsupported stones, and sanitize persisted collections.
+- Node syntax checks passed for new modules.
+- Browser at 390x844: wish input -> hang -> read tag; stone placement and
+  off-center rejection; excavation via pointer drags reached 88%, collecting
+  opened artifact details and updated collection count; character choices,
+  figure placement and prop placement worked.
+- Browser reload retained 1/6 collected, 1 lantern, 3 stones, 2 scene pieces.
+- Browser at 360x640: document dimensions equal viewport. Primary actions
+  stayed within viewport; Wolseong controls clientHeight=scrollHeight=215,
+  Bulguksa controls clientHeight=scrollHeight=132 (no control scrolling).
+- PNG preview reported naturalWidth=1080, naturalHeight=1500.
+- Browser console: no errors/warnings observed in the checked flows.
+- Real iPhone/Android keyboard, photo sharing and camera AR were not tested
+  in this pass. The visual direction remains for user review.
+
+Production gallery order and all existing AR models/overlays are unchanged.

@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {brushCells,stoneFit,cleanLanterns,uniqueIds} from '../game-rules-v4.js';
+test('brushing one patch repeatedly cannot unlock a buried object',()=>{const cells=new Set();const first=brushCells(cells,.5,.5,.09);for(let i=0;i<100;i++)brushCells(cells,.5,.5,.09);assert.equal(brushCells(cells,.5,.5,.09),first);assert.ok(first<10);});
+test('brushing across the actual artifact region unlocks it; outside strokes do not',()=>{const cells=new Set();assert.equal(brushCells(cells,-1,1,.09),0);let pct=0;for(let y=.05;y<1;y+=.12)for(let x=.05;x<1;x+=.12)pct=brushCells(cells,x,y,.1,30,30,.115);assert.ok(pct>=95);assert.ok(pct<=100);});
+test('stone overlap accepts a supported stack and rejects unstable or disconnected stones',()=>{assert.equal(stoneFit([],300,200),true);assert.equal(stoneFit([{x:300,w:200}],305,150),true);assert.equal(stoneFit([{x:300,w:200}],400,150),false);assert.equal(stoneFit([{x:300,w:200}],535,150),false);assert.equal(stoneFit([{x:300,w:200},{x:315,w:140}],310,100),true);});
+test('saved data retains only supported records and keeps old collections separate',()=>{assert.deepEqual(cleanLanterns(null),[]);assert.deepEqual(cleanLanterns([{slot:-1,text:'bad'},{slot:8,text:'bad'},{slot:1,text:'good',tone:99,name:'traveler'}]),[{slot:1,text:'good',tone:0,name:'traveler'}]);assert.deepEqual(uniqueIds(['crown','crown','missing','wing'],['crown','wing']),['crown','wing']);});

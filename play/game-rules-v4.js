@@ -1,0 +1,4 @@
+export function stoneFit(stack,x,width){if(!stack.length)return true;const top=stack.at(-1);const overlap=Math.min(top.x+top.w/2,x+width/2)-Math.max(top.x-top.w/2,x-width/2);return overlap>=Math.min(top.w,width)*.54&&Math.abs(x-top.x)<top.w*.49;}
+export function brushCells(cells,x,y,rx,cols=30,rows=30,ry=rx){for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if(Math.hypot(((i+.5)/cols-x)/rx,((j+.5)/rows-y)/ry)<1)cells.add(j*cols+i);}return Math.min(100,Math.floor(cells.size/(cols*rows)*100));}
+export function cleanLanterns(value){return Array.isArray(value)?value.filter(v=>v&&Number.isInteger(v.slot)&&v.slot>=0&&v.slot<8&&typeof v.text==='string').slice(-8).map(v=>({slot:v.slot,text:v.text.slice(0,48),name:String(v.name||'여행자').slice(0,10),tone:Number.isInteger(v.tone)&&v.tone>=0&&v.tone<6?v.tone:0})):[];}
+export function uniqueIds(value,allowed){return [...new Set(Array.isArray(value)?value.filter(v=>allowed.includes(v)):[])];}
