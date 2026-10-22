@@ -1,0 +1,20 @@
+{
+  "id": "crown",
+  "originalFile": "SM_24CL0003_Cage_High.fbx",
+  "polygonsBefore": 3124,
+  "polygonsAfter": 3124,
+  "blenderBounds": [
+    [
+      -0.16981393098831177,
+      -0.14171423017978668,
+      -0.005643048789352179
+    ],
+    [
+      0.1768222153186798,
+      0.143614262342453,
+      0.3564384877681732
+    ]
+  ],
+  "glbBytes": 3259908,
+  "processing": "Official source geometry, original texture maps; mobile decimation and texture resize. Thumbnail is a render of the exported geometry."
+}

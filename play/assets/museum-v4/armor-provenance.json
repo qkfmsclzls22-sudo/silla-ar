@@ -1,0 +1,20 @@
+{
+  "id": "armor",
+  "originalFile": "model-v1.glb",
+  "polygonsBefore": 116448,
+  "polygonsAfter": 95000,
+  "blenderBounds": [
+    [
+      -0.2696537375450134,
+      -0.19193093478679657,
+      -8.08834101917455e-08
+    ],
+    [
+      0.2696633040904999,
+      0.1925106942653656,
+      0.6870632171630859
+    ]
+  ],
+  "glbBytes": 6557600,
+  "processing": "Official source geometry, original texture maps; mobile decimation and texture resize. Thumbnail is a render of the exported geometry."
+}

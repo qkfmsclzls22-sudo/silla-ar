@@ -1,0 +1,20 @@
+{
+  "id": "helmet",
+  "originalFile": "model-v1.glb",
+  "polygonsBefore": 3712,
+  "polygonsAfter": 3712,
+  "blenderBounds": [
+    [
+      -0.0774070993065834,
+      -0.07908909022808075,
+      0.0
+    ],
+    [
+      0.07741113752126694,
+      0.07908909022808075,
+      0.1524624079465866
+    ]
+  ],
+  "glbBytes": 1510972,
+  "processing": "Official source geometry, original texture maps; mobile decimation and texture resize. Thumbnail is a render of the exported geometry."
+}

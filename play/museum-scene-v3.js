@@ -3,9 +3,9 @@ import {GLTFLoader} from './vendor/GLTFLoader-r169.js';
 import {DRACOLoader} from './vendor/DRACOLoader-r169.js';
 import {OrbitControls} from './vendor/OrbitControls-r169.js';
 import {RoomEnvironment} from './vendor/RoomEnvironment-r169.js';
-import {artifactById} from './museum-data-v3.js';
+import {artifactById,exhibitionSlots} from './museum-data-v3.js?v=20261023-1';
 
-const positions=[[-4,-4],[0,-6],[4,-4],[-4,2],[0,0],[4,2]];
+const positions=exhibitionSlots.map(s=>[s.x,s.z]);
 export function createGallery(host,{onSelect,onStatus,onReady}){
  let dirty=true;
  const scene=new T.Scene();scene.background=new T.Color('#19232b');scene.fog=new T.Fog('#19232b',32,65);
@@ -34,11 +34,9 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
  for(let x=-12;x<13;x+=.36)box(.1,.1,32,x,6.85,4,woodMat);
  const lightMat=new T.MeshBasicMaterial({color:'#f3ddaf',toneMapped:false});
  for(let z=-8;z<=8;z+=4)for(let x=-7;x<=7;x+=4.65){box(3.9,.035,2.7,x,6.72,z,lightMat);box(4.1,.14,.09,x,6.64,z-1.4,darkMat);box(4.1,.14,.09,x,6.64,z+1.4,darkMat);box(.09,.14,2.9,x-2.02,6.64,z,darkMat);box(.09,.14,2.9,x+2.02,6.64,z,darkMat);}
- // Shallow wall niches and benches echo the historical gallery's material palette.
- for(const x of [-9.7,9.7]){box(3.1,3.7,.3,x,2.7,-11.65,mat('#121d25'));box(3.2,.1,.9,x,.9,-11.4,woodMat);box(2.9,.04,.25,x,4.48,-11.3,lightMat);}
- box(2.3,5.3,.1,-5.9,3,-11.75,mat('#8a4c2e'));
+ // The rear wall holds four real, selectable recessed display cases.
  for(const x of [-9.5,9.5]){box(2.5,.18,1.15,x,.68,4.5,woodMat);box(.16,.6,.8,x-1,.3,4.5,darkMat);box(.16,.6,.8,x+1,.3,4.5,darkMat);}
- const titleMap=canvasTexture(2048,768,()=>{});const titlePlane=new T.Mesh(new T.PlaneGeometry(8,3),new T.MeshBasicMaterial({map:titleMap,transparent:true,depthWrite:false}));titlePlane.position.set(.6,3.5,-11.78);scene.add(titlePlane);
+ const titleMap=canvasTexture(2048,768,()=>{});const titlePlane=new T.Mesh(new T.PlaneGeometry(7,2.1),new T.MeshBasicMaterial({map:titleMap,transparent:true,depthWrite:false}));titlePlane.position.set(0,5.65,-11.78);scene.add(titlePlane);
  function setTitle(title){const c=titleMap.image.getContext('2d');c.clearRect(0,0,2048,768);c.fillStyle='#c5b58d';c.font='32px sans-serif';c.fillText('GYEONGJU  /  MY PRIVATE COLLECTION',90,135);c.fillStyle='#f0ece2';c.font='500 116px "Noto Sans KR", sans-serif';let rows=title.length>12?[title.slice(0,12),title.slice(12)]:[title];rows.forEach((r,i)=>c.fillText(r,90,340+i*150));c.fillStyle='#b4bdc1';c.font='30px "Noto Sans KR", sans-serif';c.fillText('신라의 아름다움, 나의 시선으로',96,680);titleMap.needsUpdate=true;dirty=true;}
  const glassMat=new T.MeshPhysicalMaterial({color:0xcfe3df,transparent:true,opacity:.065,roughness:.12,metalness:.12,side:T.DoubleSide,depthWrite:false});
  const cache=new Map(),slots=[],hitObjects=[],baseHits=[];
@@ -47,6 +45,21 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
  async function load(id){if(!cache.has(id))cache.set(id,loader.loadAsync(artifactById[id].model).then(g=>{g.scene.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});return g.scene;}).catch(e=>{cache.delete(id);throw e;}));return cache.get(id);}
  positions.forEach(([x,z],i)=>{
   const group=new T.Group();group.position.set(x,0,z);scene.add(group);
+  const wall=exhibitionSlots[i].kind==='wall';
+  if(wall){
+   box(3.8,3.5,.16,0,2.9,-.49,woodMat,group);
+   box(3.55,3.27,.08,0,2.9,-.39,mat('#101c22'),group);
+   for(const sx of [-1,1])box(.055,3.5,1.2,sx*1.89,2.9,.08,edgeMat,group);
+   box(3.8,.12,1.2,0,1.2,.08,stoneMat,group);box(3.8,.09,1.2,0,4.6,.08,stoneMat,group);
+   box(3.4,.035,.18,0,4.49,.18,lightMat,group);
+   const glass=box(3.64,3.3,.025,0,2.9,.69,glassMat,group);glass.renderOrder=5;
+   const glow=box(3.8,.045,1.22,0,1.28,.08,new T.MeshBasicMaterial({color:'#e6c47e'}),group);glow.visible=false;
+   const plateMap=canvasTexture(768,192,()=>{}),plate=new T.Mesh(new T.PlaneGeometry(2.5,.48),new T.MeshBasicMaterial({map:plateMap}));plate.position.set(0,.84,.7);group.add(plate);
+   const content=new T.Group();content.position.set(0,1.48,.13);content.userData.slot=i;group.add(content);
+   const hit=box(3.8,3.9,1.2,x,2.6,z+.1,new T.MeshBasicMaterial({visible:false}));hit.userData.slot=i;hitObjects.push(hit);
+   const marker=document.createElement('button');marker.className='mg-marker mg-wall-marker';marker.dataset.slot=i;marker.onclick=()=>onSelect(i);host.append(marker);
+   slots.push({group,content,plateMap,glow,marker,id:null,revision:0,width:3.2,depth:.95,height:2.65,wall:true});return;
+  }
   box(2.55,.15,2.35,0,.08,0,darkMat,group);box(2.45,1.02,2.25,0,.65,0,woodMat,group);box(2.57,.08,2.37,0,1.2,0,stoneMat,group);
   const glow=box(2.56,.025,2.36,0,1.15,0,new T.MeshBasicMaterial({color:'#bfa46c'}),group);glow.visible=false;
   box(2.34,.035,2.14,0,1.255,0,mat('#343a36'),group);
@@ -62,21 +75,22 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
   const hit=box(2.6,3.2,2.4,x,1.6,z,new T.MeshBasicMaterial({visible:false}));hit.userData.slot=i;hitObjects.push(hit);
   const baseHit=box(2.55,1.24,2.35,x,.62,z,new T.MeshBasicMaterial({visible:false}));baseHit.userData.slot=i;baseHits.push(baseHit);
   const marker=document.createElement('button');marker.className='mg-marker';marker.dataset.slot=i;marker.onclick=()=>onSelect(i);host.append(marker);
-  slots.push({group,content,plateMap,glow,marker,id:null,revision:0});
+  slots.push({group,content,plateMap,glow,marker,id:null,revision:0,width:1.95,depth:1.7,height:1.8,wall:false});
  });
- function plate(i,text){const s=slots[i],c=s.plateMap.image.getContext('2d');c.fillStyle='#e6e1d3';c.fillRect(0,0,768,192);c.fillStyle='#202c31';c.font='28px sans-serif';c.fillText(String(i+1).padStart(2,'0'),28,49);c.font='500 35px "Noto Sans KR",sans-serif';c.fillText(text,28,120,700);s.plateMap.needsUpdate=true;}
- async function setCase(i,data){const s=slots[i],rev=++s.revision;s.id=data?.id||null;s.content.clear();dirty=true;s.marker.classList.toggle('filled',!!data);s.marker.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span><b>${data?'이야기':'＋ 유물 담기'}</b>`;s.marker.setAttribute('aria-label',`${i+1}번 진열장 · ${data?artifactById[data.id].name:'유물 담기'}`);plate(i,data?artifactById[data.id].name:'나의 선택을 기다리는 자리');
+ function plate(i,text){const s=slots[i],c=s.plateMap.image.getContext('2d');c.fillStyle='#e6e1d3';c.fillRect(0,0,768,192);c.fillStyle='#202c31';c.font='28px sans-serif';c.fillText(exhibitionSlots[i].label,28,49);c.font='500 35px "Noto Sans KR",sans-serif';c.fillText(text,28,120,700);s.plateMap.needsUpdate=true;}
+ async function setCase(i,data){const s=slots[i],rev=++s.revision;s.id=data?.id||null;s.content.clear();dirty=true;s.marker.classList.toggle('filled',!!data);s.marker.innerHTML=`<span>${exhibitionSlots[i].label}</span><b>${data?'이야기':'＋ 유물 담기'}</b>`;s.marker.setAttribute('aria-label',`${exhibitionSlots[i].name} · ${data?artifactById[data.id].name:'유물 담기'}`);plate(i,data?artifactById[data.id].name:'나의 선택을 기다리는 자리');
   if(!data){s.marker.classList.remove('loading');onStatus(i,'empty');return;}
   s.marker.classList.add('loading');s.marker.querySelector('b').textContent='불러오는 중';onStatus(i,'loading');
-  try{const source=await load(data.id);if(rev!==s.revision)return;const m=source.clone(true);const bounds=new T.Box3().setFromObject(m),size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());const scale=Math.min(artifactById[data.id].height/size.y,1.95/size.x,1.7/size.z);m.scale.multiplyScalar(scale);m.position.set(-center.x*scale,-bounds.min.y*scale,-center.z*scale);const turn=new T.Group();turn.add(m);turn.rotation.y=T.MathUtils.degToRad(data.rotation||0);s.content.add(turn);dirty=true;s.marker.querySelector('b').textContent='이야기';s.marker.classList.remove('loading');onStatus(i,'ready');
+  try{const source=await load(data.id);if(rev!==s.revision)return;const m=source.clone(true);const bounds=new T.Box3().setFromObject(m),size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());m.position.sub(new T.Vector3(center.x,bounds.min.y,center.z));const turn=new T.Group();turn.add(m);s.content.add(turn);s.size=size;s.artifactHeight=artifactById[data.id].height;rotate(i,data.rotation||0);dirty=true;s.marker.querySelector('b').textContent='이야기';s.marker.classList.remove('loading');onStatus(i,'ready');
   }catch(e){if(rev!==s.revision)return;s.marker.classList.remove('loading');s.marker.querySelector('b').textContent='다시 불러오기';onStatus(i,'error');console.error('Museum model failed',data.id,e);}
  }
- function rotate(i,degrees){if(slots[i].content.children[0])slots[i].content.children[0].rotation.y=T.MathUtils.degToRad(degrees);dirty=true;}
+ function rotate(i,degrees){const s=slots[i],turn=s.content.children[0];if(turn&&s.size){const angle=T.MathUtils.degToRad(degrees),c=Math.abs(Math.cos(angle)),n=Math.abs(Math.sin(angle));const width=s.size.x*c+s.size.z*n,depth=s.size.z*c+s.size.x*n;const scale=Math.min((s.wall?s.height:s.artifactHeight)/s.size.y,s.width/Math.max(width,.001),s.depth/Math.max(depth,.001));turn.rotation.y=angle;turn.scale.setScalar(scale);}dirty=true;}
  let selected=-1,transition=null;
  function move(pos,target){transition={from:camera.position.clone(),fromTarget:controls.target.clone(),to:new T.Vector3(...pos),target:new T.Vector3(...target),start:performance.now()};}
  const mobile=()=>host.clientWidth<700;
- function overview(animate=true){selected=-1;slots.forEach(s=>s.glow.visible=false);const p=mobile()?[3.5,4.5,21]:[10,5.2,15];const t=[0,1.5,-2.8];if(animate)move(p,t);else{camera.position.set(...p);controls.target.set(...t);controls.update();}dirty=true;}
- function focus(i){selected=i;slots.forEach((s,k)=>s.glow.visible=k===i);const [x,z]=positions[i];const dist=mobile()?4.7:5.2;move([x+.8,3.1,z+dist],[x,1.85,z]);dirty=true;}
+ function overview(animate=true){selected=-1;slots.forEach(s=>s.glow.visible=false);const p=mobile()?[2.5,5.5,23]:[10,5.8,19];const t=[0,1.8,-2.8];if(animate)move(p,t);else{camera.position.set(...p);controls.target.set(...t);controls.update();}dirty=true;}
+ function wallView(){selected=-1;slots.forEach(s=>s.glow.visible=false);move(mobile()?[0,4.2,12]:[0,3.9,10],[0,3,-11]);dirty=true;}
+ function focus(i){selected=i;slots.forEach((s,k)=>s.glow.visible=k===i);const [x,z]=positions[i];const wall=slots[i].wall,dist=wall?(mobile()?5.6:6.5):(mobile()?4.7:5.2);move([x+(wall?0:.8),wall?3:3.1,z+dist],[x,wall?2.8:1.85,z]);dirty=true;}
  function setTheme(name){wallMat.color.set(name==='warm'?'#786e5f':'#182b37');dirty=true;}
  let pointer=null;
  renderer.domElement.addEventListener('pointerdown',e=>{pointer={x:e.clientX,y:e.clientY};transition=null;});
@@ -86,9 +100,9 @@ export function createGallery(host,{onSelect,onStatus,onReady}){
  function resize(){const w=host.clientWidth,h=host.clientHeight;camera.aspect=w/h;camera.fov=w<700?57:48;camera.updateProjectionMatrix();renderer.setSize(w,h);dirty=true;}
  const ro=new ResizeObserver(resize);ro.observe(host);resize();overview(false);
  const v=new T.Vector3();let stopped=false;
- function frame(now){if(stopped)return;if(transition){dirty=true;let t=Math.min(1,(now-transition.start)/720);t=1-Math.pow(1-t,3);camera.position.lerpVectors(transition.from,transition.to,t);controls.target.lerpVectors(transition.fromTarget,transition.target,t);if(t>=1)transition=null;}controls.target.x=T.MathUtils.clamp(controls.target.x,-7,7);controls.target.z=T.MathUtils.clamp(controls.target.z,-8,5);controls.target.y=T.MathUtils.clamp(controls.target.y,.7,3.2);controls.update();camera.position.x=T.MathUtils.clamp(camera.position.x,-12,12);camera.position.y=T.MathUtils.clamp(camera.position.y,1.6,6.4);camera.position.z=T.MathUtils.clamp(camera.position.z,-10.5,24);camera.lookAt(controls.target);if(dirty){renderer.render(scene,camera);dirty=false;}slots.forEach((s,i)=>{v.set(positions[i][0],.55,positions[i][1]+1.25).project(camera);const x=(v.x*.5+.5)*host.clientWidth,y=(-v.y*.5+.5)*host.clientHeight;const inView=v.z<1&&v.z>-1&&x>30&&x<host.clientWidth-30&&y>70&&y<host.clientHeight-72;s.marker.hidden=!inView||(selected>=0&&selected!==i);s.marker.style.transform=`translate(${x}px,${y}px) translate(-50%,0)`;s.marker.classList.toggle('selected',selected===i);});requestAnimationFrame(frame);}
+ function frame(now){if(stopped)return;if(transition){dirty=true;let t=Math.min(1,(now-transition.start)/720);t=1-Math.pow(1-t,3);camera.position.lerpVectors(transition.from,transition.to,t);controls.target.lerpVectors(transition.fromTarget,transition.target,t);if(t>=1)transition=null;}controls.target.x=T.MathUtils.clamp(controls.target.x,-10,10);controls.target.z=T.MathUtils.clamp(controls.target.z,-11.2,8);controls.target.y=T.MathUtils.clamp(controls.target.y,.7,3.5);controls.update();camera.position.x=T.MathUtils.clamp(camera.position.x,-12,12);camera.position.y=T.MathUtils.clamp(camera.position.y,1.6,6.4);camera.position.z=T.MathUtils.clamp(camera.position.z,-10.5,25);camera.lookAt(controls.target);if(dirty){renderer.render(scene,camera);dirty=false;}slots.forEach((s,i)=>{v.set(positions[i][0],s.wall?4.75:.55,positions[i][1]+(s.wall?.75:1.25)).project(camera);const x=(v.x*.5+.5)*host.clientWidth,y=(-v.y*.5+.5)*host.clientHeight;const inView=v.z<1&&v.z>-1&&x>30&&x<host.clientWidth-30&&y>70&&y<host.clientHeight-72;s.marker.hidden=!inView||(selected>=0&&selected!==i);s.marker.style.transform=`translate(${x}px,${y}px) translate(-50%,0)`;s.marker.classList.toggle('selected',selected===i);});requestAnimationFrame(frame);}
  requestAnimationFrame(frame);onReady?.();
  function capture(){renderer.render(scene,camera);const out=document.createElement('canvas');out.width=renderer.domElement.width;out.height=renderer.domElement.height;out.getContext('2d').drawImage(renderer.domElement,0,0);return out;}
  renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();onStatus(-1,'contextlost');});
- return {setCase,rotate,focus,overview,setTitle,setTheme,capture,zoom(delta){camera.position.sub(controls.target).multiplyScalar(delta).add(controls.target);controls.update();},dispose(){stopped=true;ro.disconnect();controls.dispose();draco.dispose();scene.traverse(o=>{o.geometry?.dispose();});env.dispose();renderer.dispose();}};
+ return {setCase,rotate,focus,overview,wallView,setTitle,setTheme,capture,zoom(delta){camera.position.sub(controls.target).multiplyScalar(delta).add(controls.target);controls.update();},dispose(){stopped=true;ro.disconnect();controls.dispose();draco.dispose();scene.traverse(o=>{o.geometry?.dispose();});env.dispose();renderer.dispose();}};
 }

@@ -1,0 +1,20 @@
+{
+  "id": "amitabha",
+  "originalFile": "NT27_Gilt-bronze_Seated_Amitabha_Buddha_of_Bulguksa_Temple_Gyeongju_low.obj",
+  "polygonsBefore": 6128810,
+  "polygonsAfter": 94997,
+  "blenderBounds": [
+    [
+      -1228.60302734375,
+      -790.060302734375,
+      -886.5965576171875
+    ],
+    [
+      1200.1380615234375,
+      651.532470703125,
+      1209.8616943359375
+    ]
+  ],
+  "glbBytes": 915804,
+  "processing": "Official source geometry, original texture maps; mobile decimation and texture resize. Thumbnail is a render of the exported geometry."
+}
