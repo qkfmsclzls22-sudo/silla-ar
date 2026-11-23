@@ -1,7 +1,8 @@
 import {$,esc,modal,toast,read,write,swatches,wireSwatches,shareLink,saveCanvas,colors} from './ui.js';
 import {createSanctuaryScene,CUSHIONS,CUSHION_ORDER,SPOTS,LANTERN_SLOTS,INSTRUMENTS,BOW_T} from './sanctuary-scene-v8.js?v=20261123-3';
 import {SanctuaryRoom} from './sanctuary-room-v8.js?v=20261123-3';
-// 불국사 메타버스 소원마당 v8 rev.2: 아바타로 청운교·백운교를 올라 대웅전 법당 안까지 들어가고,
+import {WOOD_SR,moktakWave,fishWave,resample} from './sanctuary-sounds-v8.js?v=20261123-4';
+// 불국사 메타버스 소원마당 v8 rev.4: 아바타로 청운교·백운교를 올라 대웅전 법당 안까지 들어가고,
 // 합장·큰절·목탁·좌선을 실제 동작으로 하고, 범영루 법고와 좌경루 목어·운판을 치고, 불 켜진 연등에 소원 글씨를 달고, 투어 일행(최대 10명)과 함께해요.
 const PROFILE='gj-sanctuary-profile-v8',SOLO='gj-sanctuary-wish-v8',STATS='gj-sanctuary-stats-v8',SOUND='gj-sanctuary-sound-v8',SOUNDTIP='gj-sanctuary-soundtip-v8';
 const today=()=>new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -10,32 +11,34 @@ const r2=v=>Math.round(v*100)/100;
 const MOKTAK_ICON='<svg viewBox="0 0 48 48" width="27" height="27" aria-hidden="true"><path d="M14 21c-9-2-11 13 0 12" fill="none" stroke="#a9662f" stroke-width="5.5" stroke-linecap="round"/><ellipse cx="28" cy="27" rx="15.5" ry="14" fill="#c98444" stroke="#8a4f22" stroke-width="1.6"/><path d="M43 28.5H27" stroke="#55300f" stroke-width="3" stroke-linecap="round"/><circle cx="25.5" cy="28.5" r="3.6" fill="#55300f"/><path d="M17.5 21.5c2.5-5 7.5-7.6 12.5-7.4" fill="none" stroke="#f3cf9f" stroke-width="2.4" stroke-linecap="round"/><path d="M43 3 33.5 11.5" stroke="#7a4a22" stroke-width="3.2" stroke-linecap="round"/><circle cx="32.5" cy="12.5" r="4" fill="#e0a868" stroke="#8a4f22" stroke-width="1.2"/></svg>';
 
 // ---------- sound ----------
-// 소리는 파일 없이 미리 계산한 파형으로 낸다. 아이폰은 무음 스위치가 Web Audio를 막아서 <audio> 태그로 재생한다.
-const SR=22050,TAU=Math.PI*2,IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+// 목탁·목어는 실제 나무 타악기 녹음(sanctuary-sounds-v8.js)을, 나머지는 미리 계산한 파형을 쓴다. 아이폰은 무음 스위치가 Web Audio를 막아서 <audio> 태그로 재생한다.
+const SR=WOOD_SR,TAU=Math.PI*2,IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 let actx=null,master=null,unlocked=false,soundOn=read(SOUND,true)!==false;const bank={};
 function render(dur,fn,peak){const n=Math.floor(dur*SR),a=new Float32Array(n);let m=0;for(let i=0;i<n;i++){a[i]=fn(i/SR);m=Math.max(m,Math.abs(a[i]))}const k=peak/(m||1),fade=Math.min(n,500);for(let i=0;i<n;i++)a[i]*=k;for(let i=0;i<fade;i++)a[n-1-i]*=i/fade;return a}
 const WAVES={
- // 목탁: 속이 빈 나무를 두드리는 짧고 또렷한 소리
- moktak:()=>render(.45,t=>{const gl=1+.07*Math.exp(-t/.012);return Math.sin(TAU*540*gl*t)*Math.exp(-t/.075)+.55*Math.sin(TAU*815*gl*t)*Math.exp(-t/.045)+.3*Math.sin(TAU*1390*t)*Math.exp(-t/.02)+.22*Math.sin(TAU*270*t)*Math.exp(-t/.09)+(Math.random()*2-1)*.6*Math.exp(-t/.0035)},.97),
+ // 목탁: 실제 나무 타악기 녹음. MOKTAK_KIND 로 음색을 고른다(clear 또렷함, hollow 통울림, big 낮고 묵직함)
+ moktak:()=>moktakWave(MOKTAK_KIND),
  bell:()=>render(6.5,t=>Math.min(1,t/.012)*(Math.sin(TAU*98*t)*Math.exp(-t/1.9)+.55*Math.sin(TAU*196.6*t)*Math.exp(-t/1.5)+.36*Math.sin(TAU*247*t)*Math.exp(-t/1.1)+.26*Math.sin(TAU*393*t)*Math.exp(-t/.8)+.14*Math.sin(TAU*524*t)*Math.exp(-t/.5))*(1+.06*Math.sin(TAU*1.7*t)),.62),
  soft:()=>render(.4,t=>Math.sin(TAU*(190-150*t)*t)*Math.exp(-t/.09)*Math.min(1,t/.004),.42),
  // 법고: 낮게 울리는 큰 북. 휴대폰 스피커에서도 들리도록 배음을 섞는다
  drum:()=>render(1.3,t=>{const gl=1+.35*Math.exp(-t/.03);return Math.sin(TAU*74*gl*t)*Math.exp(-t/.36)+.7*Math.sin(TAU*148*gl*t)*Math.exp(-t/.26)+.45*Math.sin(TAU*226*t)*Math.exp(-t/.17)+.3*Math.sin(TAU*318*t)*Math.exp(-t/.1)+(Math.random()*2-1)*.5*Math.exp(-t/.012)},.97),
- // 목어: 목탁보다 크고 낮은 속 빈 나무 소리
- fish:()=>render(.6,t=>{const gl=1+.05*Math.exp(-t/.015);return Math.sin(TAU*318*gl*t)*Math.exp(-t/.11)+.6*Math.sin(TAU*482*gl*t)*Math.exp(-t/.075)+.32*Math.sin(TAU*806*t)*Math.exp(-t/.035)+.2*Math.sin(TAU*159*t)*Math.exp(-t/.12)+(Math.random()*2-1)*.55*Math.exp(-t/.005)},.97),
+ // 목어: 같은 녹음을 낮고 길게 늘인, 크고 속이 깊은 나무 소리
+ fish:()=>fishWave(),
  // 운판: 맑게 퍼지는 쇠 소리
  cloud:()=>render(2.6,t=>Math.min(1,t/.003)*(Math.sin(TAU*523*t)*Math.exp(-t/.9)+.7*Math.sin(TAU*1207*t)*Math.exp(-t/.7)+.5*Math.sin(TAU*1733*t)*Math.exp(-t/.5)+.35*Math.sin(TAU*2489*t)*Math.exp(-t/.33)+.22*Math.sin(TAU*3151*t)*Math.exp(-t/.2)+.3*Math.sin(TAU*529*t)*Math.exp(-t/.9)+(Math.random()*2-1)*.3*Math.exp(-t/.004)),.8)
 };
 function wavUrl(a){const n=a.length,b=new DataView(new ArrayBuffer(44+n*2)),w=(o,s)=>{for(let i=0;i<s.length;i++)b.setUint8(o+i,s.charCodeAt(i))};w(0,'RIFF');b.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');b.setUint32(16,16,true);b.setUint16(20,1,true);b.setUint16(22,1,true);b.setUint32(24,SR,true);b.setUint32(28,SR*2,true);b.setUint16(32,2,true);b.setUint16(34,16,true);w(36,'data');b.setUint32(40,n*2,true);for(let i=0;i<n;i++)b.setInt16(44+i*2,Math.max(-1,Math.min(1,a[i]))*32767,true);return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
+// 나무 소리는 칠 때마다 음높이를 아주 조금씩 달리해서, 똑같은 소리가 반복되는 기계음 느낌을 없앤다
+const MOKTAK_KIND='hollow',VARY={moktak:[1,.986,1.012,.994],fish:[1,.985]};
 const wave=name=>bank[name]||(bank[name]={data:WAVES[name](),buf:null,tags:null,i:0});
 // 사용자가 누른 순간에 불러서 소리를 연다
 function audio(){if(!soundOn)return false;
  try{if(navigator.audioSession&&navigator.audioSession.type!=='playback')navigator.audioSession.type='playback'}catch{}
- if(IOS){if(!unlocked){unlocked=true;for(const name of Object.keys(WAVES)){const s=wave(name),url=wavUrl(s.data);s.tags=Array.from({length:name==='moktak'?4:2},()=>{const el=new Audio(url);el.preload='auto';return el});for(const el of s.tags){el.muted=true;el.play()?.then(()=>{if(!el._used){el.pause();el.currentTime=0;el.muted=false}}).catch(()=>{el.muted=false})}}}return true}
+ if(IOS){if(!unlocked){unlocked=true;for(const name of Object.keys(WAVES)){const s=wave(name),urls={},url=r=>urls[r]||(urls[r]=wavUrl(r===1?s.data:resample(s.data,r)));s.tags=(VARY[name]||[1,1]).map(r=>{const el=new Audio(url(r));el.preload='auto';return el});for(const el of s.tags){el.muted=true;el.play()?.then(()=>{if(!el._used){el.pause();el.currentTime=0;el.muted=false}}).catch(()=>{el.muted=false})}}}return true}
  try{if(!actx){actx=new (window.AudioContext||window.webkitAudioContext)();master=actx.createDynamicsCompressor();master.connect(actx.destination)}if(actx.state==='suspended')actx.resume();return true}catch{return false}}
 function play(name,vol=1){if(!audio())return;const s=wave(name);
  if(IOS){if(vol<.6||!s.tags)return;const el=s.tags[s.i++%s.tags.length];try{el._used=true;el.muted=false;el.currentTime=0;el.play()?.catch(()=>{})}catch{}return}
- try{if(!s.buf){s.buf=actx.createBuffer(1,s.data.length,SR);s.buf.getChannelData(0).set(s.data)}const src=actx.createBufferSource(),g=actx.createGain();src.buffer=s.buf;g.gain.value=vol;src.connect(g).connect(master);src.start()}catch{}}
+ try{if(!s.buf){s.buf=actx.createBuffer(1,s.data.length,SR);s.buf.getChannelData(0).set(s.data)}const src=actx.createBufferSource(),g=actx.createGain(),vary=VARY[name];src.buffer=s.buf;if(vary)src.playbackRate.value=.986+.026*Math.random();g.gain.value=vary?vol*(.88+.12*Math.random()):vol;src.connect(g).connect(master);src.start()}catch{}}
 const moktak=(v=1)=>play('moktak',v),bell=()=>play('bell'),soft=()=>play('soft');
 const buzz=ms=>{try{navigator.vibrate?.(ms)}catch{}};
 const INST_INFO={drum:{hit:'둥!',verb:'북 치기',desc:'법고는 땅 위에 사는 생명을 깨우는 큰 북이에요. 양손으로 번갈아 쳐요.'},fish:{hit:'딱!',verb:'목어 치기',desc:'목어는 물속 생명을 깨우는 나무 물고기예요. 늘 눈을 뜨고 있는 물고기처럼 깨어 있으라는 뜻이에요.'},cloud:{hit:'땡!',verb:'운판 치기',desc:'운판은 하늘을 나는 생명을 깨우는 구름 모양 청동 판이에요.'}};
