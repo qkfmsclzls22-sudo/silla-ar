@@ -1,6 +1,6 @@
 import {$,esc,modal,toast,read,write,swatches,wireSwatches,shareLink,saveCanvas,colors} from './ui.js';
-import {createSanctuaryScene,CUSHIONS,CUSHION_ORDER,SPOTS,LANTERN_SLOTS,INSTRUMENTS,BOW_T} from './sanctuary-scene-v8.js?v=20261123-2';
-import {SanctuaryRoom} from './sanctuary-room-v8.js?v=20261123-2';
+import {createSanctuaryScene,CUSHIONS,CUSHION_ORDER,SPOTS,LANTERN_SLOTS,INSTRUMENTS,BOW_T} from './sanctuary-scene-v8.js?v=20261123-3';
+import {SanctuaryRoom} from './sanctuary-room-v8.js?v=20261123-3';
 // 불국사 메타버스 소원마당 v8 rev.2: 아바타로 청운교·백운교를 올라 대웅전 법당 안까지 들어가고,
 // 합장·큰절·목탁·좌선을 실제 동작으로 하고, 범영루 법고와 좌경루 목어·운판을 치고, 불 켜진 연등에 소원 글씨를 달고, 투어 일행(최대 10명)과 함께해요.
 const PROFILE='gj-sanctuary-profile-v8',SOLO='gj-sanctuary-wish-v8',STATS='gj-sanctuary-stats-v8',SOUND='gj-sanctuary-sound-v8',SOUNDTIP='gj-sanctuary-soundtip-v8';
@@ -42,7 +42,7 @@ const INST_INFO={drum:{hit:'둥!',verb:'북 치기',desc:'법고는 땅 위에 �
 
 export async function mountLantern(root){
  document.body.classList.add('sanct-page');document.title='불국사 메타버스 소원마당 · 경주트립';
- const css=document.createElement('link');css.rel='stylesheet';css.href='./sanctuary-v8.css?v=20261123-2';await new Promise(r=>{css.onload=r;css.onerror=r;document.head.append(css)});
+ const css=document.createElement('link');css.rel='stylesheet';css.href='./sanctuary-v8.css?v=20261123-3';await new Promise(r=>{css.onload=r;css.onerror=r;document.head.append(css)});
  const q=new URLSearchParams(location.search),rawRoom=q.get('room'),roomId=rawRoom&&/^[A-Za-z0-9_-]{3,48}$/.test(rawRoom)?rawRoom:null;
  let profile=read(PROFILE,null);
  let stats=read(STATS,null);if(!stats||stats.date!==today())stats={date:today(),bows:0,toks:0,sit:0,greets:0};
@@ -76,7 +76,7 @@ export async function mountLantern(root){
 
  // ---------- me ----------
  let me=null;
- function spawnMe(){if(me)scene.removeAvatar(you);me=scene.addAvatar(you,{kind:profile.kind,color:profile.color,name:profile.name,mine:true});me.onBowDone=onMyBow;scene.place(me,0,63,Math.PI);scene.snapCamera({az:Math.PI,polar:1.3,dist:19});myDest={x:0,z:18};
+ function spawnMe(){if(me)scene.removeAvatar(you);me=scene.addAvatar(you,{kind:profile.kind,color:profile.color,name:profile.name,mine:true});me.onBowDone=onMyBow;scene.place(me,0,63,Math.PI);scene.snapCamera({az:Math.PI,polar:1.44,dist:21});myDest={x:0,z:18};
   setHint('청운교·백운교를 올라 대웅전 마당으로 들어가요');
   setTimeout(()=>{if(me&&!me.path.length&&mode==='free'&&scene.regionOf(me)==='plaza')walkTo(0,18,{facing:Math.PI})},1500)}
  function rekeyMe(id){if(!me||id===you)return;scene.avatars.delete(you);scene.avatars.set(id,me);you=id}
