@@ -1,4 +1,4 @@
-import * as game from './sanctuary-rules-v8.js?v=20261123-2';
+import * as game from './sanctuary-rules-v8.js?v=20261123-3';
 const read=(key,f)=>{try{return JSON.parse(localStorage.getItem(key))??f}catch{return f}};
 const save=(key,v)=>{try{localStorage.setItem(key,JSON.stringify(v))}catch{}};
 const hash=async s=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
