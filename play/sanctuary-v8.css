@@ -78,3 +78,15 @@ dialog input[readonly]{width:100%;box-sizing:border-box;font:inherit;font-size:1
 }
 @media (max-width:370px){.sanct-dock>button span{font-size:11px}.sanct-mark span{font-size:13px}}
 @media (prefers-reduced-motion:reduce){.sanct-ring .fg{transition:none}.sanct-dock>button.hit b{animation:none}}
+.sanct-dock>button b{height:26px;display:grid;place-items:center}
+.sanct-dock>button b svg{display:block}
+.sanct-seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#efe6d3;border-radius:16px;padding:4px;margin:0 0 10px}
+.sanct-seg button{font:inherit;font-size:13px;font-weight:700;border:0;border-radius:12px;background:transparent;color:#5d5549;min-height:40px;cursor:pointer}
+.sanct-seg button[aria-checked=true]{background:#fffaf0;color:#7c3036;box-shadow:0 1px 4px #0002}
+.sanct-spots{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.sanct-spots::-webkit-scrollbar{display:none}
+.sanct-spots button{flex:none;white-space:nowrap}
+.sanct-inst-box{max-width:300px;padding:2px 4px}
+.sanct-inst-box small{color:#7c3036;font-size:12px;font-weight:800;letter-spacing:.5px}
+.sanct-inst-box p{margin:4px 0 10px;font-size:13px;line-height:1.5;color:#4d463b}
+.sanct-inst-actions{display:grid;grid-template-columns:1.6fr 1fr;gap:6px}
