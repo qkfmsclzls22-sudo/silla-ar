@@ -2,9 +2,9 @@
 export const meta={game:'경주트립 · 불국사 메타버스 소원마당',minPlayers:1,maxPlayers:10};
 export const COLORS=['coral','gold','jade','blue','violet','cream'];
 export const KINDS=['monk','traveler'];
-export const POSES=['stand','hapjang','bow','sit'];
+export const POSES=['stand','hapjang','bow','sit','moktak','drum','fish','cloud'];
 export const SLOT_COUNT=40;
-export const BOUNDS={minX:-30,maxX:30,minZ:-21,maxZ:32};
+export const BOUNDS={minX:-36,maxX:36,minZ:-36,maxZ:71};
 const textOK=(v,n)=>typeof v==='string'&&v.trim().length>0&&Array.from(v).length<=n&&!/[<>\u0000-\u001f]/.test(v);
 const num=(v,a,b)=>Number.isFinite(v)&&v>=a&&v<=b;
 export function setup(){return{version:8,seq:0,guests:{},lanterns:[]}}
@@ -26,7 +26,7 @@ export function validateAction(s,id,a){
 }
 export function applyAction(s,id,a){
  const n={...s,seq:s.seq+1},g=s.guests[id];
- if(a.type==='profile'){const guest={x:0,z:26,pose:'stand',poseSeq:0,bows:0,...g,name:a.name.trim(),color:a.color,kind:a.kind};n.guests=Object.fromEntries(Object.entries({...s.guests,[id]:guest}).slice(-60))}
+ if(a.type==='profile'){const guest={x:0,z:18,pose:'stand',poseSeq:0,bows:0,...g,name:a.name.trim(),color:a.color,kind:a.kind};n.guests=Object.fromEntries(Object.entries({...s.guests,[id]:guest}).slice(-60))}
  if(a.type==='move')n.guests={...s.guests,[id]:{...g,x:a.x,z:a.z,pose:'stand'}};
  if(a.type==='pose')n.guests={...s.guests,[id]:{...g,pose:a.pose,poseSeq:(g.poseSeq||0)+1,bows:Math.min(99999,(g.bows||0)+(a.pose==='bow'?1:0))}};
  if(a.type==='lantern')n.lanterns=[...s.lanterns.filter(l=>l.owner!==id),{id:n.seq,owner:id,name:g.name,text:a.text.trim(),color:a.color,slot:a.slot}];

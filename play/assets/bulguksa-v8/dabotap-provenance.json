@@ -1,0 +1,14 @@
+{
+  "id": "dabotap",
+  "title": "국가유산청_경주 불국사 다보탑 3D 모델링_20241231",
+  "source": "공공데이터포털 https://www.data.go.kr/data/15150537/fileData.do",
+  "provider": "국가유산청",
+  "license": "공공누리 제1유형 (출처표시)",
+  "downloaded": "2026-11-23",
+  "originalFile": "NT20_Dabotap_Pagoda_of_Bulguksa_Temple,_Gyeongju_low.obj",
+  "originalTexture": "NT20_Dabotap_Pagoda_of_Bulguksa_Temple,_Gyeongju_low.jpg (8192x8192)",
+  "polygonsBefore": 10718098,
+  "polygonsAfter": 109999,
+  "glbBytes": 1180600,
+  "processing": "Official source geometry and original texture map. Ground outside the pagoda (beyond 5.85 m from the centre, and the paving below the base) removed, quadric decimation with texture coordinates preserved (PyMeshLab), re-centred, rotated 11.67 degrees to square the stairs to the axes, Z-up to Y-up, millimetres to metres, texture resized to 2048x2048 JPEG, Draco compression (glTF-Transform). No geometry was added or reshaped."
+}
