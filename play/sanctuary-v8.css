@@ -1,0 +1,80 @@
+body.sanct-page{margin:0;background:#1f2a24;color:#fff8ea;overflow:hidden;height:100dvh;font-family:'Noto Sans KR',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+body.sanct-page>.skip,body.sanct-page>.mast,body.sanct-page>.tours,body.sanct-page>.footer{display:none}
+body.sanct-page main{margin:0;padding:0;max-width:none}
+.sanct-app{position:fixed;inset:0;display:flex;flex-direction:column;height:100dvh}
+.sanct-head{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 8px) 14px 8px;background:linear-gradient(#18221ccc,#18221c00);position:absolute;left:0;right:0;top:0;z-index:5}
+.sanct-mark{color:#fff;text-decoration:none;font-weight:800;font-size:11px;letter-spacing:2px;white-space:nowrap}
+.sanct-mark span{display:block;letter-spacing:0;font-size:15px;font-weight:800;margin-top:2px}
+.sanct-head button,.sanct-tools button,.sanct-spots button{font:inherit;border:0;cursor:pointer}
+.sanct-room{margin-left:auto;display:flex;align-items:center;gap:7px;background:#fffaf0e6;color:#2e3a32;border-radius:999px;padding:8px 12px;font-size:12px!important;font-weight:700;min-height:36px;max-width:46vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sanct-room i{width:8px;height:8px;border-radius:50%;background:#b9b09f;flex:none}
+.sanct-room[data-state=on] i{background:#45b26b;box-shadow:0 0 0 4px #45b26b33}
+.sanct-room[data-state=wait] i{background:#e6a93b}
+.sanct-room[data-state=off] i{background:#d2544a}
+.sanct-head-links{display:flex;gap:6px}
+.sanct-head-links button{background:#ffffff26;color:#fff;border-radius:50%;width:36px;height:36px;padding:0;font-size:15px;font-weight:800;backdrop-filter:blur(6px)}
+.sanct-head-links button[aria-pressed=false]{opacity:.65}
+.sanct-stage{position:relative;flex:1;min-height:0}
+#sanct-canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
+.sanct-tools{position:absolute;right:12px;top:calc(env(safe-area-inset-top) + 64px);display:flex;flex-direction:column;gap:8px;z-index:4}
+.sanct-tools button{width:44px;height:44px;border-radius:50%;background:#fffaf0e6;color:#2e3a32;font-size:19px;box-shadow:0 4px 14px #0002}
+.sanct-tools button[aria-pressed=true]{background:#283b63;color:#ffe9a8}
+.sanct-spots{position:absolute;left:12px;right:68px;top:calc(env(safe-area-inset-top) + 64px);display:flex;gap:6px;flex-wrap:wrap;z-index:4}
+.sanct-spots button{background:#18221c99;color:#fff;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;min-height:34px;backdrop-filter:blur(6px)}
+.sanct-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);margin:0;background:#18221cb3;color:#fff;border-radius:999px;padding:8px 14px;font-size:12px;white-space:nowrap;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;pointer-events:none;backdrop-filter:blur(6px)}
+.sanct-hint:empty{display:none}
+.sanct-loading{position:absolute;inset:0;display:grid;place-items:center;background:#1f2a24;color:#fff;font-size:14px}
+.sanct-hud{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:14px;background:#fffaf0f2;color:#2e3a32;border-radius:26px;padding:12px 14px;box-shadow:0 12px 40px #0004;max-width:calc(100% - 24px)}
+.sanct-hud[hidden]{display:none}
+.sanct-ring{position:relative;width:86px;height:86px;flex:none}
+.sanct-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.sanct-ring circle{fill:none;stroke-width:8}
+.sanct-ring .bg{stroke:#e7dcc6;stroke-dasharray:1.2 3.2}
+.sanct-ring .fg{stroke:#7c3036;stroke-linecap:round;transition:stroke-dashoffset .4s}
+.sanct-ring strong{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-size:24px;font-weight:900;line-height:1}
+.sanct-ring small{display:block;font-size:11px;font-weight:600;color:#8a8172;margin-top:3px}
+.sanct-hud-actions{display:flex;flex-direction:column;gap:6px}
+.sanct-hud button{white-space:nowrap;font:inherit;border:0;border-radius:14px;padding:9px 14px;background:#efe6d3;color:#2e3a32;font-size:13px;font-weight:700;cursor:pointer;min-height:40px}
+.sanct-hud button.primary{background:#7c3036;color:#fff;font-size:16px;min-height:50px;padding:10px 26px}
+.sanct-calm-box{text-align:center;padding:4px 10px}
+.sanct-calm-box small{color:#8a8172;font-size:12px}
+.sanct-calm-box strong{display:block;font-size:34px;font-weight:900;letter-spacing:1px;margin:2px 0}
+.sanct-calm-box p{margin:0 0 10px;font-size:13px;color:#5d5549}
+body.sanct-calm .sanct-dock,body.sanct-calm .sanct-spots,body.sanct-calm .sanct-tools{opacity:.18;transition:opacity 1.2s}
+body.sanct-calm .sanct-dock:hover,body.sanct-calm .sanct-dock:focus-within{opacity:1}
+.sanct-dock{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:10px 10px calc(env(safe-area-inset-bottom) + 10px);background:#f6efe0;color:#2e3a32;border-radius:22px 22px 0 0;box-shadow:0 -10px 30px #0003;z-index:5}
+.sanct-dock>button{font:inherit;border:0;background:#fffaf0;border-radius:16px;padding:9px 2px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;color:#2e3a32;cursor:pointer;min-height:62px;box-shadow:inset 0 0 0 1px #e6dcc6}
+.sanct-dock>button b{font-size:22px;line-height:1.1;font-weight:400}
+.sanct-dock>button span{font-size:12px;font-weight:700;white-space:nowrap}
+.sanct-dock>button.primary{background:#7c3036;color:#fff;box-shadow:none}
+.sanct-dock>button:active{transform:scale(.96)}
+.sanct-dock>button.hit b{animation:tok .22s}
+@keyframes tok{40%{transform:scale(1.35) rotate(-8deg)}}
+.sanct-dock-sub{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sanct-dock-sub button{font:inherit;border:0;border-radius:14px;background:#e9dfca;color:#2e3a32;font-size:13px;font-weight:700;min-height:42px;cursor:pointer}
+dialog .sanct-eyebrow{margin:0;font-size:11px;letter-spacing:2px;color:#7c3036;font-weight:800}
+.sanct-form{display:grid;gap:12px}
+.sanct-form label{display:grid;gap:6px;font-size:13px;font-weight:700}
+.sanct-form label small{font-weight:500;color:#8a8172;margin-left:6px}
+.sanct-form input,.sanct-form textarea{font:inherit;font-size:16px;border:1px solid #d8cfbb;border-radius:14px;padding:12px;background:#fff;color:#2e3a32;resize:none}
+.sanct-label{margin:0;font-size:13px;font-weight:700}
+.sanct-form .primary,.sanct-choice .primary,dialog .stack .primary{background:#7c3036;color:#fff;border:0}
+.sanct-prompts{display:flex;flex-wrap:wrap;gap:6px}
+.sanct-prompts button{font:inherit;font-size:12px;border:1px solid #e0d6c2;background:#fffaf0;border-radius:999px;padding:6px 10px;min-height:32px}
+.sanct-kinds{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sanct-kinds button{font:inherit;font-weight:700;border:2px solid #e0d6c2;background:#fffaf0;border-radius:18px;padding:12px;display:grid;justify-items:center;gap:4px;min-height:84px}
+.sanct-kinds button b{font-size:30px;font-weight:400}
+.sanct-kinds button[aria-checked=true]{border-color:#7c3036;background:#fbeeea}
+.sanct-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sanct-choice button{font:inherit;font-weight:800;font-size:15px;border:1px solid #e0d6c2;background:#fffaf0;border-radius:18px;padding:14px 10px;display:grid;gap:4px;text-align:left;min-height:76px}
+.sanct-choice button small{font-weight:500;font-size:11px;opacity:.75}
+.sanct-wish{margin:0 0 16px;padding:18px 18px 18px 22px;border-radius:16px;background:#fffaf0;border-left:8px solid var(--c);font-size:18px;font-weight:700;line-height:1.6;color:#2e3a32}
+dialog input[readonly]{width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:10px;border-radius:12px;border:1px solid #d8cfbb;margin-bottom:10px}
+@media (min-width:900px){
+ .sanct-dock{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:640px;border-radius:24px;grid-template-columns:repeat(5,1fr) 1.3fr;padding:10px}
+ .sanct-dock-sub{grid-column:auto;grid-template-columns:1fr;gap:5px}
+ .sanct-dock-sub button{min-height:28px;font-size:12px}
+ .sanct-hint{bottom:130px}.sanct-hud{bottom:140px}
+}
+@media (max-width:370px){.sanct-dock>button span{font-size:11px}.sanct-mark span{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.sanct-ring .fg{transition:none}.sanct-dock>button.hit b{animation:none}}
