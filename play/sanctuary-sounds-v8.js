@@ -1,4 +1,4 @@
-// 목탁·목어 소리의 바탕: 실제 나무 타악기를 한 번 친 녹음(22.05kHz, 16비트 모노, 0.36초).
+// 목탁·목어 소리의 바탕: 실제 나무 타악기를 한 번 친 녹음(22.05kHz, 16비트 모노, 0.36초). 목어는 이 녹음을 늘여 쓰고, 목탁은 채가 닿는 순간만 빌려 쓴다.
 // 출처: FluidR3 GM 사운드폰트의 Woodblock 음색, gleitz/midi-js-soundfonts 변환본(CC BY 3.0).
 // 앞뒤를 자르고 음량만 맞췄다. 자세한 내용은 assets/bulguksa-v8/sound-provenance.json.
 export const WOOD_SR=22050;
@@ -11,12 +11,27 @@ export function resample(a,rate){if(rate===1)return a.slice();const n=Math.floor
 export function hollow(a,{f,q,mix,tail=.25,soft=0}){const n=a.length+Math.floor(tail*WOOD_SR),o=new Float32Array(n),w=2*Math.PI*f/WOOD_SR,al=Math.sin(w)/(2*q),b0=al/(1+al),a1=-2*Math.cos(w)/(1+al),a2=(1-al)/(1+al),c=1-Math.exp(-2*Math.PI*3200/WOOD_SR);let x1=0,x2=0,y1=0,y2=0,lp=0;for(let i=0;i<n;i++){const x=i<a.length?a[i]:0,y=b0*(x-x2)-a1*y1-a2*y2;x2=x1;x1=x;y2=y1;y1=y;lp+=c*(x-lp);o[i]=x+soft*(lp-x)+mix*y}return o}
 // 가장 큰 값을 peak 에 맞추고 끝을 부드럽게 줄인다
 export function finish(a,peak=.97,fade=900){let m=0;for(let i=0;i<a.length;i++)m=Math.max(m,Math.abs(a[i]));const k=peak/(m||1),f=Math.min(a.length,fade);for(let i=0;i<a.length;i++)a[i]*=k;for(let i=0;i<f;i++)a[a.length-1-i]*=i/f;return a}
-// 목탁: 손에 드는 목탁의 또렷한 "똑". kind 로 음색을 고른다.
+// 실제 법당 목탁의 울림: [주파수 Hz, 처음 세기 dB, 울림이 줄어드는 시간(초)]. 뒤의 두 줄은 법당 안에 남는 긴 여운이다.
+// 공유마당 김용배 「목탁1」(CC BY 4.0) 녹음에서 한 번 친 소리 3개를 재서 맞춘 값이다(약 380Hz가 중심, 1초 가까이 울린다). 녹음 자체는 쓰지 않았다.
+const MOKTAK_MODES=[[380,0,.17],[325,-8,.19],[405,-16,.15],[1022,-9,.075],[295,-25,.2],[450,-24,.2],[380,-12,.4],[325,-19,.4]];
+// 채가 닿는 순간의 짧은 소리(나무 녹음의 앞부분)로 몸통의 공명들을 울린다. pitch 는 음높이 배율, ring 은 울림 길이 배율, knock 은 닿는 소리의 세기.
+export function modal(modes,{pitch=1,ring=1,knock=.22,dur=1.3}={}){
+ const sr=WOOD_SR,n=Math.floor(dur*sr),src=resample(woodHit(),.6),m=Math.floor(.03*sr),exc=new Float32Array(n),out=new Float32Array(n),y=new Float32Array(n);
+ let pk=0,s0=0;for(let i=0;i<m*2;i++)pk=Math.max(pk,Math.abs(src[i]));while(Math.abs(src[s0])<pk*.1)s0++;s0=Math.max(0,s0-6);
+ for(let i=0;i<m;i++)exc[i]=src[s0+i]*Math.min(1,i/4)*Math.exp(-i/(.006*sr));
+ const m0=Math.floor(.008*sr);
+ const c=1-Math.exp(-2*Math.PI*1400/sr);let l1=0,l2=0,kmax=0;for(let i=0;i<m*3;i++){l1+=c*(exc[i]-l1);l2+=c*(l1-l2);y[i]=l2;kmax=Math.max(kmax,Math.abs(l2))}
+ for(let i=0;i<m*3;i++)out[i]=y[i]/kmax*knock;
+ for(const[f,db,tau]of modes){const w=2*Math.PI*f*pitch/sr,r=Math.exp(-1/(tau*ring*sr)),a1=2*r*Math.cos(w),a2=-r*r;let y1=0,y2=0;for(let i=0;i<n;i++){const v=exc[i]+a1*y1+a2*y2;y2=y1;y1=v;y[i]=v}
+  // 두드림이 끝난 뒤의 울림 크기를 재서, 처음 세기가 표의 값이 되도록 맞춘다
+  let am=0;for(let i=m,e=m+Math.ceil(sr/(f*pitch));i<e;i++)am=Math.max(am,Math.abs(y[i]));const g=Math.pow(10,db/20)/(am*Math.exp((m-m0)/(tau*ring*sr)));for(let i=0;i<n;i++)out[i]+=y[i]*g}
+ return finish(out,.97,Math.floor(.12*sr))}
+// 목탁: kind 로 음색을 고른다. deep 법당 큰 목탁(낮고 길게 울림), dry 같은 높이에 울림 절반, small 손에 드는 작은 목탁(조금 높음)
 export const MOKTAK_KINDS={
- clear:a=>finish(a.slice()),
- hollow:a=>finish(hollow(a,{f:637,q:75,mix:2.4,tail:.2,soft:.3})),
- big:a=>finish(hollow(resample(a,.78),{f:637*.78,q:70,mix:2.4,tail:.24,soft:.3}))
+ deep:()=>modal(MOKTAK_MODES),
+ dry:()=>modal(MOKTAK_MODES,{ring:.5,dur:.8}),
+ small:()=>modal(MOKTAK_MODES,{pitch:1.4,ring:.8,dur:1.1})
 };
-export const moktakWave=(kind='hollow')=>MOKTAK_KINDS[kind](woodHit());
+export const moktakWave=(kind='deep')=>MOKTAK_KINDS[kind]();
 // 목어: 훨씬 크고 속이 깊은 나무 물고기. 같은 녹음을 낮고 길게 늘인다.
 export const fishWave=()=>finish(hollow(resample(woodHit(),.46),{f:637*.46,q:70,mix:2.2,tail:.3,soft:.15}),.97,1500);

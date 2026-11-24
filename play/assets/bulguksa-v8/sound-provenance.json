@@ -6,6 +6,14 @@
   "license": "Creative Commons Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/)",
   "downloaded": "2026-11-23",
   "usedIn": "play/sanctuary-sounds-v8.js (WOOD_PCM)",
-  "processing": "MP3 note sample decoded to mono, resampled to 22.05 kHz, first 0.36 s kept, 0.6 ms fade-in and 30 ms fade-out, peak normalised, stored as 16-bit PCM in base64. At run time the moktak sound adds a resonator tuned to the recording's own lowest mode (hollow body ring) and softens the stick click; the mogeo (wooden fish) sound is the same recording resampled to 0.46x speed with the same kind of resonator. No other recordings are mixed in.",
-  "note": "A recording of a real wooden percussion instrument, not of the moktak at Bulguksa."
+  "processing": "MP3 note sample decoded to mono, resampled to 22.05 kHz, first 0.36 s kept, 0.6 ms fade-in and 30 ms fade-out, peak normalised, stored as 16-bit PCM in base64. Mogeo (wooden fish): the recording resampled to 0.46x speed plus a resonator tuned to its lowest mode. Moktak (since 2026-11-24): only the first 30 ms of the recording (resampled to 0.6x) is used as the strike; it drives a bank of resonators whose frequencies, levels and decay times were measured from a real temple moktak recording (see moktakReference).",
+  "note": "Built from a recording of a real wooden percussion instrument and tuned to a real temple moktak; not a recording of the moktak at Bulguksa.",
+  "moktakReference": {
+    "title": "목탁1",
+    "creator": "김용배",
+    "provider": "한국저작권위원회 공유마당",
+    "url": "https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13253415&menuNo=200020",
+    "license": "CC BY 4.0",
+    "use": "Listened to on the public preview on 2026-11-24 and measured only: three isolated strikes gave main partials near 380 Hz (0 dB), 325 Hz (about -7 dB), 1022 Hz (about -16 dB), almost no energy above 2.5 kHz, and a level drop of about 10 dB at 0.3 s and 30 dB at 0.9 s. The audio itself was not downloaded into the repository or copied into the sound."
+  }
 }

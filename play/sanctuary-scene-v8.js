@@ -16,13 +16,14 @@ const ST={z1:46.2,z2:47.8,mid:-3.3},roofF=u=>.6*u+.4*u*u; // 계단 가운데 �
 export const BOW_T=2.3;
 export const CUSHIONS=Array.from({length:10},(_,i)=>({x:-6+(i%5)*3,z:i<5?-29.8:-27}));
 export const CUSHION_ORDER=[2,1,3,0,4,7,6,8,5,9];
-// 불전사물: 실제 불국사처럼 자하문 서쪽 범영루에 법고, 동쪽 좌경루에 목어와 운판을 둔다
-export const INSTRUMENTS={drum:{x:-13.6,z:37.35,stand:{x:-13.6,z:35.95},label:'법고',place:'범영루'},fish:{x:11.35,z:37.35,stand:{x:11.35,z:36.05},label:'목어',place:'좌경루'},cloud:{x:15.85,z:37.35,stand:{x:15.85,z:36.15},label:'운판',place:'좌경루'}};
+// 불전사물: 실제 불국사처럼 남쪽 회랑의 서쪽 끝 범영루에 법고, 동쪽 끝 좌경루에 목어와 운판을 둔다
+const PAV_X=28.6;
+export const INSTRUMENTS={drum:{x:-PAV_X,z:37.35,stand:{x:-PAV_X,z:35.95},label:'법고',place:'범영루'},fish:{x:PAV_X-2.25,z:37.35,stand:{x:PAV_X-2.25,z:36.05},label:'목어',place:'좌경루'},cloud:{x:PAV_X+2.25,z:37.35,stand:{x:PAV_X+2.25,z:36.15},label:'운판',place:'좌경루'}};
 export const SPOTS={hall:{x:0,z:-25.6,label:'법당 안'},seokgatap:{x:-11,z:1.5,label:'석가탑'},dabotap:{x:11,z:2.6,label:'다보탑'},lanterns:{x:0,z:13,label:'연등 줄'},drum:{...INSTRUMENTS.drum.stand,label:'법고',inst:'drum'},fish:{...INSTRUMENTS.fish.stand,label:'목어',inst:'fish'},cloud:{...INSTRUMENTS.cloud.stand,label:'운판',inst:'cloud'},stairs:{x:0,z:60,label:'청운교 아래'}};
 const STRINGS=[{z:6,n:13},{z:12.5,n:14},{z:19,n:13}];
 export const LANTERN_SLOTS=STRINGS.flatMap(s=>Array.from({length:s.n},(_,i)=>{const t=(i+1)/(s.n+1);return{x:-25+50*t,z:s.z,y:8.3-Math.sin(t*Math.PI)*1.3}}));
 const OBSTACLES=[{x:-11,z:-5,r:4.6},{x:11,z:-5,r:6},{x:0,z:-13,r:1.3}];
-const REG={hall:{x:[-11.6,11.6],z:[-34.2,-24]},yard:{x:[-29.5,29.5],z:[-20,36.4]},stairs:{x:[-2,2],z:[37,53.8]},plaza:{x:[-34,34],z:[54.4,70]}};
+const REG={hall:{x:[-11.6,11.6],z:[-34.2,-24]},yard:{x:[-31.8,31.8],z:[-20,36.4]},stairs:{x:[-2,2],z:[37,53.8]},plaza:{x:[-34,34],z:[54.4,70]}};
 const ORDER=['plaza','stairs','yard','hall'];
 const LINKS=[[{x:0,z:54.2}],[{x:0,z:36.8}],[{x:0,z:-19.6},{x:0,z:-24.4}]];
 const DAY={sky:'#cfe3ea',fog:'#dbe8e6',hemi:2.1,sun:2.7,ground:'#6c8a70'},NIGHT={sky:'#0b1428',fog:'#111c33',hemi:.42,sun:.08,ground:'#1a2233'};
@@ -164,7 +165,7 @@ export function createSanctuaryScene(canvas,{onTap,onRegion}={}){
   const lerp3=(a,b,n)=>Array.from({length:n+1},(_,i)=>a.map((v,k)=>v+(b[k]-v)*i/n));
   for(const sx of[-1,1]){const x=sx*(STAIR_HALF+.3);rail([...lerp3([x,.25,TERR_Z+.1],[x,ST.mid+.25,ST.z1],4),...lerp3([x,ST.mid+.25,ST.z2],[x,LOW+.25,STAIR_END+.15],4)]);
    // 석축 위 난간
-   rail(lerp3([sx*(STAIR_HALF+.9),.3,TERR_Z+1.25],[sx*8.5,.3,TERR_Z+1.25],2));rail(lerp3([sx*18.8,.3,TERR_Z+1.25],[sx*42.8,.3,TERR_Z+1.25],10))}
+   rail(lerp3([sx*(STAIR_HALF+.9),.3,TERR_Z+1.25],[sx*(PAV_X-5.2),.3,TERR_Z+1.25],8));rail(lerp3([sx*(PAV_X+5.2),.3,TERR_Z+1.25],[sx*42.8,.3,TERR_Z+1.25],4))}
   scene.add(shadowy(new T.Mesh(mergeGeometries(rg),railMat)))}
 
  // ---------- 건물 공통: 석간주 기둥, 황토벽, 청록 살문, 공포와 단청, 한식 기와지붕 ----------
@@ -222,19 +223,19 @@ export function createSanctuaryScene(canvas,{onTap,onRegion}={}){
   if(walls==='front'){tbox(g,w-.4,colH-.3,.12,0,base+(colH-.3)/2,d/2,BM.door,bay);tbox(g,w,colH,.2,0,base+colH/2,-d/2,BM.plaster,bay);for(const sx of[-1,1])tbox(g,.2,colH,d,sx*w/2,base+colH/2,0,BM.plaster,d/2)}
   const pj=roof==='paljak',bb=bracketBand(g,{w,d,y:yc,tiers,h:bh,bay},BM),OV=ov??(pj?2.1:1.35),D=d+2*OV,th=.26;
   koreanRoof(g,{W:w+(pj?2*OV:1.7),D,H:roofH,y:eaveY(bb.top,roofH,D,OV-bb.proj-.15,th),type:roof,lift:lift??(pj?.7:.2),out:pj?.35:.1,rise:pj?.22:.1,th,rs},BM);return g}
- // 회랑(맞배지붕의 긴 복도), 자하문, 범영루·좌경루(팔작지붕)
+ // 회랑(맞배지붕의 긴 복도), 자하문, 남쪽 회랑 양쪽 끝의 범영루·좌경루(팔작지붕)
  for(const sx of[-1,1]){hall({w:81.4,d:4.2,x:sx*36.5,z:1.1,rot:sx<0?Math.PI/2:-Math.PI/2,colH:3.1,roofH:1.9,base:.6,walls:'back',roof:'matbae',tiers:0,cols:24,rs:.7});
-  hall({w:9,d:4.6,x:sx*13.6,z:37.6,rot:Math.PI,colH:4.5,roofH:2.9,base:.16,walls:'open',cols:sx<0?3:2,tiers:2,bh:.9,lift:.75});
-  hall({w:16.2,d:4.2,x:sx*26.3,z:37.6,rot:Math.PI,colH:2.9,roofH:1.9,base:.16,walls:'back',roof:'matbae',tiers:0,cols:5,rs:.7});
+  hall({w:9,d:4.6,x:sx*PAV_X,z:37.6,rot:Math.PI,colH:4.5,roofH:2.9,base:.16,walls:'open',cols:sx<0?3:2,tiers:2,bh:.9,lift:.75});
+  hall({w:16.8,d:4.2,x:sx*15.6,z:37.6,rot:Math.PI,colH:2.9,roofH:1.9,base:.16,walls:'back',roof:'matbae',tiers:0,cols:5,rs:.7});
   hall({w:9,d:6,x:sx*27,z:-31,colH:3,roofH:2.6,walls:'front',tiers:1,bh:.5,lift:.6,rs:.7})}
  hall({w:14,d:5,x:0,z:37.3,rot:Math.PI,colH:3.6,roofH:3.2,base:.14,walls:'open',cols:3,tiers:2,bh:.95,lift:.8,rs:.85});
  // 현판: 검은 바탕에 흰 글씨, 오른쪽에서 왼쪽으로 쓴다
  const nameBoard=text=>canvasTex(256,96,(c,w,h)=>{c.fillStyle=DC.brown;c.fillRect(0,0,w,h);c.fillStyle=DC.teal;c.fillRect(4,4,w-8,h-8);for(let i=0;i<12;i++){c.fillStyle=i%2?DC.orange:DC.yellow;c.beginPath();c.arc(14+i*20.7,9,3.2,0,Math.PI*2);c.arc(14+i*20.7,h-9,3.2,0,Math.PI*2);c.fill()}c.fillStyle='#16181b';c.fillRect(13,15,w-26,h-30);c.strokeStyle='#d9c27a';c.lineWidth=2;c.strokeRect(13,15,w-26,h-30);c.fillStyle='#f6f2e6';c.font='700 48px serif';c.textAlign='center';c.textBaseline='middle';c.fillText([...text].reverse().join(''),w/2,h/2+3)});
  const hangBoard=(parent,text,w,h,x,y,z,ry=0,material)=>{const b=new T.Mesh(new T.PlaneGeometry(w,h),material||new T.MeshBasicMaterial({map:nameBoard(text)}));b.position.set(x,y,z);b.rotation.order='YXZ';b.rotation.set(.16,ry,0);parent.add(b);return b};
  hangBoard(scene,'紫霞門',2.7,1.02,0,4.45,41.02);
- for(const[x,t]of[[-13.6,'泛影樓'],[13.6,'左經樓']])for(const[z,ry]of[[41.1,0],[34.1,Math.PI]])hangBoard(scene,t,2.3,.88,x,5.32,z,ry);
+ for(const[x,t]of[[-PAV_X,'泛影樓'],[PAV_X,'左經樓']])for(const[z,ry]of[[41.1,0],[34.1,Math.PI]])hangBoard(scene,t,2.3,.88,x,5.32,z,ry);
  // 누각을 받치는 돌기둥(석축 바깥쪽)
- for(const cx of[-13.6,13.6])for(const dx of[-3.3,0,3.3]){box(scene,1.5,.7,1.1,cx+dx,LOW+.35,42,'#bdb49e');box(scene,1.05,5.4,.8,cx+dx,LOW+3.4,41.9,'#cfc6b0');box(scene,1.7,.5,1.2,cx+dx,LOW+6.35,42,'#bdb49e');box(scene,2.2,.4,1.5,cx+dx,LOW+6.8,42.05,'#cbc3ad')}
+ for(const cx of[-PAV_X,PAV_X])for(const dx of[-3.3,0,3.3]){box(scene,1.5,.7,1.1,cx+dx,LOW+.35,42,'#bdb49e');box(scene,1.05,5.4,.8,cx+dx,LOW+3.4,41.9,'#cfc6b0');box(scene,1.7,.5,1.2,cx+dx,LOW+6.35,42,'#bdb49e');box(scene,2.2,.4,1.5,cx+dx,LOW+6.8,42.05,'#cbc3ad')}
 
  // ---------- 대웅전: 겉(ext)은 안에 들어가면 투명해지고(그림자는 유지), 안(inn)은 항상 그린다 ----------
  const F=HALL.floor,HW=HALL.w/2,HD=HALL.d,HZ=(HALL.front+HALL.back)/2,ceilY=F+HALL.colH,CE=ceilY+1.7;
@@ -334,7 +335,7 @@ export function createSanctuaryScene(canvas,{onTap,onRegion}={}){
 
  // ---------- 불전사물: 법고(범영루), 목어·운판(좌경루) ----------
  const instr={},BEAM_Y=4.45,frameM=mat('#7a3b26'),ropeM=mat('#cdb98e');
- for(const cx of[-13.6,13.6])box(scene,8.7,.3,.3,cx,BEAM_Y+.15,37.35,'#8f3a2b');
+ for(const cx of[-PAV_X,PAV_X])box(scene,8.7,.3,.3,cx,BEAM_Y+.15,37.35,'#8f3a2b');
  const pick=(g,id)=>g.traverse(o=>{if(o.isMesh){o.userData.inst=id;pickable.push(o)}});
  {// 법고: 받침틀 위에 올린 큰 북
   const I=INSTRUMENTS.drum,g=new T.Group();g.position.set(I.x,.16,I.z);scene.add(g);
@@ -381,7 +382,7 @@ export function createSanctuaryScene(canvas,{onTap,onRegion}={}){
   else{cyl(g,.2,.34,2.6,0,1.3,0,trunk,7);const m=maples[(kind-1)%maples.length],m2=maples[kind%maples.length];ball(g,1.9,0,3.7,0,m,1,.8,1,9);ball(g,1.3,1.1,3.2,.4,m2,1,.8,1,8);ball(g,1.2,-1,3.3,-.5,m,1,.8,1,8);ball(g,1,.2,4.7,.1,m2,1,.8,1,8)}}
  for(let i=0;i<46;i++){const a=i/46*Math.PI*2,r=60+((i*37)%19),x=Math.cos(a)*r,z=Math.sin(a)*r-2;if(z>30&&Math.abs(x)<52)continue;tree(x,z,1.3+((i*13)%7)/10,i%3===0?1+(i%4):0)}
  // 청운교 앞 광장은 계단을 배경으로 사진 찍는 자리라 나무를 두지 않는다(멀리 양옆에만 소나무)
- [[-24,-46,0],[24,-46,0],[-8,-48,2],[9,-49,0],[-28.5,33,2],[28.5,33,1],[-45,10,0],[45,-8,3],[-52,47,0],[53,46,0],[-58,60,0],[59,62,0]].forEach(([x,z,k],i)=>tree(x,z,1.15+i%3*.18,k));
+ [[-24,-46,0],[24,-46,0],[-8,-48,2],[9,-49,0],[-45,10,0],[45,-8,3],[-52,47,0],[53,46,0],[-58,60,0],[59,62,0]].forEach(([x,z,k],i)=>tree(x,z,1.15+i%3*.18,k));
  const mtn=[mat('#9bb59c'),mat('#86a58a'),mat('#a9c0a6')];
  [[-70,-130,46,40],[-20,-150,60,54],[40,-140,50,46],[95,-115,40,34],[-110,-100,38,30],[0,-180,90,70],[150,-60,40,30],[-150,-40,44,32]].forEach(([x,z,r,h],i)=>{const m=new T.Mesh(new T.ConeGeometry(r,h,7),mtn[i%3]);m.position.set(x,h/2-3,z);scene.add(m)});
  const starPos=[];for(let i=0;i<320;i++){const a=Math.random()*Math.PI*2,e=Math.random()*.9+.08,r=300;starPos.push(Math.cos(a)*Math.cos(e)*r,Math.sin(e)*r,Math.sin(a)*Math.cos(e)*r)}
