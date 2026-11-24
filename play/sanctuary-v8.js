@@ -1,8 +1,8 @@
 import {$,esc,modal,toast,read,write,swatches,wireSwatches,shareLink,saveCanvas,colors} from './ui.js';
-import {createSanctuaryScene,CUSHIONS,CUSHION_ORDER,SPOTS,LANTERN_SLOTS,INSTRUMENTS,BOW_T} from './sanctuary-scene-v8.js?v=20261123-3';
+import {createSanctuaryScene,CUSHIONS,CUSHION_ORDER,SPOTS,LANTERN_SLOTS,INSTRUMENTS,BOW_T} from './sanctuary-scene-v8.js?v=20261124-1';
 import {SanctuaryRoom} from './sanctuary-room-v8.js?v=20261123-3';
-import {WOOD_SR,moktakWave,fishWave,resample} from './sanctuary-sounds-v8.js?v=20261123-4';
-// 불국사 메타버스 소원마당 v8 rev.4: 아바타로 청운교·백운교를 올라 대웅전 법당 안까지 들어가고,
+import {WOOD_SR,moktakWave,fishWave,resample} from './sanctuary-sounds-v8.js?v=20261124-1';
+// 불국사 메타버스 소원마당 v8 rev.5: 아바타로 청운교·백운교를 올라 대웅전 법당 안까지 들어가고,
 // 합장·큰절·목탁·좌선을 실제 동작으로 하고, 범영루 법고와 좌경루 목어·운판을 치고, 불 켜진 연등에 소원 글씨를 달고, 투어 일행(최대 10명)과 함께해요.
 const PROFILE='gj-sanctuary-profile-v8',SOLO='gj-sanctuary-wish-v8',STATS='gj-sanctuary-stats-v8',SOUND='gj-sanctuary-sound-v8',SOUNDTIP='gj-sanctuary-soundtip-v8';
 const today=()=>new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -11,12 +11,12 @@ const r2=v=>Math.round(v*100)/100;
 const MOKTAK_ICON='<svg viewBox="0 0 48 48" width="27" height="27" aria-hidden="true"><path d="M14 21c-9-2-11 13 0 12" fill="none" stroke="#a9662f" stroke-width="5.5" stroke-linecap="round"/><ellipse cx="28" cy="27" rx="15.5" ry="14" fill="#c98444" stroke="#8a4f22" stroke-width="1.6"/><path d="M43 28.5H27" stroke="#55300f" stroke-width="3" stroke-linecap="round"/><circle cx="25.5" cy="28.5" r="3.6" fill="#55300f"/><path d="M17.5 21.5c2.5-5 7.5-7.6 12.5-7.4" fill="none" stroke="#f3cf9f" stroke-width="2.4" stroke-linecap="round"/><path d="M43 3 33.5 11.5" stroke="#7a4a22" stroke-width="3.2" stroke-linecap="round"/><circle cx="32.5" cy="12.5" r="4" fill="#e0a868" stroke="#8a4f22" stroke-width="1.2"/></svg>';
 
 // ---------- sound ----------
-// 목탁·목어는 실제 나무 타악기 녹음(sanctuary-sounds-v8.js)을, 나머지는 미리 계산한 파형을 쓴다. 아이폰은 무음 스위치가 Web Audio를 막아서 <audio> 태그로 재생한다.
+// 목탁·목어는 sanctuary-sounds-v8.js(나무 타악기 녹음과 실제 목탁 울림에 맞춘 공명)를, 나머지는 미리 계산한 파형을 쓴다. 아이폰은 무음 스위치가 Web Audio를 막아서 <audio> 태그로 재생한다.
 const SR=WOOD_SR,TAU=Math.PI*2,IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 let actx=null,master=null,unlocked=false,soundOn=read(SOUND,true)!==false;const bank={};
 function render(dur,fn,peak){const n=Math.floor(dur*SR),a=new Float32Array(n);let m=0;for(let i=0;i<n;i++){a[i]=fn(i/SR);m=Math.max(m,Math.abs(a[i]))}const k=peak/(m||1),fade=Math.min(n,500);for(let i=0;i<n;i++)a[i]*=k;for(let i=0;i<fade;i++)a[n-1-i]*=i/fade;return a}
 const WAVES={
- // 목탁: 실제 나무 타악기 녹음. MOKTAK_KIND 로 음색을 고른다(clear 또렷함, hollow 통울림, big 낮고 묵직함)
+ // 목탁: 실제 법당 목탁의 울림에 맞춘 소리. MOKTAK_KIND 로 음색을 고른다(deep 법당 큰 목탁, dry 울림 절반, small 작은 손목탁)
  moktak:()=>moktakWave(MOKTAK_KIND),
  bell:()=>render(6.5,t=>Math.min(1,t/.012)*(Math.sin(TAU*98*t)*Math.exp(-t/1.9)+.55*Math.sin(TAU*196.6*t)*Math.exp(-t/1.5)+.36*Math.sin(TAU*247*t)*Math.exp(-t/1.1)+.26*Math.sin(TAU*393*t)*Math.exp(-t/.8)+.14*Math.sin(TAU*524*t)*Math.exp(-t/.5))*(1+.06*Math.sin(TAU*1.7*t)),.62),
  soft:()=>render(.4,t=>Math.sin(TAU*(190-150*t)*t)*Math.exp(-t/.09)*Math.min(1,t/.004),.42),
@@ -29,7 +29,7 @@ const WAVES={
 };
 function wavUrl(a){const n=a.length,b=new DataView(new ArrayBuffer(44+n*2)),w=(o,s)=>{for(let i=0;i<s.length;i++)b.setUint8(o+i,s.charCodeAt(i))};w(0,'RIFF');b.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');b.setUint32(16,16,true);b.setUint16(20,1,true);b.setUint16(22,1,true);b.setUint32(24,SR,true);b.setUint32(28,SR*2,true);b.setUint16(32,2,true);b.setUint16(34,16,true);w(36,'data');b.setUint32(40,n*2,true);for(let i=0;i<n;i++)b.setInt16(44+i*2,Math.max(-1,Math.min(1,a[i]))*32767,true);return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
 // 나무 소리는 칠 때마다 음높이를 아주 조금씩 달리해서, 똑같은 소리가 반복되는 기계음 느낌을 없앤다
-const MOKTAK_KIND='hollow',VARY={moktak:[1,.986,1.012,.994],fish:[1,.985]};
+const MOKTAK_KIND='deep',VARY={moktak:[1,.986,1.012,.994],fish:[1,.985]};
 const wave=name=>bank[name]||(bank[name]={data:WAVES[name](),buf:null,tags:null,i:0});
 // 사용자가 누른 순간에 불러서 소리를 연다
 function audio(){if(!soundOn)return false;
