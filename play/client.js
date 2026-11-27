@@ -18,8 +18,9 @@ if(backLink)backLink.href=returnUrl;
 if(brand)brand.href=returnUrl;
 
 const sanctuary=active==='bulguksa'&&params.get('mode')==='sanctuary';
-const fortress=active==='wolseong'&&params.get('mode')!=='classic'&&!params.has('room');
+const guard=active==='wolseong'&&params.get('mode')==='guard';
+const fortress=active==='wolseong'&&!guard&&params.get('mode')!=='classic'&&!params.has('room');
 const classic=!sanctuary&&!fortress&&(params.get('mode')==='classic'||params.has('room'));
-const routes={bulguksa:[sanctuary?'./sanctuary-v8.js?v=20261124-1':classic?'./lantern.js?v=20261021-3':'./lantern-v7.js?v=20261022-7','mountLantern'],museum:[classic?'./museum-v2.js?v=20261022-1':'./museum-v3.js?v=20261023-2','mountMuseum'],wolseong:[fortress?'./fortress-v9.js?v=20261127-1':'./wolseong-3d.js?v=20261021-3','mountWolseong']};
+const routes={bulguksa:[sanctuary?'./sanctuary-v8.js?v=20261124-1':classic?'./lantern.js?v=20261021-3':'./lantern-v7.js?v=20261022-7','mountLantern'],museum:[classic?'./museum-v2.js?v=20261022-1':'./museum-v3.js?v=20261023-2','mountMuseum'],wolseong:[guard?'./guard-v10.js?v=20261127-1':fortress?'./fortress-v9.js?v=20261127-1':'./wolseong-3d.js?v=20261021-3','mountWolseong']};
 const [url,name]=routes[active];
 try{const m=await import(url);await m[name](document.querySelector('main'))}catch(e){console.error(e);document.querySelector('main').innerHTML='<section class="card"><h2>화면을 불러오지 못했어요.</h2><p>새로고침하면 다시 열 수 있어요. 저장한 내용은 유지됩니다.</p><button onclick="location.reload()">다시 열기</button></section>'}
