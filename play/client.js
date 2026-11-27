@@ -18,7 +18,7 @@ if(backLink)backLink.href=returnUrl;
 if(brand)brand.href=returnUrl;
 
 const sanctuary=active==='bulguksa'&&params.get('mode')==='sanctuary';
-const fortress=active==='wolseong'&&params.get('mode')==='fortress';
+const fortress=active==='wolseong'&&params.get('mode')!=='classic'&&!params.has('room');
 const classic=!sanctuary&&!fortress&&(params.get('mode')==='classic'||params.has('room'));
 const routes={bulguksa:[sanctuary?'./sanctuary-v8.js?v=20261124-1':classic?'./lantern.js?v=20261021-3':'./lantern-v7.js?v=20261022-7','mountLantern'],museum:[classic?'./museum-v2.js?v=20261022-1':'./museum-v3.js?v=20261023-2','mountMuseum'],wolseong:[fortress?'./fortress-v9.js?v=20261127-1':'./wolseong-3d.js?v=20261021-3','mountWolseong']};
 const [url,name]=routes[active];

@@ -63,7 +63,9 @@ export async function mountWolseong(root){
  if(night)scene.setNight(true);
  scene.setPlan(plan);
  // 국가유산청 첨성대 3D(있을 때만)
- scene.loadLandmark('./assets/wolseong-v9/cheomseongdae-khs-v1.glb',9.17*0.62).then(ok=>{if(ok)console.info('첨성대 국가유산청 3D 사용')});
+ // 국가유산청 첨성대 3D 원본을 받아 변환하면 KHS_CHEOM 을 true 로 바꾼다(그 전에는 간단한 모형)
+ const KHS_CHEOM=false;
+ if(KHS_CHEOM)scene.loadLandmark('./assets/wolseong-v9/cheomseongdae-khs-v1.glb',9.17*0.62);
 
  // ---------- 화면 글자 ----------
  const budget=()=>R.levelInfo(level).budget+extra;
