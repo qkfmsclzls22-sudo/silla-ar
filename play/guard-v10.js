@@ -202,7 +202,7 @@ export async function mountWolseong(root){
   <li><b>🌊 해자</b>는 적을 느리게, <b>🥁 진군 북</b>은 병사를 빠르게 해요.</li>
   <li><b>🎲 주령구</b>는 행운석으로 굴려요. 전설이나 왕이 나올지도!</li>
   <li>5웨이브마다 <b>유물 발굴</b>, 10웨이브마다 <b>보스</b>. 적이 100명 쌓이면 끝!</li></ol>
-  <div class="stack"><button class="primary" id="gd-go">지키러 가기</button></div>`);$('#gd-go').onclick=()=>d.close();d.addEventListener('close',()=>{paused=false;meta.seenHelp=true;saveMeta()},{once:true})}
+  <div class="stack"><button class="primary" id="gd-go">지키러 가기</button><a class="btn" href="./?tour=wolseong&mode=fortress">월성 쌓기 게임 ↗</a></div>`);$('#gd-go').onclick=()=>d.close();d.addEventListener('close',()=>{paused=false;meta.seenHelp=true;saveMeta()},{once:true})}
  start();if(!meta.seenHelp)help();
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&st&&!st.over){paused=true;$('#gd-pause').textContent='▶'}});
  if(new URLSearchParams(location.search).has('debug'))window.__gd={G,get st(){return st},set speed(v){speed=v},meta,start,redraw(){mapCache=null}};
